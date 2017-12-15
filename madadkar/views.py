@@ -60,6 +60,11 @@ def show_payam_ersali(request):
     return render(request, template, {})
 
 
+def show_payam_entezar(request):
+    template = 'madadkar/payam_entezar.html'
+    return render(request, template, {})
+
+
 def show_profile(request):
     template = 'madadkar/profile.html'
     return render(request, template, {})
@@ -82,6 +87,16 @@ def show_sandoghe_payamhaye_daryafti(request):
 
 def show_sandoghe_payamhaye_ersali(request):
     template = 'madadkar/sandoghe_payamhaye_ersali.html'
+    return render(request, template, {})
+
+
+def show_sandoghe_payamhaye_entezar(request):
+    template = 'madadkar/sandoghe_payamhaye_entezar.html'
+    return render(request, template, {})
+
+
+def show_sabte_naam_madadju(request):
+    template = 'madadkar/sabte_naam_madadju.html'
     return render(request, template, {})
 
 
