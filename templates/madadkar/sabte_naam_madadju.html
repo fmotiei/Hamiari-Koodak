@@ -121,9 +121,13 @@
 							<table class="table-box" align="right">
 								<tr>
 									<td style="padding: 5px 10px 5px 5px;"> نام مددجو</td>
-									<td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="madadkar_name" name="madadkar_name" placeholder="نام همیار"> </td>
+									<td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="madadju_name" name="madadju_name" placeholder="نام مددجو"> </td>
 									<td style="padding: 5px 10px 5px 5px;">نام خانوادگی مددجو</td>
-                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="madadkar_family" name="madadkar_family" placeholder="نام خانوادگی همیار"> </td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="madadju_family" name="madadju_family" placeholder="نام خانوادگی مددجو"> </td>
+								</tr>
+                                <tr>
+									<td style="padding: 5px 10px 5px 5px;"> شماره شناسنامه</td>
+									<td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="madadkar_" name="madadkar_name" placeholder="شماره شناسنامه"> </td>
 								</tr>
 								<tr>
 									<td style="padding: 5px 10px 5px 5px;">سال تولد</td>
@@ -207,17 +211,84 @@
 	<option value="1931">1931</option>
 	<option value="1930">1930</option>
    </select></td>
-
-								<tr>
+                                <td style="padding: 5px 10px 5px 5px;">ماه </td>
+                                    <td style="padding: 5px 10px 5px 5px;"><select id="birthmonth" name="birthmonth" style="width: 100%">
+	<option value="1">1</option>
+	<option value="2">2</option>
+	<option value="3">3</option>
+	<option value="4">4</option>
+	<option value="5">5</option>
+	<option value="6">6</option>
+	<option value="7">7</option>
+	<option value="8">8</option>
+	<option value="9">9</option>
+	<option value="10">10</option>
+	<option value="11">11</option>
+	<option value="12">12</option>
+   </select></td>
+                                <tr>
 									<td style="padding: 5px 10px 5px 5px;">پست الکترونیکی مددجو</td>
-                                    <td style="padding: 5px 10px 5px 5px;"><input type="email" class="form-control" id="nam_ghayem" name="nam_ghayem" placeholder="email"></td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="email" class="form-control" id="email" name="email" placeholder="email"></td>
 									<td style="padding: 5px 10px 5px 5px;">شماره تماس مددجو</td>
-                                    <td style="padding: 5px 10px 5px 5px;"><input type="telNo" class="form-control" id="phone_madadju" name="phone_madadju" placeholder="شماره تماس مددکار"></td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="telNo" class="form-control" id="phone_madadju" name="phone_madadju" placeholder="شماره تماس مددجو"></td>
 								</tr>
 								<tr>
-									<td style="padding: 5px 10px 5px 5px;">آدرس محل کار</td>
-                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="address_mahale_kar" name="address_mahale_kar" placeholder="آدرس محل کار" style="width: 100% ; height: 100px;"></td>
+									<td style="padding: 5px 10px 5px 5px;">آدرس محل سکونت</td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="address_mahale_sokunat" name="address_mahale_sokunat" placeholder="آدرس محل سکونت" style="width: 100% ; height: 100px;"></td>
 								</tr>
+                                <tr>
+                                    <td style="padding: 5px 10px 5px 5px;">مقطع </td>
+                                    <td style="padding: 5px 10px 5px 5px;"><select id="maghta" name="maghta" style="width: 100%">
+	<option value="1">اول</option>
+	<option value="2">دوم</option>
+	<option value="3">سوم</option>
+	<option value="4">چهارم</option>
+	<option value="5">پنجم</option>
+	<option value="6">ششم</option>
+	<option value="7">هفتم</option>
+	<option value="8">هشتم</option>
+	<option value="9">نهام</option>
+	<option value="10">دهم</option>
+	<option value="11">یازدهم</option>
+	<option value="12">پیش دانشگاهی</option>
+   </select></td>
+									<td style="padding: 5px 10px 5px 5px;">نام محل تحصیل</td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="mahal_tahsil" name="mahal_tahsil" placeholder="شماره تماس مددجو"></td>
+								</tr>
+                                <tr>
+									<td style="padding: 5px 10px 5px 5px;">آدرس محل تحصیل</td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="address_mahale_kar" name="address_mahale_kar" placeholder="آدرس محل تحصیل" style="width: 100% ; height: 100px;"></td>
+                                    <td style="padding: 5px 10px 5px 5px;">معدل</td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="number" class="form-control" id="moadel" name="moadel" placeholder="معدل"></td>
+                                </tr>
+                                <tr>
+									<td style="padding: 5px 10px 5px 5px;"> نام قیم</td>
+									<td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="ghayem_name" name="madadju_name" placeholder="نام قیم"> </td>
+									<td style="padding: 5px 10px 5px 5px;">نام خانوادگی قیم</td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="ghayem_family" name="madadju_family" placeholder="نام خانوادگی قیم"> </td>
+								</tr>
+                                <tr>
+									<td style="padding: 5px 10px 5px 5px;">آدرس قیم</td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="address_ghayem" name="address_ghayem" placeholder="آدرس محل سکونت قیم" style="width: 100% ; height: 100px;"></td>
+                                    <td style="padding: 5px 10px 5px 5px;">شماره تماس قیم</td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="telNo" class="form-control" id="phone_ghayem" name="phone_ghayem" placeholder="شماره تماس مددجو"></td>
+								</tr>
+                                <tr>
+                                    <td style="padding: 5px 10px 5px 5px;">شماره حساب</td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="number" class="form-control" id="shomare_hesab" name="shomarehesab" placeholder="شماره حساب"></td>
+                                </tr>
+                                <tr>
+									<td style="padding: 5px 10px 5px 5px;">آدرس قیم</td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="address_ghayem" name="address_ghayem" placeholder="آدرس محل سکونت قیم" style="width: 100% ; height: 100px;"></td>
+                                    <td style="padding: 5px 10px 5px 5px;">شماره تماس قیم</td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="telNo" class="form-control" id="phone_ghayem" name="phone_ghayem" placeholder="شماره تماس مددجو"></td>
+								</tr>
+                                <tr>
+									<td style="padding: 5px 10px 5px 5px;">توضیحات خصوصی</td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="khosusi" name="khosusi" placeholder="توضیحات" style="width: 100% ; height: 200px;"></td>
+                                    <td style="padding: 5px 10px 5px 5px;">شرح حال عمومی</td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="omumi" name="omumi" placeholder="توضیحات" style="width: 100% ; height: 200px;"></td>
+                                </tr>
 
 							</table>
 						</div>
