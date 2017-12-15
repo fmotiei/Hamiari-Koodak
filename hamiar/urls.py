@@ -22,7 +22,6 @@ urlpatterns = [
     url(r'afzayesh_etebar/', hamiar.views.show_afzayesh_etebar),
     url(r'ahdaf/', hamiar.views.show_ahdaf),
     url(r'ashnai/', hamiar.views.show_ashnai),
-    url(r'ersal_movafagh/', hamiar.views.show_ersal_movafagh),
     url(r'ersal_payam/', hamiar.views.show_ersal_payam),
     url(r'hemayat_az_moasese/', hamiar.views.show_hemayat_az_moasese),
     url(r'hemayat_az_niaz/', hamiar.views.show_hemayat_az_niaz),
@@ -37,6 +36,6 @@ urlpatterns = [
     url(r'sakhtar_sazmani/', hamiar.views.show_sakhtar_sazmani),
     url(r'sandoghe_payamhaye_daryafti/', hamiar.views.show_sandoghe_payamhaye_daryafti),
     url(r'sandoghe_payamhaye_ersali/', hamiar.views.show_sandoghe_payamhaye_ersali),
-    url(r'tarakonesh_movafagh/', hamiar.views.show_tarakonesh_movafagh),
+    url(r'amaliat_movafagh/', hamiar.views.show_amaliat_movafagh),
     url(r'^$', hamiar.views.show_hamiar),
 ]

@@ -26,11 +26,6 @@ def show_ashnai(request):
     return render(request, template, {})
 
 
-def show_ersal_movafagh(request):
-    template = 'hamiar/ersal_movafagh.html'
-    return render(request, template, {})
-
-
 def show_ersal_payam(request):
     template = 'hamiar/ersal_payam.html'
     return render(request, template, {})
@@ -101,6 +96,6 @@ def show_sandoghe_payamhaye_ersali(request):
     return render(request, template, {})
 
 
-def show_tarakonesh_movafagh(request):
-    template = 'hamiar/tarakonesh_movafagh.html'
+def show_amaliat_movafagh(request):
+    template = 'hamiar/amaliat_movafagh.html'
     return render(request, template, {})
