@@ -6,6 +6,11 @@ from django.http import HttpResponse
 
 # Create your views here.
 
+
+def show_afzoudan_niaz(request):
+    template = 'madadkar/afzoudan_niaz.html'
+    return render(request, template, {})
+
 def show_madadkar(request):
     template = 'madadkar/madadkar.html'
     return render(request, template, {})
@@ -40,6 +45,10 @@ def show_moshahede_tarakonesh_haye_mali(request):
     return render(request, template, {})
 
 
+def show_niaz_haye_madadju(request):
+    template = 'madadkar/niaz_haye_madadju.html'
+    return render(request, template, {})
+
 def show_niaz_haye_tamin_nashode(request):
     template = 'madadkar/niaz_haye_tamin_nashode.html'
     return render(request, template, {})
@@ -67,6 +76,11 @@ def show_payam_entezar(request):
 
 def show_profile(request):
     template = 'madadkar/profile.html'
+    return render(request, template, {})
+
+
+def show_profile_madadju(request):
+    template = 'madadkar/profile_madadju.html'
     return render(request, template, {})
 
 
@@ -102,4 +116,14 @@ def show_sabte_naam_madadju(request):
 
 def show_amaliat_movafagh(request):
     template = 'madadkar/amaliat_movafagh.html'
+    return render(request, template, {})
+
+
+def show_virayesh_niaz(request):
+    template = 'madadkar/virayesh_niaz.html'
+    return render(request, template, {})
+
+
+def show_vaziat_tahsili(request):
+    template = 'madadkar/vaziat_tahsili.html'
     return render(request, template, {})

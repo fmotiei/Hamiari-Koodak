@@ -20,17 +20,20 @@ import madadkar.views
 
 urlpatterns = [
     url(r'afzayesh_etebar/', madadkar.views.show_afzayesh_etebar),
+    url(r'afzoudan_niaz/', madadkar.views.show_afzoudan_niaz),
     url(r'ahdaf/', madadkar.views.show_ahdaf),
     url(r'ashnai/', madadkar.views.show_ashnai),
     url(r'ersal_payam/', madadkar.views.show_ersal_payam),
     url(r'moshahede_madadjuyan_taht_kefalat/', madadkar.views.show_moshahede_madadjuyan_taht_kefalat),
     url(r'moshahede_tarakonesh_haye_mali/', madadkar.views.show_moshahede_tarakonesh_haye_mali),
     url(r'niaz_haye_tamin_nashode/', madadkar.views.show_niaz_haye_tamin_nashode),
+    url(r'niaz_haye_madadju/', madadkar.views.show_niaz_haye_madadju),
     url(r'niaz_haye_tamin_nashode_fori/', madadkar.views.show_niaz_haye_tamin_nashode_fori),
     url(r'payam_daryafti/', madadkar.views.show_payam_daryafti),
     url(r'payam_ersali/', madadkar.views.show_payam_ersali),
     url(r'payam_entezar/', madadkar.views.show_payam_entezar),
     url(r'profile/', madadkar.views.show_profile),
+    url(r'profile_madadju/', madadkar.views.show_profile_madadju),
     url(r'roydad_ha/', madadkar.views.show_roydad_ha),
     url(r'sakhtar_sazmani/', madadkar.views.show_sakhtar_sazmani),
     url(r'sandoghe_payamhaye_daryafti/', madadkar.views.show_sandoghe_payamhaye_daryafti),
@@ -38,5 +41,7 @@ urlpatterns = [
     url(r'sandoghe_payamhaye_entezar/', madadkar.views.show_sandoghe_payamhaye_entezar),
     url(r'amaliat_movafagh/', madadkar.views.show_amaliat_movafagh),
     url(r'sabte_naam_madadju/',madadkar.views.show_sabte_naam_madadju),
+    url(r'virayesh_niaz/',madadkar.views.show_virayesh_niaz),
+    url(r'vaziat_tahsili/',madadkar.views.show_vaziat_tahsili),
     url(r'^$', madadkar.views.show_madadkar),
 ]
