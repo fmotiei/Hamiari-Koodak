@@ -127,3 +127,17 @@ def show_virayesh_niaz(request):
 def show_vaziat_tahsili(request):
     template = 'madadkar/vaziat_tahsili.html'
     return render(request, template, {})
+
+
+def show_moshahede_madadjuyan_dar_entezar_madadkar(request):
+    template = 'madadkar/moshahede_madadjuyan_dar_entezar_madadkar.html'
+    return render(request, template, {})
+
+
+def show_profile_madadju_bi_kefalat(request):
+    template = 'madadkar/profile_madadju_bi_kefalat.html'
+    return render(request, template, {})
+
+def show_niaz_haye_madadju_bi_kefalat(request):
+    template = 'madadkar/niaz_haye_madadju_bi_kefalat.html'
+    return render(request, template, {})
