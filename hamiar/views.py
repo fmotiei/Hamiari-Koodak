@@ -66,6 +66,12 @@ def show_niaz_haye_tamin_nashode_fori(request):
     return render(request, template, {})
 
 
+
+def show_niaz_haye_madadju(request):
+    template = 'hamiar/niaz_haye_madadju.html'
+    return render(request, template, {})
+
+
 def show_payam_daryafti(request):
     template = 'hamiar/payam_daryafti.html'
     return render(request, template, {})
@@ -80,6 +86,9 @@ def show_profile(request):
     template = 'hamiar/profile.html'
     return render(request, template, {})
 
+def show_profile_madadju(request):
+    template = 'hamiar/profile_madadju.html'
+    return render(request, template, {})
 
 def show_roydad_ha(request):
     template = 'hamiar/roydad_ha.html'

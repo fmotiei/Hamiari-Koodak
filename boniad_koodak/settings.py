@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'hamiar',
     'madadkar',
     'django_extensions',
+    'modir',
+    'karbar',
+    'madadju',
 ]
 
 MIDDLEWARE = [

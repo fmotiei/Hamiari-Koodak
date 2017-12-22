@@ -21,4 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url('hamiar/',include('hamiar.urls')),
     url('madadkar/',include('madadkar.urls')),
+    url('modir/',include('modir.urls')),
+    url('madadju/',include('madadju.urls')),
+    url('karbar/',include('karbar.urls')),
 ]
