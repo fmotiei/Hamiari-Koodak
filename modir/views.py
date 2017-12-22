@@ -98,5 +98,19 @@ def show_sandoghe_payamhaye_daryafti(request):
 
 def show_sandoghe_payamhaye_ersali(request):
     template = 'modir/sandoghe_payamhaye_ersali.html'
+    return render(request, template, {}
+                )
+def show_amaliat_movafagh(request):
+    template = 'modir/amaliat_movafagh.html'
     return render(request, template, {})
+
+def show_moshahede_tarakonesh_haye_mali(request):
+    template = 'modir/moshahede_tarakonesh_haye_mali.html'
+    return render(request, template, {})
+
+def show_afzayesh_etebar(request):
+    template = 'modir/afzayesh_etebar.html'
+    return render(request, template, {})
+
+
 

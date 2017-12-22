@@ -38,5 +38,9 @@ urlpatterns = [
     url(r'sakhtar_sazmani/', modir.views.show_sakhtar_sazmani),
     url(r'sandoghe_payamhaye_daryafti/', modir.views.show_sandoghe_payamhaye_daryafti),
     url(r'sandoghe_payamhaye_ersali/', modir.views.show_sandoghe_payamhaye_ersali),
+    url(r'amaliat_movafagh/', modir.views.show_sandoghe_payamhaye_ersali),
+    url(r'moshahede_tarakonesh_haye_mali/', modir.views.show_sandoghe_payamhaye_ersali),
+    url(r'afzayesh_etebar/', modir.views.show_sandoghe_payamhaye_ersali),
+
     url(r'^$', modir.views.show_modir),
 ]
