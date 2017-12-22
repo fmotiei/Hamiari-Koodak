@@ -49,6 +49,12 @@ def show_payam_daryafti(request):
     return render(request, template, {})
 
 
+
+def show_payam_ersali(request):
+    template = 'madadju/payam_ersali.html'
+    return render(request, template, {})
+
+
 def show_profile(request):
     template = 'madadju/profile.html'
     return render(request, template, {})
@@ -73,3 +79,7 @@ def show_sandoghe_payamhaye_ersali(request):
     template = 'madadju/sandoghe_payamhaye_ersali.html'
     return render(request, template, {})
 
+
+def show_amaliat_movafagh(request):
+    template = 'madadju/amaliat_movafagh.html'
+    return render(request, template, {})

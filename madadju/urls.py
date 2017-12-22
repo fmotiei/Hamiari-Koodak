@@ -26,11 +26,13 @@ urlpatterns = [
     url(r'ersal_payam/', madadju.views.show_ersal_payam),
     url(r'madadju/', madadju.views.show_madadju),
     url(r'payam_daryafti/', madadju.views.show_payam_daryafti),
+    url(r'payam_ersali/', madadju.views.show_payam_ersali),
     url(r'moshahede_tarakonesh_haye_mali/', madadju.views.show_moshahede_tarakonesh_haye_mali),
     url(r'profile/', madadju.views.show_profile),
     url(r'roydadha/', madadju.views.show_roydadha),
     url(r'sakhtar_sazmani/', madadju.views.show_sakhtar_sazmani),
     url(r'sandoghe_payamhaye_daryafti/', madadju.views.show_sandoghe_payamhaye_daryafti),
     url(r'sandoghe_payamhaye_ersali/', madadju.views.show_sandoghe_payamhaye_ersali),
+    url(r'amaliat_movafagh/', madadju.views.show_amaliat_movafagh),
     url(r'^$', madadju.views.show_madadju),
 ]
