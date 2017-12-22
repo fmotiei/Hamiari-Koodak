@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'ersal_payam/', madadju.views.show_ersal_payam),
     url(r'madadju/', madadju.views.show_madadju),
     url(r'payam_daryafti/', madadju.views.show_payam_daryafti),
+    url(r'moshahede_tarakonesh_haye_mali/', madadju.views.show_moshahede_tarakonesh_haye_mali),
     url(r'profile/', madadju.views.show_profile),
     url(r'roydadha/', madadju.views.show_roydadha),
     url(r'sakhtar_sazmani/', madadju.views.show_sakhtar_sazmani),
