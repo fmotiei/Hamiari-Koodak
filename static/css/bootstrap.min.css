@@ -3373,7 +3373,7 @@ left:auto
 }
 .dropdown-menu .divider{
 height:1px;
-margin:9px 0;
+margin:gaha9px 0;
 overflow:hidden;
 background-color:#e5e5e5
 }
@@ -4302,7 +4302,7 @@ color:#ccc
 }
 .navbar-inverse{
 background-image: url("/static/img/tool2.png");
-	background-size: contain;
+	background-repeat: no-repeat;
 border-color:none
 }
 .navbar-inverse .navbar-brand{
