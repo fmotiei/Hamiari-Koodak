@@ -1,5 +1,9 @@
 from django.db import models
-import datetime
+from madadju.models import *
+from modir.models import *
+from hamiar.models import *
+from karbar.models import *
+from datetime import datetime
 
 from modir.models import *
 
