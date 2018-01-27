@@ -61,7 +61,7 @@ def show_profile(request):
 
 
 def show_roydadha(request):
-    template = 'madadju/roydadha.html'
+    template = 'madadju/roydad_ha.html'
     return render(request, template, {})
 
 

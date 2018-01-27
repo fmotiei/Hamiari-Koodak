@@ -71,8 +71,8 @@ def show_profile(request):
     return render(request, template, {})
 
 
-def show_roydadha(request):
-    template = 'modir/roydadha.html'
+def show_roydad_ha(request):
+    template = 'modir/roydad_ha.html'
     return render(request, template, {})
 
 
@@ -106,6 +106,10 @@ def show_amaliat_movafagh(request):
 
 def show_moshahede_tarakonesh_haye_mali(request):
     template = 'modir/moshahede_tarakonesh_haye_mali.html'
+    return render(request, template, {})
+
+def show_moshahede_tarakoneshe_mali_karbar(request):
+    template = 'modir/moshahede_tarakoneshe_mali_karbar.html'
     return render(request, template, {})
 
 def show_afzayesh_etebar(request):

@@ -32,7 +32,7 @@ urlpatterns = [
     url(r'moshahede_madadjuyan_dar_entezar_madadkar/', modir.views.show_moshahede_madadjuyan_dar_entezar_madadkar),
     url(r'payam_daryafti/', modir.views.show_payam_daryafti),
     url(r'profile/', modir.views.show_profile),
-    url(r'roydadha/', modir.views.show_roydadha),
+    url(r'roydad_ha/', modir.views.show_roydad_ha),
     url(r'sabtename_madadkar/', modir.views.show_sabtename_madadkar),
     url(r'sabtename_modir_karshenas/', modir.views.show_sabtename_modir_karshenas),
     url(r'sakhtar_sazmani/', modir.views.show_sakhtar_sazmani),
@@ -40,6 +40,7 @@ urlpatterns = [
     url(r'sandoghe_payamhaye_ersali/', modir.views.show_sandoghe_payamhaye_ersali),
     url(r'amaliat_movafagh/', modir.views.show_amaliat_movafagh),
     url(r'moshahede_tarakonesh_haye_mali/', modir.views.show_moshahede_tarakonesh_haye_mali),
+    url(r'moshahede_tarakoneshe_mali_karbar/', modir.views.show_moshahede_tarakoneshe_mali_karbar),
     url(r'afzayesh_etebar/', modir.views.show_afzayesh_etebar),
     url(r'madadju_profile/', modir.views.show_madadju_profile),
 
