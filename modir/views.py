@@ -112,5 +112,10 @@ def show_afzayesh_etebar(request):
     template = 'modir/afzayesh_etebar.html'
     return render(request, template, {})
 
+def show_afzayesh_etebar(request):
+    template = 'modir/afzayesh_etebar.html'
+    return render(request, template, {})
 
-
+def show_madadju_profile(request):
+    template = 'modir/madadju_profile.html'
+    return render(request, template, {})
