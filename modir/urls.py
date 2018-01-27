@@ -29,7 +29,7 @@ urlpatterns = [
     url(r'moshahede_hamyaran_dar_entezar_taeid/', modir.views.show_moshahede_hamyaran_dar_entezar_taeid),
     url(r'moshahede_list_koodakan/', modir.views.show_moshahede_list_koodakan),
     url(r'moshahede_list_niazhaye_fori_taminnashode/', modir.views.show_moshahede_list_niazhaye_fori_taminnashode),
-    url(r'moshahede_madadjuyan_dar_entezar_madadkar/', modir.views.show_moshahede_madadjuyan_dar_entezar_madadkar),
+    url(r'madadjuyan/', modir.views.show_madadjuyan),
     url(r'payam_daryafti/', modir.views.show_payam_daryafti),
     url(r'profile/', modir.views.show_profile),
     url(r'roydad_ha/', modir.views.show_roydad_ha),

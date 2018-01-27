@@ -56,10 +56,9 @@ def show_moshahede_list_niazhaye_fori_taminnashode(request):
     return render(request, template, {})
 
 
-def show_moshahede_madadjuyan_dar_entezar_madadkar(request):
-    template = 'modir/moshahede_madadjuyan_dar_entezar_madadkar.html'
+def show_madadjuyan(request):
+    template = 'modir/madadjuyan.html'
     return render(request, template, {})
-
 
 def show_payam_daryafti(request):
     template = 'modir/payam_daryafti.html'
