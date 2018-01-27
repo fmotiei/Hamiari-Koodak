@@ -75,8 +75,8 @@ def show_roydad_ha(request):
     return render(request, template, {})
 
 
-def show_sabtename_madadkar(request):
-    template = 'modir/sabtename_madadkar.html'
+def show_sabtnam_madadkar(request):
+    template = 'modir/sabtnam.html'
     return render(request, template, {})
 
 
