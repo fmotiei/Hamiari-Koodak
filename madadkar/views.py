@@ -5,6 +5,8 @@ from django.http import HttpResponse
 
 
 # Create your views here.
+import karbar
+from madadju.models import Madadju, Niaz
 
 
 def show_afzoudan_niaz(request):
@@ -12,22 +14,15 @@ def show_afzoudan_niaz(request):
     return render(request, template, {})
 
 def show_madadkar(request):
-    template = 'madadkar/madadkar.html'
-    return render(request, template, {})
+    template = 'karbar/index.html'
+    return render(request, template, {'tozihat': karbar.darbare_ma.tozihat_text()
+        , 'images': karbar.darbare_ma.akhbar_image()
+        , 'progress': karbar.darbare_ma.progress()
+        , 'utype': 'madadkar'})
 
 
 def show_afzayesh_etebar(request):
     template = 'madadkar/afzayesh_etebar.html'
-    return render(request, template, {})
-
-
-def show_ahdaf(request):
-    template = 'madadkar/ahdaf.html'
-    return render(request, template, {})
-
-
-def show_ashnai(request):
-    template = 'madadkar/ashnai.html'
     return render(request, template, {})
 
 
@@ -89,11 +84,6 @@ def show_roydad_ha(request):
     return render(request, template, {})
 
 
-def show_sakhtar_sazmani(request):
-    template = 'madadkar/sakhtar_sazmani.html'
-    return render(request, template, {})
-
-
 def show_sandoghe_payamhaye_daryafti(request):
     template = 'madadkar/sandoghe_payamhaye_daryafti.html'
     return render(request, template, {})
@@ -141,3 +131,37 @@ def show_profile_madadju_bi_kefalat(request):
 def show_niaz_haye_madadju_bi_kefalat(request):
     template = 'madadkar/niaz_haye_madadju_bi_kefalat.html'
     return render(request, template, {})
+
+def show_ahdaf(request):
+    template = 'karbar/ahdaf.html'
+    return render(request, template, {'ahdaf': karbar.darbare_ma.ahdaf_text()
+                                      ,'progress':karbar.darbare_ma.progress()
+                                      ,'utype' : 'madadkar'})
+
+
+def show_ashnai(request):
+    template = 'karbar/ashnai.html'
+    return render(request, template, {'ashnai': karbar.darbare_ma.ashnai_text()
+                                      ,'progress':karbar.darbare_ma.progress()
+                                      ,'utype' : 'madadkar'})
+
+
+def show_sakhtar_sazmani(request):
+    template = 'karbar/sakhtar_sazmani.html'
+    return render(request, template, {'sakhtar_sazmani': karbar.darbare_ma.sakhtar_sazmani_text()
+                                      ,'progress':karbar.darbare_ma.progress()
+                                      ,'utype' : 'madadkar'})
+
+def show_moshahede_list_koodakan(request):
+    template = 'karbar/moshahede_list_koodakan.html'
+    madadjuyan = Madadju.objects.all()
+    return render(request, template, {'madadjuyan':[(m.first_name,Niaz.objects.filter(niazmand=m),Niaz.niaz_taminnashode(m)) for m in madadjuyan]
+                                      ,'progress':karbar.darbare_ma.progress()
+                                      ,'utype' : 'madadkar'})
+
+def show_moshahede_list_niazhaye_fori_taminnashode(request):
+    template = 'karbar/moshahede_list_niazhaye_fori_taminnashode.html'
+    madadjuyan = Madadju.objects.all()
+    return render(request, template, {'madadjuyan':[( m.first_name, ((niaz.onvan,niaz.mablagh_taminnashode()) for niaz in Niaz.niaz_taminnashode(m).filter(niazFori=True))) for m in madadjuyan]
+                                      ,'progress':karbar.darbare_ma.progress()
+                                      ,'utype' : 'madadkar'})

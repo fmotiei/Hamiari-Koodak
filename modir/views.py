@@ -5,15 +5,8 @@ from django.http import HttpResponse
 
 
 # Create your views here.
-
-def show_ahdaf(request):
-    template = 'modir/ahdaf.html'
-    return render(request, template, {})
-
-
-def show_ashnai(request):
-    template = 'modir/ashnai.html'
-    return render(request, template, {})
+import karbar
+from madadju.models import Madadju, Niaz
 
 
 def show_ersal_payam(request):
@@ -32,8 +25,11 @@ def show_list_omur_kheyrie(request):
 
 
 def show_modir(request):
-    template = 'modir/modir.html'
-    return render(request, template, {})
+    template = 'karbar/index.html'
+    return render(request, template, {'tozihat': karbar.darbare_ma.tozihat_text()
+        , 'images': karbar.darbare_ma.akhbar_image()
+        , 'progress': karbar.darbare_ma.progress()
+        , 'utype': 'modir'})
 
 
 def show_moshahede_etelat_mali_karbaran(request):
@@ -85,11 +81,6 @@ def show_sabtename_modir_karshenas(request):
     return render(request, template, {})
 
 
-def show_sakhtar_sazmani(request):
-    template = 'modir/sakhtar_sazmani.html'
-    return render(request, template, {})
-
-
 def show_sandoghe_payamhaye_daryafti(request):
     template = 'modir/sandoghe_payamhaye_daryafti.html'
     return render(request, template, {})
@@ -122,3 +113,37 @@ def show_afzayesh_etebar(request):
 def show_madadju_profile(request):
     template = 'modir/madadju_profile.html'
     return render(request, template, {})
+
+def show_ahdaf(request):
+    template = 'karbar/ahdaf.html'
+    return render(request, template, {'ahdaf': karbar.darbare_ma.ahdaf_text()
+                                      ,'progress':karbar.darbare_ma.progress()
+                                      ,'utype' : 'modir'})
+
+
+def show_ashnai(request):
+    template = 'karbar/ashnai.html'
+    return render(request, template, {'ashnai': karbar.darbare_ma.ashnai_text()
+                                      ,'progress':karbar.darbare_ma.progress()
+                                      ,'utype' : 'modir'})
+
+
+def show_sakhtar_sazmani(request):
+    template = 'karbar/sakhtar_sazmani.html'
+    return render(request, template, {'sakhtar_sazmani': karbar.darbare_ma.sakhtar_sazmani_text()
+                                      ,'progress':karbar.darbare_ma.progress()
+                                      ,'utype' : 'modir'})
+
+def show_moshahede_list_koodakan(request):
+    template = 'karbar/moshahede_list_koodakan.html'
+    madadjuyan = Madadju.objects.all()
+    return render(request, template, {'madadjuyan':[(m.first_name,Niaz.objects.filter(niazmand=m),Niaz.niaz_taminnashode(m)) for m in madadjuyan]
+                                      ,'progress':karbar.darbare_ma.progress()
+                                      ,'utype' : 'modir'})
+
+def show_moshahede_list_niazhaye_fori_taminnashode(request):
+    template = 'karbar/moshahede_list_niazhaye_fori_taminnashode.html'
+    madadjuyan = Madadju.objects.all()
+    return render(request, template, {'madadjuyan':[( m.first_name, ((niaz.onvan,niaz.mablagh_taminnashode()) for niaz in Niaz.niaz_taminnashode(m).filter(niazFori=True))) for m in madadjuyan]
+                                      ,'progress':karbar.darbare_ma.progress()
+                                      ,'utype' : 'modir'})

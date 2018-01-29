@@ -34,5 +34,7 @@ urlpatterns = [
     url(r'sandoghe_payamhaye_daryafti/', madadju.views.show_sandoghe_payamhaye_daryafti),
     url(r'sandoghe_payamhaye_ersali/', madadju.views.show_sandoghe_payamhaye_ersali),
     url(r'amaliat_movafagh/', madadju.views.show_amaliat_movafagh),
+    url(r'moshahede_list_koodakan/', madadju.views.show_moshahede_list_koodakan),
+    url(r'moshahede_list_niazhaye_fori_taminnashode/', madadju.views.show_moshahede_list_niazhaye_fori_taminnashode),
     url(r'^$', madadju.views.show_madadju),
 ]
