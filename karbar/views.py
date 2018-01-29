@@ -8,6 +8,7 @@ from django.http import HttpResponse
 
 def show_moshahede_list_koodakan(request):
     template = 'karbar/moshahede_list_koodakan.html'
+
     return render(request, template, {})
 
 def show_moshahede_list_niazhaye_fori_taminnashode(request):
@@ -16,7 +17,7 @@ def show_moshahede_list_niazhaye_fori_taminnashode(request):
 
 
 def show_profile(request):
-    template = 'karbar/profile.html'
+    template = 'karbar/index.html'
     return render(request, template, {})
 
 
