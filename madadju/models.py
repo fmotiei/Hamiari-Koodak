@@ -56,6 +56,16 @@ class Niaz(models.Model):
     class Meta:
         unique_together = (("niazmand", "onvan"),)
 
+    def niaz_taminnashode(madadju):
+        niazha = Niaz.objects.filter(niazmand=madadju)
+        niazha_res = []
+        for niaz in niazha :
+            if(niaz.mablagh > niaz.mablagh_taminshodeh):
+                niazha_res.append(niaz)
+        return niazha_res
+    def mablagh_taminnashode(self):
+        return self.mablagh - self.mablagh_taminshodeh
+
 
 class hadie_gheire_naghdi(models.Model):
     hamiar = models.ForeignKey('hamiar.Hamiar', on_delete=models.PROTECT)

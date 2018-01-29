@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'hamiar',
     'madadkar',
-    'django_extensions',
     'modir',
     'karbar',
     'madadju',

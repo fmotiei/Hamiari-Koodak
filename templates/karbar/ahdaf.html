@@ -127,7 +127,7 @@
 				<div class="panel-heading">
 					<h1 class="panel-title">اهداف و دیدگاه ها</h1>
 				</div>
-				<p>هدف کمک به کودکان با استعداد است.</p>
+				<p>{{ahdaf}}</p>
 			</div>
 		</div><!--/Center Column-->
 
@@ -146,7 +146,6 @@
 				</div>
 			</div>
 
-
 			<!-- Progress Bars -->
 			<div class="panel panel-default">
 				<div class="panel-heading">
@@ -156,19 +155,14 @@
 					</h3>
 				</div>
 				<div class="panel-body">
+					{% for num,pr in progress %}
 					<div class="progress">
-						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="97"
-						aria-valuemin="0" aria-valuemax="100" style="width:97%">
-							۹۷٪ نیازهای مددجویان تامین شده است.
+						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{num}}"
+						aria-valuemin="0" aria-valuemax="100" style="width:{{num}}%">
+							{{num}}{{pr}}
 						</div>
 					</div>
-					<div class="progress">
-						<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="80"
-						aria-valuemin="0" aria-valuemax="100" style="width:80%" align="right"><rtl>
-							۸۰٪ نیازهای فوری مددجویان تامین شده است.
-						</rtl>
-						</div>
-					</div>
+					{% endfor %}
 				</div>
 			</div>
 
@@ -177,7 +171,7 @@
 
 	</div><!--/container-fluid-->
 
-	<footer>
+	<footer style="text-align: center">
         <div class="small-print">
         	<div class="container">
         		<p><a href="#">Telegram</a> | <a href="#">Instagram</a> | <a href="#">Facebook</a></p>
