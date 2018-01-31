@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'afzayesh_etebar/', madadju.views.show_afzayesh_etebar),
     url(r'ahdaf/', madadju.views.show_ahdaf),
     url(r'ashnai/', madadju.views.show_ashnai),
-    url(r'darkhast_taghir_madadkar/', madadju.views.show_darkhast_taghir_madadkar),
+    url(r'darkhast/', madadju.views.show_darkhast_taghir_madadkar),
     url(r'ersal_payam/', madadju.views.show_ersal_payam),
     url(r'madadju/', madadju.views.show_madadju),
     url(r'payam_daryafti/', madadju.views.show_payam_daryafti),

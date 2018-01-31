@@ -13,11 +13,15 @@ def show_afzayesh_etebar(request):
     template = 'karbar/afzayesh_etebar.html'
     return render(request, template, {'utype' : 'madadju'
                                    , 'progress': karbar.darbare_ma.progress()})
+#TODO html to DB
 
 
 def show_darkhast_taghir_madadkar(request):
-    template = 'madadju/darkhast_taghir_madadkar.html'
-    return render(request, template, {'utype' : 'madadju'})
+    template = 'madadju/darkhast.html'
+    return render(request, template, {'utype' : 'madadju'
+                                   , 'progress': karbar.darbare_ma.progress()})
+#TODO html to DB
+#TODO send madadju's madadkar name
 
 
 def show_ersal_payam(request):
