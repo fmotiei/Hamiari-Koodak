@@ -6,13 +6,8 @@ from django.http import HttpResponse
 
 # Create your views here.
 import karbar
+from karbar import moshtarak
 from madadju.models import Madadju, Niaz
-
-
-def show_ersal_payam(request):
-    template = 'karbar/ersal_payam.html'
-    return render(request, template, {'utype' : 'madadju'
-                                   , 'progress': karbar.darbare_ma.progress()})
 
 
 def show_ezafe_kardan_amr_kheyrie_motefareghe(request):
@@ -25,14 +20,6 @@ def show_list_omur_kheyrie(request):
     return render(request, template, {})
 
 
-def show_modir(request):
-    template = 'karbar/index.html'
-    return render(request, template, {'tozihat': karbar.darbare_ma.tozihat_text()
-        , 'images': karbar.darbare_ma.akhbar_image()
-        , 'progress': karbar.darbare_ma.progress()
-        , 'utype': 'modir'})
-
-
 def show_moshahede_etelat_mali_karbaran(request):
     template = 'modir/moshahede_etelat_mali_karbaran.html'
     return render(request, template, {})
@@ -42,14 +29,8 @@ def show_moshahede_hamyaran_dar_entezar_taeid(request):
     template = 'modir/moshahede_hamyaran_dar_entezar_taeid.html'
     return render(request, template, {})
 
-
-def show_moshahede_list_koodakan(request):
-    template = 'modir/moshahede_list_koodakan.html'
-    return render(request, template, {})
-
-
-def show_moshahede_list_niazhaye_fori_taminnashode(request):
-    template = 'modir/moshahede_list_niazhaye_fori_taminnashode.html'
+def show_moshahede_madadjuyan_dar_entezar_madadkar(request):
+    template = 'modir/moshahede_madadjuyan_dar_entezar_madadkar.html'
     return render(request, template, {})
 
 
@@ -57,20 +38,9 @@ def show_madadjuyan(request):
     template = 'modir/madadjuyan.html'
     return render(request, template, {})
 
-def show_payam_daryafti(request):
-    template = 'modir/payam_daryafti.html'
-    return render(request, template, {})
-
-
 def show_profile(request):
     template = 'modir/profile.html'
     return render(request, template, {})
-
-
-def show_roydad_ha(request):
-    template = 'modir/roydad_ha.html'
-    return render(request, template, {})
-
 
 def show_sabtnam_madadkar(request):
     template = 'modir/sabtnam.html'
@@ -81,72 +51,64 @@ def show_sabtename_modir_karshenas(request):
     template = 'modir/sabtename_modir_karshenas.html'
     return render(request, template, {})
 
-
-def show_sandoghe_payamhaye_daryafti(request):
-    template = 'modir/sandoghe_payamhaye_daryafti.html'
-    return render(request, template, {})
-
-
-def show_sandoghe_payamhaye_ersali(request):
-    template = 'modir/sandoghe_payamhaye_ersali.html'
-    return render(request, template, {}
-                )
-def show_amaliat_movafagh(request):
-    template = 'karbar/amaliat_movafagh.html'
-    return render(request, template, {'utype' : 'madadju'
-                                      , 'progress': karbar.darbare_ma.progress()})
-
-def show_moshahede_tarakonesh_haye_mali(request):
-    template = 'modir/moshahede_tarakonesh_haye_mali.html'
-    return render(request, template, {})
-
 def show_moshahede_tarakoneshe_mali_karbar(request):
     template = 'modir/moshahede_tarakoneshe_mali_karbar.html'
     return render(request, template, {})
-
-def show_afzayesh_etebar(request):
-    template = 'karbar/afzayesh_etebar.html'
-    return render(request, template, {})
-
-def show_afzayesh_etebar(request):
-    template = 'karbar/afzayesh_etebar.html'
-    return render(request, template, {'utype' : 'madadju'
-                                   , 'progress': karbar.darbare_ma.progress()})
 
 def show_madadju_profile(request):
     template = 'modir/madadju_profile.html'
     return render(request, template, {})
 
-def show_ahdaf(request):
-    template = 'karbar/ahdaf.html'
-    return render(request, template, {'ahdaf': karbar.darbare_ma.ahdaf_text()
-                                      ,'progress':karbar.darbare_ma.progress()
-                                      ,'utype' : 'modir'})
 
+
+def show_modir(request):
+    return moshtarak.show_user(request,'modir')
+
+
+def show_afzayesh_etebar(request):
+    return moshtarak.show_afzayesh_etebar(request,'modir')
+
+
+def show_ersal_payam(request):
+    return moshtarak.show_ersal_payam(request,'modir')
+
+def show_moshahede_tarakonesh_haye_mali(request):
+    return moshtarak.show_moshahede_tarakonesh_haye_mali(request,'modir')
+
+def show_payam_daryafti(request):
+    return moshtarak.show_payam_daryafti(request,'modir')
+
+def show_payam_ersali(request):
+    return moshtarak.show_payam_ersali(request,'modir')
+
+
+def show_roydadha(request):
+    return moshtarak.show_roydadha(request,'modir')
+
+
+def show_sandoghe_payamhaye_daryafti(request):
+    return moshtarak.show_sandoghe_payamhaye_daryafti(request,'modir')
+
+
+def show_sandoghe_payamhaye_ersali(request):
+    return moshtarak.show_sandoghe_payamhaye_ersali(request,'modir')
+
+
+def show_amaliat_movafagh(request):
+    return moshtarak.show_amaliat_movafagh(request,'modir')
+
+def show_ahdaf(request):
+    return moshtarak.show_ahdaf(request,'modir')
 
 def show_ashnai(request):
-    template = 'karbar/ashnai.html'
-    return render(request, template, {'ashnai': karbar.darbare_ma.ashnai_text()
-                                      ,'progress':karbar.darbare_ma.progress()
-                                      ,'utype' : 'modir'})
+    return moshtarak.show_ashnai(request,'modir')
 
 
 def show_sakhtar_sazmani(request):
-    template = 'karbar/sakhtar_sazmani.html'
-    return render(request, template, {'sakhtar_sazmani': karbar.darbare_ma.sakhtar_sazmani_text()
-                                      ,'progress':karbar.darbare_ma.progress()
-                                      ,'utype' : 'modir'})
+    return moshtarak.show_sakhtar_sazmani(request,'modir')
 
 def show_moshahede_list_koodakan(request):
-    template = 'karbar/moshahede_list_koodakan.html'
-    madadjuyan = Madadju.objects.all()
-    return render(request, template, {'madadjuyan':[(m.first_name,Niaz.objects.filter(niazmand=m),Niaz.niaz_taminnashode(m)) for m in madadjuyan]
-                                      ,'progress':karbar.darbare_ma.progress()
-                                      ,'utype' : 'modir'})
+    return moshtarak.show_moshahede_list_koodakan(request,'modir')
 
 def show_moshahede_list_niazhaye_fori_taminnashode(request):
-    template = 'karbar/moshahede_list_niazhaye_fori_taminnashode.html'
-    madadjuyan = Madadju.objects.all()
-    return render(request, template, {'madadjuyan':[( m.first_name, ((niaz.onvan,niaz.mablagh_taminnashode()) for niaz in Niaz.niaz_taminnashode(m).filter(niazFori=True))) for m in madadjuyan]
-                                      ,'progress':karbar.darbare_ma.progress()
-                                      ,'utype' : 'modir'})
+    return moshtarak.show_moshahede_list_niazhaye_fori_taminnashode(request,'modir')

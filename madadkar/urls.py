@@ -37,7 +37,7 @@ urlpatterns = [
     url(r'profile/', madadkar.views.show_profile),
     url(r'profile_madadju/', madadkar.views.show_profile_madadju),
     url(r'profile_madadju_bi_kefalat/', madadkar.views.show_profile_madadju_bi_kefalat),
-    url(r'roydad_ha/', madadkar.views.show_roydad_ha),
+    url(r'roydadha/', madadkar.views.show_roydadha),
     url(r'sakhtar_sazmani/', madadkar.views.show_sakhtar_sazmani),
     url(r'sandoghe_payamhaye_daryafti/', madadkar.views.show_sandoghe_payamhaye_daryafti),
     url(r'sandoghe_payamhaye_ersali/', madadkar.views.show_sandoghe_payamhaye_ersali),

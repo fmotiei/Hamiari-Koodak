@@ -34,7 +34,7 @@ urlpatterns = [
     url(r'payam_ersali/', hamiar.views.show_payam_ersali),
     url(r'profile/', hamiar.views.show_profile),
     url(r'profile_madadju/', hamiar.views.show_profile_madadju),
-    url(r'roydad_ha/', hamiar.views.show_roydad_ha),
+    url(r'roydadha/', hamiar.views.show_roydadha),
     url(r'sakhtar_sazmani/', hamiar.views.show_sakhtar_sazmani),
     url(r'sandoghe_payamhaye_daryafti/', hamiar.views.show_sandoghe_payamhaye_daryafti),
     url(r'sandoghe_payamhaye_ersali/', hamiar.views.show_sandoghe_payamhaye_ersali),
