@@ -43,8 +43,7 @@ def show_payam_daryafti(request,user):
                                     , 'onvan': ''
                                     , 'text' : ''
                                     , 'sender': ''
-                                    , 'day': ''
-                                    , 'hour' : ''})
+                                    , 'date': ''})
 #TODO onvan matne payam tarkh va fersatnde
 
 
@@ -56,9 +55,8 @@ def show_payam_ersali(request,user):
                                     , 'username': ''
                                     , 'onvan': ''
                                     , 'text': ''
-                                    , 'sender': ''
-                                    , 'day': ''
-                                    , 'hour': ''})
+                                    , 'receiver': ''
+                                    , 'date': ''})
 #TODO onvan matne payam tarkh va fersatnde
 
 
