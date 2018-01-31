@@ -38,9 +38,10 @@ def show_ersal_payam(request):
 def show_madadju(request):
     template = 'karbar/index.html'
     return render(request, template, {'tozihat': karbar.darbare_ma.tozihat_text()
-        , 'images': karbar.darbare_ma.akhbar_image()
-        , 'progress': karbar.darbare_ma.progress()
-        , 'utype': 'madadju'})
+                                    , 'images': karbar.darbare_ma.akhbar_image()
+                                    , 'progress': karbar.darbare_ma.progress()
+                                    , 'utype': 'madadju'
+                                    ,'username': ''})
 
 
 
@@ -48,13 +49,22 @@ def show_moshahede_tarakonesh_haye_mali(request):
     template = 'karbar/moshahede_tarakonesh_haye_mali.html'
     return render(request, template, {'utype' : 'madadju'
                                    , 'progress': karbar.darbare_ma.progress()
-                                      , 'tarakoneshha' : {}})
+                                      , 'tarakoneshha' : {}
+                                      ,'username': ''})
 #TODO bayd tarakonesh haye mali ro behesh befrestim
 
 
 def show_payam_daryafti(request):
-    template = 'madadju/payam_daryafti.html'
-    return render(request, template, {'utype' : 'madadju'})
+    template = 'karbar/payam_daryafti.html'
+    return render(request, template, {'utype' : 'madadju'
+                                    , 'progress': karbar.darbare_ma.progress()
+                                    ,'username':''
+                                      , 'onvan': ''
+                                      , 'text' : ''
+                                      , 'sender': ''
+                                      , 'day': ''
+                                      , 'hour' : ''})
+#TODO onvan matne payam tarkh va fersatnde
 
 
 
