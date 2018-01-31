@@ -11,21 +11,33 @@ from madadju.models import Madadju, Niaz
 
 #TODO username befrestim
 
-def show_afzayesh_etebar(request):
-    template = 'karbar/afzayesh_etebar.html'
-    return render(request, template, {'utype' : 'madadju'
-                                   , 'progress': karbar.darbare_ma.progress()
-                                      , 'username' : ''})
-#TODO html to DB
-
-
 def show_darkhast_taghir_madadkar(request):
     template = 'madadju/darkhast.html'
     return render(request, template, {'utype' : 'madadju'
-                                   , 'progress': karbar.darbare_ma.progress()
-                                      ,'username' : ''})
+                                    , 'progress': karbar.darbare_ma.progress()
+                                    ,'username' : ''})
 #TODO html to DB
 #TODO send madadju's madadkar name
+
+
+def show_profile(request):
+    template = 'madadju/profile.html'
+    return render(request, template, {'utype' : 'madadju'
+                                    , 'progress': karbar.darbare_ma.progress()
+                                    , 'username' : ''
+                                    , 'first_name': ''
+                                    , 'last_name': ''
+                                    , 'alarm': '1'
+                                    , 'madadkar': ''
+                                    , 'hamiarha': {}})
+#TODO vurudi takmil shavad
+
+def show_afzayesh_etebar(request):
+    template = 'karbar/afzayesh_etebar.html'
+    return render(request, template, {'utype' : 'madadju'
+                                    , 'progress': karbar.darbare_ma.progress()
+                                    , 'username' : ''})
+#TODO html to DB
 
 
 def show_ersal_payam(request):
@@ -48,9 +60,9 @@ def show_madadju(request):
 def show_moshahede_tarakonesh_haye_mali(request):
     template = 'karbar/moshahede_tarakonesh_haye_mali.html'
     return render(request, template, {'utype' : 'madadju'
-                                   , 'progress': karbar.darbare_ma.progress()
-                                      , 'tarakoneshha' : {}
-                                      ,'username': ''})
+                                        , 'progress': karbar.darbare_ma.progress()
+                                        , 'tarakoneshha' : {}
+                                        ,'username': ''})
 #TODO bayd tarakonesh haye mali ro behesh befrestim
 
 
@@ -58,42 +70,54 @@ def show_payam_daryafti(request):
     template = 'karbar/payam_daryafti.html'
     return render(request, template, {'utype' : 'madadju'
                                     , 'progress': karbar.darbare_ma.progress()
-                                    ,'username':''
-                                      , 'onvan': ''
-                                      , 'text' : ''
-                                      , 'sender': ''
-                                      , 'day': ''
-                                      , 'hour' : ''})
+                                    , 'username':''
+                                    , 'onvan': ''
+                                    , 'text' : ''
+                                    , 'sender': ''
+                                    , 'day': ''
+                                    , 'hour' : ''})
 #TODO onvan matne payam tarkh va fersatnde
 
 
 
 def show_payam_ersali(request):
-    template = 'madadju/payam_ersali.html'
-    return render(request, template, {'utype' : 'madadju'})
-
-
-def show_profile(request):
-    template = 'madadju/profile.html'
-    return render(request, template, {'utype' : 'madadju'})
+    template = 'karbar/payam_ersali.html'
+    return render(request, template, {'utype': 'madadju'
+                                    , 'progress': karbar.darbare_ma.progress()
+                                    , 'username': ''
+                                    , 'onvan': ''
+                                    , 'text': ''
+                                    , 'sender': ''
+                                    , 'day': ''
+                                    , 'hour': ''})
+#TODO onvan matne payam tarkh va fersatnde
 
 
 def show_roydadha(request):
-    template = 'madadju/roydadha.html'
+    template = 'karbar/roydadha.html'
     return render(request, template, {'utype' : 'madadju'
-                                      ,'username':''})
+        , 'progress': karbar.darbare_ma.progress()
+        , 'username':''
+        , 'roydadha' : {} })
+#TODO roydadha shamel onvan,text,day,hour
 
 
 def show_sandoghe_payamhaye_daryafti(request):
-    template = 'madadju/sandoghe_payamhaye_daryafti.html'
-    return render(request, template, {'utype' : 'madadju'
-                                      ,'username':''})
+    template = 'karbar/sandoghe_payamhaye_daryafti.html'
+    return render(request, template, {'utype': 'madadju'
+        , 'progress': karbar.darbare_ma.progress()
+        , 'username': ''
+        , 'payamha': {}})
+#TODO payamha shamele sender,day,hour,onvan
 
 
 def show_sandoghe_payamhaye_ersali(request):
-    template = 'madadju/sandoghe_payamhaye_ersali.html'
-    return render(request, template, {'utype' : 'madadju'
-                                      ,'username':''})
+    template = 'karbar/sandoghe_payamhaye_ersali.html'
+    return render(request, template, {'utype': 'madadju'
+        , 'progress': karbar.darbare_ma.progress()
+        , 'username': ''
+        , 'payamha': {}})
+    # TODO payamha shamele receiver,day,hour,onvan
 
 
 def show_amaliat_movafagh(request):
