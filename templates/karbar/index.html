@@ -38,7 +38,7 @@
                 <a class="navbar-brand" href="/karbar/profile"><span class="glyphicon glyphicon-globe"></span> بنیاد کودک</a>
             </div>
             <!-- Navbar links -->
-            <div class="collapse navbar-collapse" id="navbar">
+            <div class="collapse navbar-collapse" id="navbar1">
                 <ul class="nav navbar-nav">
                     <li class="active">
                         <a href="/karbar/profile">خانه</a>
@@ -171,7 +171,9 @@
 			<div id="side-carousel" class="carousel slide" data-ride="carousel">
 				<ol class="carousel-indicators">
 					<li data-target="#side-carousel" data-slide-to="0" class="active"></li>
-					<li data-target="#side-carousel" data-slide-to="1"></li>
+					{% for img in images %}
+						<li data-target="#side-carousel" data-slide-to="1"></li>
+					{% endfor %}
 				</ol>
 				<div class="carousel-inner" role="listbox">
 					<div class="item active">
