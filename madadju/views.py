@@ -72,7 +72,8 @@ def show_sandoghe_payamhaye_ersali(request):
 
 def show_amaliat_movafagh(request):
     template = 'madadju/amaliat_movafagh.html'
-    return render(request, template, {'utype' : 'madadju'})
+    return render(request, template, {'utype' : 'madadju'
+                                      , 'progress': karbar.darbare_ma.progress()})
 
 def show_ahdaf(request):
     template = 'karbar/ahdaf.html'

@@ -91,8 +91,9 @@ def show_sandoghe_payamhaye_ersali(request):
     return render(request, template, {}
                 )
 def show_amaliat_movafagh(request):
-    template = 'modir/amaliat_movafagh.html'
-    return render(request, template, {})
+    template = 'madadju/amaliat_movafagh.html'
+    return render(request, template, {'utype' : 'madadju'
+                                      , 'progress': karbar.darbare_ma.progress()})
 
 def show_moshahede_tarakonesh_haye_mali(request):
     template = 'modir/moshahede_tarakonesh_haye_mali.html'
@@ -107,8 +108,9 @@ def show_afzayesh_etebar(request):
     return render(request, template, {})
 
 def show_afzayesh_etebar(request):
-    template = 'modir/afzayesh_etebar.html'
-    return render(request, template, {})
+    template = 'karbar/afzayesh_etebar.html'
+    return render(request, template, {'utype' : 'madadju'
+                                   , 'progress': karbar.darbare_ma.progress()})
 
 def show_madadju_profile(request):
     template = 'modir/madadju_profile.html'

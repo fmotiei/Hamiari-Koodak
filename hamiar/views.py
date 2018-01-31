@@ -19,11 +19,12 @@ def show_hamiar(request):
 
 def show_afzayesh_etebar(request):
     template = 'karbar/afzayesh_etebar.html'
-    return render(request, template, {})
+    return render(request, template, {'utype' : 'madadju'
+                                   , 'progress': karbar.darbare_ma.progress()})
 
 
 def show_ersal_movafagh(request):
-    template = 'hamiar/amaliat_movafagh.html'
+    template = 'karbar/amaliat_movafagh.html'
     return render(request, template, {'ersal'})
 
 
@@ -102,8 +103,9 @@ def show_sandoghe_payamhaye_ersali(request):
 
 
 def show_amaliat_movafagh(request):
-    template = 'hamiar/amaliat_movafagh.html'
-    return render(request, template, {})
+    template = 'madadju/amaliat_movafagh.html'
+    return render(request, template, {'utype' : 'madadju'
+                                      , 'progress': karbar.darbare_ma.progress()})
 
 def show_ahdaf(request):
     template = 'karbar/ahdaf.html'

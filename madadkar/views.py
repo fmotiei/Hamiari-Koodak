@@ -22,8 +22,9 @@ def show_madadkar(request):
 
 
 def show_afzayesh_etebar(request):
-    template = 'madadkar/afzayesh_etebar.html'
-    return render(request, template, {})
+    template = 'karbar/afzayesh_etebar.html'
+    return render(request, template, {'utype' : 'madadju'
+                                   , 'progress': karbar.darbare_ma.progress()})
 
 
 def show_ersal_payam(request):
@@ -105,8 +106,9 @@ def show_sabte_naam_madadju(request):
 
 
 def show_amaliat_movafagh(request):
-    template = 'madadkar/amaliat_movafagh.html'
-    return render(request, template, {})
+    template = 'madadju/amaliat_movafagh.html'
+    return render(request, template, {'utype' : 'madadju'
+                                      , 'progress': karbar.darbare_ma.progress()})
 
 
 def show_virayesh_niaz(request):
