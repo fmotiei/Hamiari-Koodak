@@ -10,7 +10,7 @@ from madadju.models import Madadju, Niaz
 
 
 def show_afzoudan_niaz(request):
-    template = 'madadkar/afzoudan_niaz.html'
+    template = 'karbar/afzoudan_niaz.html'
     return render(request, template, {})
 
 def show_madadkar(request):

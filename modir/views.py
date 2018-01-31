@@ -103,7 +103,7 @@ def show_moshahede_tarakoneshe_mali_karbar(request):
     return render(request, template, {})
 
 def show_afzayesh_etebar(request):
-    template = 'modir/afzayesh_etebar.html'
+    template = 'karbar/afzayesh_etebar.html'
     return render(request, template, {})
 
 def show_afzayesh_etebar(request):

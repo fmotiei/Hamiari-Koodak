@@ -10,8 +10,9 @@ from madadju.models import Madadju, Niaz
 
 
 def show_afzayesh_etebar(request):
-    template = 'madadju/afzayesh_etebar.html'
-    return render(request, template, {'utype' : 'madadju'})
+    template = 'karbar/afzayesh_etebar.html'
+    return render(request, template, {'utype' : 'madadju'
+                                   , 'progress': karbar.darbare_ma.progress()})
 
 
 def show_darkhast_taghir_madadkar(request):

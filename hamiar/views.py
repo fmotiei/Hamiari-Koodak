@@ -18,7 +18,7 @@ def show_hamiar(request):
 
 
 def show_afzayesh_etebar(request):
-    template = 'hamiar/afzayesh_etebar.html'
+    template = 'karbar/afzayesh_etebar.html'
     return render(request, template, {})
 
 
