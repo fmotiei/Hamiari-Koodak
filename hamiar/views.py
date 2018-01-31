@@ -23,14 +23,10 @@ def show_afzayesh_etebar(request):
                                    , 'progress': karbar.darbare_ma.progress()})
 
 
-def show_ersal_movafagh(request):
-    template = 'karbar/amaliat_movafagh.html'
-    return render(request, template, {'ersal'})
-
-
 def show_ersal_payam(request):
-    template = 'hamiar/ersal_payam.html'
-    return render(request, template, {})
+    template = 'karbar/ersal_payam.html'
+    return render(request, template, {'utype' : 'madadju'
+                                   , 'progress': karbar.darbare_ma.progress()})
 
 
 def show_hemayat_az_moasese(request):
@@ -103,7 +99,7 @@ def show_sandoghe_payamhaye_ersali(request):
 
 
 def show_amaliat_movafagh(request):
-    template = 'madadju/amaliat_movafagh.html'
+    template = 'karbar/amaliat_movafagh.html'
     return render(request, template, {'utype' : 'madadju'
                                       , 'progress': karbar.darbare_ma.progress()})
 

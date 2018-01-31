@@ -10,8 +10,9 @@ from madadju.models import Madadju, Niaz
 
 
 def show_ersal_payam(request):
-    template = 'modir/ersal_payam.html'
-    return render(request, template, {})
+    template = 'karbar/ersal_payam.html'
+    return render(request, template, {'utype' : 'madadju'
+                                   , 'progress': karbar.darbare_ma.progress()})
 
 
 def show_ezafe_kardan_amr_kheyrie_motefareghe(request):
@@ -91,7 +92,7 @@ def show_sandoghe_payamhaye_ersali(request):
     return render(request, template, {}
                 )
 def show_amaliat_movafagh(request):
-    template = 'madadju/amaliat_movafagh.html'
+    template = 'karbar/amaliat_movafagh.html'
     return render(request, template, {'utype' : 'madadju'
                                       , 'progress': karbar.darbare_ma.progress()})
 

@@ -25,8 +25,9 @@ def show_darkhast_taghir_madadkar(request):
 
 
 def show_ersal_payam(request):
-    template = 'madadju/ersal_payam.html'
-    return render(request, template, {'utype' : 'madadju'})
+    template = 'karbar/ersal_payam.html'
+    return render(request, template, {'utype' : 'madadju'
+                                   , 'progress': karbar.darbare_ma.progress()})
 
 
 def show_madadju(request):
@@ -75,7 +76,7 @@ def show_sandoghe_payamhaye_ersali(request):
 
 
 def show_amaliat_movafagh(request):
-    template = 'madadju/amaliat_movafagh.html'
+    template = 'karbar/amaliat_movafagh.html'
     return render(request, template, {'utype' : 'madadju'
                                       , 'progress': karbar.darbare_ma.progress()})
 
