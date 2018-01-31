@@ -9,17 +9,21 @@ import karbar
 from madadju.models import Madadju, Niaz
 
 
+#TODO username befrestim
+
 def show_afzayesh_etebar(request):
     template = 'karbar/afzayesh_etebar.html'
     return render(request, template, {'utype' : 'madadju'
-                                   , 'progress': karbar.darbare_ma.progress()})
+                                   , 'progress': karbar.darbare_ma.progress()
+                                      , 'username' : ''})
 #TODO html to DB
 
 
 def show_darkhast_taghir_madadkar(request):
     template = 'madadju/darkhast.html'
     return render(request, template, {'utype' : 'madadju'
-                                   , 'progress': karbar.darbare_ma.progress()})
+                                   , 'progress': karbar.darbare_ma.progress()
+                                      ,'username' : ''})
 #TODO html to DB
 #TODO send madadju's madadkar name
 
@@ -27,7 +31,8 @@ def show_darkhast_taghir_madadkar(request):
 def show_ersal_payam(request):
     template = 'karbar/ersal_payam.html'
     return render(request, template, {'utype' : 'madadju'
-                                   , 'progress': karbar.darbare_ma.progress()})
+                                   , 'progress': karbar.darbare_ma.progress()
+                                      ,'username' : ''})
 
 
 def show_madadju(request):
@@ -40,8 +45,11 @@ def show_madadju(request):
 
 
 def show_moshahede_tarakonesh_haye_mali(request):
-    template = 'madadju/moshahede_tarakonesh_haye_mali.html'
-    return render(request, template, {'utype' : 'madadju'})
+    template = 'karbar/moshahede_tarakonesh_haye_mali.html'
+    return render(request, template, {'utype' : 'madadju'
+                                   , 'progress': karbar.darbare_ma.progress()
+                                      , 'tarakoneshha' : {}})
+#TODO bayd tarakonesh haye mali ro behesh befrestim
 
 
 def show_payam_daryafti(request):
@@ -62,54 +70,64 @@ def show_profile(request):
 
 def show_roydadha(request):
     template = 'madadju/roydadha.html'
-    return render(request, template, {'utype' : 'madadju'})
+    return render(request, template, {'utype' : 'madadju'
+                                      ,'username':''})
 
 
 def show_sandoghe_payamhaye_daryafti(request):
     template = 'madadju/sandoghe_payamhaye_daryafti.html'
-    return render(request, template, {'utype' : 'madadju'})
+    return render(request, template, {'utype' : 'madadju'
+                                      ,'username':''})
 
 
 def show_sandoghe_payamhaye_ersali(request):
     template = 'madadju/sandoghe_payamhaye_ersali.html'
-    return render(request, template, {'utype' : 'madadju'})
+    return render(request, template, {'utype' : 'madadju'
+                                      ,'username':''})
 
 
 def show_amaliat_movafagh(request):
     template = 'karbar/amaliat_movafagh.html'
     return render(request, template, {'utype' : 'madadju'
-                                      , 'progress': karbar.darbare_ma.progress()})
+                                      , 'progress': karbar.darbare_ma.progress()
+                                      ,'username':''})
 
 def show_ahdaf(request):
     template = 'karbar/ahdaf.html'
     return render(request, template, {'ahdaf': karbar.darbare_ma.ahdaf_text()
                                       ,'progress':karbar.darbare_ma.progress()
-                                      ,'utype' : 'madadju'})
+                                      ,'utype' : 'madadju'
+                                      ,'username':''})
+
 
 
 def show_ashnai(request):
     template = 'karbar/ashnai.html'
     return render(request, template, {'ashnai': karbar.darbare_ma.ashnai_text()
                                       ,'progress':karbar.darbare_ma.progress()
-                                      ,'utype' : 'madadju'})
+                                      ,'utype' : 'madadju'
+                                      , 'username' : ''})
 
 
 def show_sakhtar_sazmani(request):
     template = 'karbar/sakhtar_sazmani.html'
     return render(request, template, {'sakhtar_sazmani': karbar.darbare_ma.sakhtar_sazmani_text()
                                       ,'progress':karbar.darbare_ma.progress()
-                                      ,'utype' : 'madadju'})
+                                      ,'utype' : 'madadju'
+                                      ,'username':''})
 
 def show_moshahede_list_koodakan(request):
     template = 'karbar/moshahede_list_koodakan.html'
     madadjuyan = Madadju.objects.all()
     return render(request, template, {'madadjuyan':[(m.first_name,Niaz.objects.filter(niazmand=m),Niaz.niaz_taminnashode(m)) for m in madadjuyan]
                                       ,'progress':karbar.darbare_ma.progress()
-                                      ,'utype' : 'madadju'})
+                                      ,'utype' : 'madadju'
+                                      ,'username':''})
 
 def show_moshahede_list_niazhaye_fori_taminnashode(request):
     template = 'karbar/moshahede_list_niazhaye_fori_taminnashode.html'
     madadjuyan = Madadju.objects.all()
     return render(request, template, {'madadjuyan':[( m.first_name, ((niaz.onvan,niaz.mablagh_taminnashode()) for niaz in Niaz.niaz_taminnashode(m).filter(niazFori=True))) for m in madadjuyan]
                                       ,'progress':karbar.darbare_ma.progress()
-                                      ,'utype' : 'madadju'})
+                                      ,'utype' : 'madadju'
+                                      ,'username':''})

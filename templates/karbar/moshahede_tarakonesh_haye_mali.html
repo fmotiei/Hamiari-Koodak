@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <!-- Template by Quackit.com -->
-<html lang="ar">
+<html lang="en">
 <head>
     <meta charset="utf-8">
-{#    <meta http-equiv="X-UA-Compatible" content="IE=edge">#}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
@@ -40,35 +40,35 @@
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="nav navbar-nav">
                     <li class="active">
-                        <a href="/madadju/">خانه</a>
+                        <a href="/{{utype}}/">خانه</a>
                     </li>
                     <li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">امور مالی <span class="caret"></span></a>
 						<ul class="dropdown-menu" aria-labelledby="about-us">
-							<li><a href="/madadju/afzayesh_etebar">افزایش اعتبار</a></li>
-							<li><a href="/madadju/moshahede_tarakonesh_haye_mali">مشاهده تراکنش های مالی</a></li>
+							<li><a href="/{{utype}}/afzayesh_etebar">افزایش اعتبار</a></li>
+							<li><a href="/{{utype}}/moshahede_tarakonesh_haye_mali">مشاهده تراکنش های مالی</a></li>
 						</ul>
 					</li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">صندوق پیام ها<span class="caret"></span></a>
 						<ul class="dropdown-menu" aria-labelledby="about-us">
-							<li><a href="/madadju/ersal_payam">ارسال پیام به دیگر کاربران</a></li>
-							<li><a href="/madadju/sandoghe_payamhaye_daryafti">صندوق پیام های دریافتی</a></li>
-							<li><a href="/madadju/sandoghe_payamhaye_ersali">صندوق پیام های ارسالی</a></li>
+							<li><a href="/{{utype}}/ersal_payam">ارسال پیام به دیگر کاربران</a></li>
+							<li><a href="/{{utype}}/sandoghe_payamhaye_daryafti">صندوق پیام های دریافتی</a></li>
+							<li><a href="/{{utype}}/sandoghe_payamhaye_ersali">صندوق پیام های ارسالی</a></li>
 						</ul>
 					</li>
                     <li>
-                        <a href="/madadju/roydadha">رویداد ها</a>
+                        <a href="/{{utype}}/roydadha">رویداد ها</a>
                     </li>
                     <li>
-                        <a href="/madadju/profile">پروفایل شخصی</a>
+                        <a href="/{{utype}}/profile">پروفایل شخصی</a>
                     </li>
                     <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">درباره ما<span class="caret"></span></a>
 						<ul class="dropdown-menu" aria-labelledby="about-us">
-							<li><a href="/madadju/ashnai">آشنایی با موسسه</a></li>
-							<li><a href="/madadju/sakhtar_sazmani">ساختار سازمانی</a></li>
-							<li><a href="/madadju/ahdaf/">اهداف و دیدگاه ها</a></li>
+							<li><a href="/{{utype}}/ashnai">آشنایی با موسسه</a></li>
+							<li><a href="/{{utype}}/sakhtar_sazmani">ساختار سازمانی</a></li>
+							<li><a href="/{{utype}}/ahdaf">اهداف و دیدگاه ها</a></li>
 						</ul>
                     </li>
                 </ul>
@@ -88,7 +88,7 @@
 				<div class="panel-heading">
 					<h3 class="panel-title" align=right >
 						<span class="glyphicon glyphicon-log-in"></span>
-						نام کاربر
+						{{username}}
 					</h3>
 				</div>
 				<div class="panel-body" align= right >
@@ -104,10 +104,21 @@
 		<!-- Center Column -->
 		<div class="col-sm-6">
 
-			<!-- Alert -->
-			<div class="alert alert-success alert-dismissible" role="alert" align = center >
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<strong> شما با موفقیت وارد شدید</strong>
+
+			<div class="row">
+				<article class="col-xs-12">
+					{% for onvan,mablagh,user,day,hour in tarakoneshha %}
+					<p><strong>افزایش اعتبار</strong></p>
+					<p class="pull-right"><span class="label label-default">۱۰۰۰۰۰ هزار تومان</span></p>
+					<br><br>
+					<p><strong>توسط:</strong>کاربر</p>
+					<br>
+					<p><strong>باقیمانده:</strong>۴۳۰۰۰</p>
+					<br>
+					<p>تاریخ ۲۱/۵/۹۶ , ساعت ۲۱:۳۰</p>
+					<hr>
+					{% endfor %}
+				</article>
 			</div>
 			<hr>
 		</div><!--/Center Column-->
@@ -126,19 +137,14 @@
 					</h3>
 				</div>
 				<div class="panel-body">
+					{% for num,pr in progress %}
 					<div class="progress">
-						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="97"
-						aria-valuemin="0" aria-valuemax="100" style="width:97%">
-							۹۷٪ نیازهای مددجویان تامین شده است.
+						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{num}}"
+						aria-valuemin="0" aria-valuemax="100" style="width:{{num}}%">
+							{{num}}{{pr}}
 						</div>
 					</div>
-					<div class="progress">
-						<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="80"
-						aria-valuemin="0" aria-valuemax="100" style="width:80%" align="right"><rtl>
-							۸۰٪ نیازهای فوری مددجویان تامین شده است.
-						</rtl>
-						</div>
-					</div>
+					{% endfor %}
 				</div>
 			</div>
 
@@ -168,7 +174,9 @@
 
 	<!-- Placeholder Images -->
 	<script src="/static/js/holder.min.js"></script>
-	
+
 </body>
 
 </html>
+
+
