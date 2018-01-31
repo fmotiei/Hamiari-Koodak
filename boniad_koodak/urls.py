@@ -24,4 +24,5 @@ urlpatterns = [
     url('modir/',include('modir.urls')),
     url('madadju/',include('madadju.urls')),
     url('karbar/',include('karbar.urls')),
+    url('',include('karbar.urls')),
 ]
