@@ -95,6 +95,14 @@ def show_amaliat_movafagh(request,user):
                                       , 'progress': karbar.darbare_ma.progress()
                                       ,'username':''})
 
+def show_hamiar_pri(request,user):
+    template = 'karbar/ahdaf.html'
+    return render(request, template, {'ahdaf': karbar.darbare_ma.ahdaf_text()
+                                      ,'progress':karbar.darbare_ma.progress()
+                                      ,'utype' : user
+                                      ,'username':''})
+
+
 def show_ahdaf(request,user):
     template = 'karbar/ahdaf.html'
     return render(request, template, {'ahdaf': karbar.darbare_ma.ahdaf_text()
