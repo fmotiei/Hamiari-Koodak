@@ -61,12 +61,11 @@ def show_sandoghe_payamhaye_daryafti(request):
     return moshtarak.show_sandoghe_payamhaye_daryafti(request,'madadju')
 
 def show_hamiar_profile(request):
-
     template = 'madadju/hamiar_profile.html'
     return render(request, template, {'tozihat': karbar.darbare_ma.tozihat_text()
         , 'images': karbar.darbare_ma.akhbar_image()
         , 'progress': karbar.darbare_ma.progress()
-        , 'utype': madadju
+        , 'utype': 'madadju'
         , 'username': ''})
 
 

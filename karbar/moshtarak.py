@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 import karbar
-from madadju.models import Madadju
+from madadju.models import Madadju, Niaz
 
 
 def show_user(request,user):
