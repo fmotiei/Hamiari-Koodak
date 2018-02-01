@@ -36,5 +36,6 @@ urlpatterns = [
     url(r'amaliat_movafagh/', madadju.views.show_amaliat_movafagh),
     url(r'moshahede_list_koodakan/', madadju.views.show_moshahede_list_koodakan),
     url(r'moshahede_list_niazhaye_fori_taminnashode/', madadju.views.show_moshahede_list_niazhaye_fori_taminnashode),
+    url(r'hamiar_profile/', madadju.views.show_hamiar_profile),
     url(r'^$', madadju.views.show_madadju),
 ]

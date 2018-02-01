@@ -36,7 +36,6 @@ def show_profile(request):
 def show_madadju(request):
     return moshtarak.show_user(request,'madadju')
 
-
 def show_afzayesh_etebar(request):
     return moshtarak.show_afzayesh_etebar(request,'madadju')
 
@@ -60,6 +59,16 @@ def show_roydadha(request):
 
 def show_sandoghe_payamhaye_daryafti(request):
     return moshtarak.show_sandoghe_payamhaye_daryafti(request,'madadju')
+
+def show_hamiar_profile(request):
+
+    template = 'madadju/hamiar_profile.html'
+    return render(request, template, {'tozihat': karbar.darbare_ma.tozihat_text()
+        , 'images': karbar.darbare_ma.akhbar_image()
+        , 'progress': karbar.darbare_ma.progress()
+        , 'utype': madadju
+        , 'username': ''})
+
 
 
 def show_sandoghe_payamhaye_ersali(request):
