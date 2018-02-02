@@ -6,9 +6,10 @@ from hamiar.models import *
 
 from datetime import datetime
 class User(models.Model):
-    username = models.CharField(max_length=30, primary_key=True)
+    username = models.CharField(max_length=30, primary_key=True, unique=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
+    address = models.CharField(max_length=100)
     email = models.EmailField()
     online = models.BooleanField()  # is online
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
