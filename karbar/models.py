@@ -3,8 +3,7 @@ from madadju.models import *
 from madadkar.models import *
 from modir.models import *
 from hamiar.models import *
-from django.contrib.auth import get_user_model
-User = get_user_model()
+from django.contrib.auth.models import User
 
 from datetime import datetime
 class UserKarbar(models.Model):

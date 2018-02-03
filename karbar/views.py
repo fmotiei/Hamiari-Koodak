@@ -17,6 +17,7 @@ from madadju.models import Madadju, Niaz
 def show_profile(request):
     return moshtarak.show_user(request,'karbar')
 
+
 def show_sabtename_hamyar(request):
     template = 'karbar/sabtename_hamyar.html'
     if request.method == 'GET':
@@ -25,25 +26,26 @@ def show_sabtename_hamyar(request):
 
     if request.method == 'POST':
         form = SignUpForm(request.POST)
-        args = {'form': form}
         if form.is_valid():
-            first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
+            first_name = form.cleaned_data['first_name']
             phone_number = form.cleaned_data['phone_number']
             address = form.cleaned_data['address']
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
             username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            email = form.cleaned_data['email']
             if User.objects.filter(username=username).exists():
-                message = 'ثبت نام شما با خطا مواجه شد! دوباره تلاش کنید.'
-                return render(request, template, {'form': form, 'message': message})
+                return render(request, template, {'form': form})
 
             user = User.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name)
             user.save()
+            ukarbar=UserKarbar.objects.create(user=user, phone_number=phone_number, address=address)
+            staff_members.objects.create(stafID=ukarbar,pardakhti=0,dariafti=0 )
+            Hamiar.objects.create(staffID=ukarbar )
+            # login(request, user)
 
-            login(request, user)
-            Hamiar.objects.create(user=user, phone_number=phone_number, address=address)
-            return HttpResponseRedirect(reverse("hamyar_panel")+"?success=1")  # this should be hamyar's own page
+            return render(request, 'karbar/afzayesh_etebar.html', {'form': form})
+            # return HttpResponseRedirect(reverse("hamyar_panel")+"?success=1")  # this should be hamyar's own page
         else:
             return render(request, template, {'form': form})
 
