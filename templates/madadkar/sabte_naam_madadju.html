@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<!-- Template by Quackit.com -->
+<html lang="ar">
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>بنیاد خیریه کودک - ثبت نام مددجو</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body dir="rtl">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+        <div class="container">
+            <!-- Logo and responsive toggle -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href=""><span class="glyphicon glyphicon-globe"></span> بنیاد کودک</a>
+            </div>
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="/madadkar/">خانه</a>
+                    </li>
+                    <li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">امور مالی <span class="caret"></span></a>
+						<ul class="dropdown-menu" aria-labelledby="about-us">
+							<li><a href="/madadkar/afzayesh_etebar">افزایش اعتبار</a></li>
+							<li><a href="/madadkar/moshahede_tarakonesh_haye_mali">مشاهده تراکنش های مالی</a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">صندوق پیام ها<span class="caret"></span></a>
+						<ul class="dropdown-menu" aria-labelledby="about-us">
+							<li><a href="/madadkar/ersal_payam">ارسال پیام به دیگر کاربران</a></li>
+							<li><a href="/madadkar/sandoghe_payamhaye_daryafti">صندوق پیام های دریافتی</a></li>
+							<li><a href="/madadkar/sandoghe_payamhaye_ersali">صندوق پیام های ارسالی</a></li>
+							<li><a href="/madadkar/sandoghe_payamhaye_entezar">صندوق پیام های در انتظار تایید</a></li>
+						</ul>
+					</li>
+                    <li>
+                        <a href="/madadkar/roydadha">رویداد ها</a>
+                    </li>
+                    <li>
+                        <a href="/madadkar/profile">پروفایل شخصی</a>
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">درباره ما<span class="caret"></span></a>
+						<ul class="dropdown-menu" aria-labelledby="about-us">
+							<li><a href="/madadkar/ashnai">آشنایی با موسسه</a></li>
+							<li><a href="/madadkar/sakhtar_sazmani">ساختار سازمانی</a></li>
+							<li><a href="/madadkar/ahdaf/">اهداف و دیدگاه ها</a></li>
+						</ul>
+                    </li>
+                </ul>
+
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+<div class="container-fluid">
+
+		<!-- Left Column -->
+		<div class="col-sm-3">
+			<!-- Form -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title" align=right >
+						<span class="glyphicon glyphicon-log-in"></span>
+						نام کاربر
+					</h3>
+				</div>
+				<div class="panel-body" align= right >
+					<form>
+						<button type="submit" class="btn btn-default"><a href="/index/">خروج</a></button>
+					</form>
+				</div>
+			</div>
+
+			<button type="submit" class="btn btn-default" style="width: 100%"><a href="/madadkar/sabte_naam_madadju">افزودن مددجو</a></button>
+
+		</div><!--/Left Column-->
+
+
+		<!-- Center Column -->
+		<div class="col-sm-6">
+
+			<!-- Alert -->
+						<div class="panel panel-default">
+				<div class="panel-heading" >
+					<h3 class="panel-title" align = "right">
+						ثبت نام مددجو
+						<span class="glyphicon glyphicon-log-in" ></span>
+					</h3>
+				</div>
+				<div class="panel-body" align="right">
+					<form>
+						<div class="form-group" align="right">
+							<table align="right">
+								<tr>
+									<td style="padding: 5px 10px 5px 5px;"> نام مددجو</td>
+									<td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="madadju_name" name="madadju_name" placeholder="نام مددجو"> </td>
+									<td style="padding: 5px 10px 5px 5px;">نام خانوادگی مددجو</td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="madadju_family" name="madadju_family" placeholder="نام خانوادگی مددجو"> </td>
+								</tr>
+                                <tr>
+									<td style="padding: 5px 10px 5px 5px;"> شماره شناسنامه</td>
+									<td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="madadkar_" name="madadkar_name" placeholder="شماره شناسنامه"> </td>
+								</tr>
+								<tr>
+									<td style="padding: 5px 10px 5px 5px;">سال تولد</td>
+                                    <td style="padding: 5px 10px 5px 5px;"><select id="birthyear" name="birthyear" style="width: 100%">
+	<option value="2007">2007</option>
+	<option value="2006">2006</option>
+	<option value="2005">2005</option>
+	<option value="2004">2004</option>
+	<option value="2003">2003</option>
+	<option value="2002">2002</option>
+	<option value="2001">2001</option>
+	<option value="2000">2000</option>
+	<option value="1999">1999</option>
+	<option value="1998">1998</option>
+	<option value="1997">1997</option>
+	<option value="1996">1996</option>
+	<option value="1995">1995</option>
+	<option value="1994">1994</option>
+	<option value="1993">1993</option>
+	<option value="1992">1992</option>
+	<option value="1991">1991</option>
+	<option value="1990">1990</option>
+	<option value="1989">1989</option>
+	<option value="1988">1988</option>
+	<option value="1987">1987</option>
+	<option value="1986">1986</option>
+	<option value="1985">1985</option>
+	<option value="1984">1984</option>
+	<option value="1983">1983</option>
+	<option value="1982">1982</option>
+	<option value="1981">1981</option>
+	<option value="1980">1980</option>
+	<option value="1979">1979</option>
+	<option value="1978">1978</option>
+	<option value="1977">1977</option>
+	<option value="1976">1976</option>
+	<option value="1975">1975</option>
+	<option value="1974">1974</option>
+	<option value="1973">1973</option>
+	<option value="1972">1972</option>
+	<option value="1971">1971</option>
+	<option value="1970">1970</option>
+	<option value="1969">1969</option>
+	<option value="1968">1968</option>
+	<option value="1967">1967</option>
+	<option value="1966">1966</option>
+	<option value="1965">1965</option>
+	<option value="1964">1964</option>
+	<option value="1963">1963</option>
+	<option value="1962">1962</option>
+	<option value="1961">1961</option>
+	<option value="1960">1960</option>
+	<option value="1959">1959</option>
+	<option value="1958">1958</option>
+	<option value="1957">1957</option>
+	<option value="1956">1956</option>
+	<option value="1955">1955</option>
+	<option value="1954">1954</option>
+	<option value="1953">1953</option>
+	<option value="1952">1952</option>
+	<option value="1951">1951</option>
+	<option value="1950">1950</option>
+	<option value="1949">1949</option>
+	<option value="1948">1948</option>
+	<option value="1947">1947</option>
+	<option value="1946">1946</option>
+	<option value="1945">1945</option>
+	<option value="1944">1944</option>
+	<option value="1943">1943</option>
+	<option value="1942">1942</option>
+	<option value="1941">1941</option>
+	<option value="1940">1940</option>
+	<option value="1939">1939</option>
+	<option value="1938">1938</option>
+	<option value="1937">1937</option>
+	<option value="1936">1936</option>
+	<option value="1935">1935</option>
+	<option value="1934">1934</option>
+	<option value="1933">1933</option>
+	<option value="1932">1932</option>
+	<option value="1931">1931</option>
+	<option value="1930">1930</option>
+   </select></td>
+                                <td style="padding: 5px 10px 5px 5px;">ماه </td>
+                                    <td style="padding: 5px 10px 5px 5px;"><select id="birthmonth" name="birthmonth" style="width: 100%">
+	<option value="1">1</option>
+	<option value="2">2</option>
+	<option value="3">3</option>
+	<option value="4">4</option>
+	<option value="5">5</option>
+	<option value="6">6</option>
+	<option value="7">7</option>
+	<option value="8">8</option>
+	<option value="9">9</option>
+	<option value="10">10</option>
+	<option value="11">11</option>
+	<option value="12">12</option>
+   </select></td>
+                                <tr>
+									<td style="padding: 5px 10px 5px 5px;">پست الکترونیکی مددجو</td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="email" class="form-control" id="email" name="email" placeholder="email"></td>
+									<td style="padding: 5px 10px 5px 5px;">شماره تماس مددجو</td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="telNo" class="form-control" id="phone_madadju" name="phone_madadju" placeholder="شماره تماس مددجو"></td>
+								</tr>
+								<tr>
+									<td style="padding: 5px 10px 5px 5px;">آدرس محل سکونت</td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="address_mahale_sokunat" name="address_mahale_sokunat" placeholder="آدرس محل سکونت" style="width: 100% ; height: 100px;"></td>
+								</tr>
+                                <tr>
+                                    <td style="padding: 5px 10px 5px 5px;">مقطع </td>
+                                    <td style="padding: 5px 10px 5px 5px;"><select id="maghta" name="maghta" style="width: 100%">
+	<option value="1">اول</option>
+	<option value="2">دوم</option>
+	<option value="3">سوم</option>
+	<option value="4">چهارم</option>
+	<option value="5">پنجم</option>
+	<option value="6">ششم</option>
+	<option value="7">هفتم</option>
+	<option value="8">هشتم</option>
+	<option value="9">نهام</option>
+	<option value="10">دهم</option>
+	<option value="11">یازدهم</option>
+	<option value="12">پیش دانشگاهی</option>
+   </select></td>
+									<td style="padding: 5px 10px 5px 5px;">نام محل تحصیل</td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="mahal_tahsil" name="mahal_tahsil" placeholder="شماره تماس مددجو"></td>
+								</tr>
+                                <tr>
+									<td style="padding: 5px 10px 5px 5px;">آدرس محل تحصیل</td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="address_mahale_kar" name="address_mahale_kar" placeholder="آدرس محل تحصیل" style="width: 100% ; height: 100px;"></td>
+                                    <td style="padding: 5px 10px 5px 5px;">معدل</td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="moadel" name="moadel" placeholder="معدل"></td>
+                                </tr>
+                                <tr>
+									<td style="padding: 5px 10px 5px 5px;"> نام قیم</td>
+									<td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="ghayem_name" name="madadju_name" placeholder="نام قیم"> </td>
+									<td style="padding: 5px 10px 5px 5px;">نام خانوادگی قیم</td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="ghayem_family" name="madadju_family" placeholder="نام خانوادگی قیم"> </td>
+								</tr>
+                                <tr>
+									<td style="padding: 5px 10px 5px 5px;">آدرس قیم</td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="address_ghayem" name="address_ghayem" placeholder="آدرس محل سکونت قیم" style="width: 100% ; height: 100px;"></td>
+                                    <td style="padding: 5px 10px 5px 5px;">شماره تماس قیم</td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="telNo" class="form-control" id="phone_ghayem" name="phone_ghayem" placeholder="شماره تماس مددجو"></td>
+								</tr>
+                                <tr>
+                                    <td style="padding: 5px 10px 5px 5px;">شماره حساب</td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="shomare_hesab" name="shomarehesab" placeholder="شماره حساب"></td>
+                                </tr>
+                                <tr>
+									<td style="padding: 5px 10px 5px 5px;">توضیحات خصوصی</td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="khosusi" name="khosusi" placeholder="توضیحات" style="width: 100% ; height: 200px;"></td>
+                                    <td style="padding: 5px 10px 5px 5px;">شرح حال عمومی</td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="omumi" name="omumi" placeholder="توضیحات" style="width: 100% ; height: 200px;"></td>
+                                </tr>
+
+							</table>
+						</div>
+						<button type="add" class="btn btn-default"><a href="/madadkar/amaliat_movafagh">تایید</a></button>
+					</form>
+				</div>
+			</div>
+			<hr>
+		</div><!--/Center Column-->
+
+	  <!-- Right Column -->
+	  <div class="col-sm-3">
+			<!-- Progress Bars -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title" align="right">
+						نمودار تامین نیازها
+						<span class="glyphicon glyphicon-scale"></span>
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div class="progress">
+						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="97"
+						aria-valuemin="0" aria-valuemax="100" style="width:97%">
+							۹۷٪ نیازهای مددجویان تامین شده است.
+						</div>
+					</div>
+					<div class="progress">
+						<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="80"
+						aria-valuemin="0" aria-valuemax="100" style="width:80%" align="right"><rtl>
+							۸۰٪ نیازهای فوری مددجویان تامین شده است.
+						</rtl>
+						</div>
+					</div>
+				</div>
+			</div>
+
+	  </div><!--/Right Column -->
+
+	</div><!--/container-fluid-->
+
+	<footer>
+		<center>
+        <div class="small-print">
+          <div class="container">
+            <p><a href="#">Telegram</a> | <a href="#">Instagram</a> | <a href="#">Facebook</a></p>
+            <p>  تمامی حقوق برای بنیاد خیریه کودک محفوظ است.&copy; </p>
+          </div>
+        </div>
+    	</center>
+  	</footer>
+
+    <!-- jQuery -->
+    <script src="/static/js/jquery-1.11.3.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/static/js/bootstrap.min.js"></script>
+
+	<!-- IE10 viewport bug workaround -->
+	<script src="/static/js/ie10-viewport-bug-workaround.js"></script>
+
+	<!-- Placeholder Images -->
+	<script src="/static/js/holder.min.js"></script>
+
+</body>
+
+</html>
