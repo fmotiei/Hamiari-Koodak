@@ -26,5 +26,5 @@ urlpatterns = [
     url(r'moshahede_list_niazhaye_fori_taminnashode/', karbar.views.show_moshahede_list_niazhaye_fori_taminnashode),
     url(r'profile/', karbar.views.show_profile),
     url(r'sabtename_hamyar/', karbar.views.show_sabtename_hamyar),
-    url(r'^$', karbar.views.show_profile, name='hamiar'), #TODO in name ro alaki gozashtam ta az sign up redirect kone inja
+    url(r'^$', karbar.views.show_profile),
 ]

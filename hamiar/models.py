@@ -4,12 +4,18 @@ from madadju.models import *
 from madadkar.models import *
 from modir.models import *
 from karbar.models import *
+from django.contrib.auth.models import User
 
 
 # Create your models here.
 
 
-class Hamiar(staff_members):
+class Hamiar(models.Model):
+    staffID = models.OneToOneField(
+        staff_members,
+        on_delete=models.CASCADE,
+        primary_key=True, default=''
+    )
     mojudi = models.PositiveIntegerField(default=0)
     termination_date = models.DateField(null=True,
                                         blank=True)  # age delete kard acountesho kolan hazfesh nemikonim. inja minevisim

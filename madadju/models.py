@@ -7,7 +7,12 @@ from karbar.models import *
 # Create your models here
 
 
-class Madadju(User):
+class Madadju(models.Model):
+    user = models.OneToOneField(
+        UserKarbar,
+        on_delete=models.CASCADE,
+        primary_key=True, default=''
+    )
     madadkar_init = models.ForeignKey(Madadkar, on_delete=models.PROTECT,related_name='Madadkar_Moaref')  # madadkari ke ezafash karde
     madadkar = models.ForeignKey(Madadkar, default=None, blank=True,
                                  null=True, on_delete=models.SET_NULL)  # madadkari ke hemaiat mikone azash mitune nabashe
