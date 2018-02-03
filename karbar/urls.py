@@ -19,12 +19,12 @@ from django.contrib import admin
 import karbar.views
 
 urlpatterns = [
-    url(r'ahdaf/', karbar.views.show_ahdaf),
-    url(r'ashnai/', karbar.views.show_ashnai),
-    url(r'sakhtar_sazmani/', karbar.views.show_sakhtar_sazmani),
-    url(r'moshahede_list_koodakan/', karbar.views.show_moshahede_list_koodakan),
-    url(r'moshahede_list_niazhaye_fori_taminnashode/', karbar.views.show_moshahede_list_niazhaye_fori_taminnashode),
-    url(r'profile/', karbar.views.show_profile),
-    url(r'sabtename_hamyar/', karbar.views.show_sabtename_hamyar),
+    url(r'^ahdaf/$', karbar.views.show_ahdaf),
+    url(r'^ashnai/$', karbar.views.show_ashnai),
+    url(r'^sakhtar_sazmani/$', karbar.views.show_sakhtar_sazmani),
+    url(r'^moshahede_list_koodakan/$', karbar.views.show_moshahede_list_koodakan),
+    url(r'^moshahede_list_niazhaye_fori_taminnashode/$', karbar.views.show_moshahede_list_niazhaye_fori_taminnashode),
+    url(r'^profile/$', karbar.views.show_profile),
+    url(r'^sabtename_hamyar/$', karbar.views.show_sabtename_hamyar),
     url(r'^$', karbar.views.show_profile),
 ]
