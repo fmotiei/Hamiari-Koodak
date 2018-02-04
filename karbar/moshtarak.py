@@ -1,9 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
+
+from hamiar.models import PardakhtNiaz, Hamiar
 from karbar.forms import  SignInForm
 import karbar
-from karbar.models import Payam, Payam_Madadju, Payam_Adi
+from karbar.models import Payam, Payam_Madadju, Payam_Adi, UserKarbar, staff_members, events
 from madadju.models import Madadju, Niaz
 from django import forms
 from django.contrib.auth.models import User
@@ -49,11 +51,35 @@ def show_ersal_payam(request,user):
 @login_required
 def show_moshahede_tarakonesh_haye_mali(request,user):
     template = 'karbar/moshahede_tarakonesh_haye_mali.html'
+    tarakoneshha = []
+    if user == 'hamiar':
+        userKarbar = UserKarbar.objects.get(user = request.user)
+        staffMember = staff_members.objects.get(stafID = userKarbar)
+        hamiar = Hamiar.objects.get(staffID=staffMember)
+        for tarakonesh in PardakhtNiaz.objects.all() :
+            if tarakonesh.niaz.hamiar == hamiar :
+                tarakoneshha.append(('پرداخت نیاز',tarakonesh.mablagh,request.user.username,tarakonesh.zaman))
+
+    if user == 'madadju':
+        userKarbar = UserKarbar.objects.get(user = request.user)
+        madadju = Madadju.objects.get(user=userKarbar)
+        for tarakonesh in PardakhtNiaz.objects.all() :
+            if tarakonesh.niaz.niaz.niazmand == madadju :
+                tarakoneshha.append(('تامین نیاز',tarakonesh.mablagh,tarakonesh.niaz.hamiar.username(),tarakonesh.zaman))
+
+    if user == 'madadkar' :
+        userKarbar = UserKarbar.objects.get(user=request.user)
+        staffMember = staff_members.objects.get(stafID=userKarbar)
+        hamiar = Hamiar.objects.get(staffID=staffMember)
+
+
+
+
     return render(request, template, {'utype' : user
                                         , 'progress': karbar.darbare_ma.progress()
-                                        , 'tarakoneshha' : []
+                                        , 'tarakoneshha' : tarakoneshha
                                         , 'username': request.user})
-#TODO bayd tarakonesh haye mali ro behesh befrestim onvan,mablagh,user,day,hour
+#TODO bayd tarakonesh haye mali ro behesh befrestim onvan,mablagh,user,date
 
 
 @login_required
@@ -94,11 +120,13 @@ def show_payam_ersali(request,user):
 @login_required
 def show_roydadha(request,user):
     template = 'karbar/roydadha.html'
+    roydadha = events.objects.filter(user=request.user)
+    roydadha = [(roydad.onvan,roydad.matn,roydad.zaman) for roydad in roydadha]
     return render(request, template, {'utype' : user
         , 'progress': karbar.darbare_ma.progress()
         , 'username': request.user
-        , 'roydadha' : {} })
-#TODO roydadha shamel onvan,text,day,hour      aghaaa roydad darim ???:))
+        , 'roydadha' : roydadha })
+#TODO mishe ba zarbdar pak she ?
 
 @login_required
 def show_sandoghe_payamhaye_daryafti(request,user):
@@ -145,9 +173,12 @@ def show_ahdaf(request,user):
     template = 'karbar/ahdaf.html'
     if request.method == 'GET':
         form = SignInForm()
+        userName = ''
+        if not user == 'karbar':
+            userName = request.user
         return render(request, template, {'form': form, 'utype' : user
         , 'progress': karbar.darbare_ma.progress()
-        , 'username': ''
+        , 'username': userName
         , 'ahdaf': karbar.darbare_ma.ahdaf_text()})
 
     if request.method == 'POST':
@@ -179,10 +210,13 @@ def show_ashnai(request,user):
     template = 'karbar/ashnai.html'
     if request.method == 'GET':
         form = SignInForm()
-
+        userName = ''
+        if not user == 'karbar':
+            userName = request.user
         return render(request, template, {'form': form, 'utype' : user
         , 'progress': karbar.darbare_ma.progress()
-        ,'ashnai': karbar.darbare_ma.ashnai_text()})
+        ,'ashnai': karbar.darbare_ma.ashnai_text()
+        , 'username': userName})
 
     if request.method == 'POST':
         form = SignInForm(request.POST)
@@ -216,10 +250,14 @@ def show_sakhtar_sazmani(request,user):
     #                                   ,'username':''})
     if request.method == 'GET':
         form = SignInForm()
+        userName = ''
+        if not user == 'karbar':
+            userName = request.user
 
         return render(request, template, {'form': form, 'utype' : user
         , 'progress': karbar.darbare_ma.progress()
-        ,'sakhtar_sazmani': karbar.darbare_ma.sakhtar_sazmani_text()})
+        ,'sakhtar_sazmani': karbar.darbare_ma.sakhtar_sazmani_text()
+        , 'username' : userName})
 
     if request.method == 'POST':
         form = SignInForm(request.POST)
@@ -251,11 +289,14 @@ def show_moshahede_list_koodakan(request,user):
     madadjuyan = Madadju.objects.all()
     if request.method == 'GET':
         form = SignInForm()
+        userName = ''
+        if not user == 'karbar':
+            userName = request.user
 
         return render(request, template, {'form': form, 'madadjuyan':[(m.user.user.first_name,Niaz.objects.filter(niazmand=m),Niaz.niaz_taminnashode(m)) for m in madadjuyan]
                                       ,'progress':karbar.darbare_ma.progress()
                                       ,'utype' : user
-                                      ,'username':request.user})
+                                      ,'username':userName})
 
     if request.method == 'POST':
         form = SignInForm(request.POST)
@@ -287,11 +328,14 @@ def show_moshahede_list_niazhaye_fori_taminnashode(request,user):
     madadjuyan = Madadju.objects.all()
     if request.method == 'GET':
         form = SignInForm()
+        userName = ''
+        if not user == 'karbar':
+            userName = request.user
 
         return render(request, template, {'form': form, 'madadjuyan':[( m.user.user.first_name, ((niaz.onvan,niaz.mablagh_taminnashode()) for niaz in Niaz.objects.filter(niazFori=True))) for m in madadjuyan]
                                       ,'progress':karbar.darbare_ma.progress()
                                       ,'utype' : user
-                                      ,'username':request.user})
+                                      ,'username':userName})
 
     if request.method == 'POST':
         form = SignInForm(request.POST)

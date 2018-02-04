@@ -110,13 +110,13 @@
 
 			<div class="row">
 				<article class="col-xs-12">
-					{% for onvan,mablagh,user,day,hour in tarakoneshha %}
+					{% for onvan,mablagh,user,date in tarakoneshha %}
 					<p><strong>{{onvan}}</strong></p>
 					<p class="pull-right"><span class="label label-default">{{mablagh}} هزار تومان</span></p>
 					<br><br>
 					<p><strong>توسط:{{user}}</strong>{{mablagh}}</p>
 					<br>
-					<p>تاریخ {{day}} , ساعت {{hour}}</p>
+					<p>{{date}}</p>
 					<hr>
 					{% endfor %}
 				</article>

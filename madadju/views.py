@@ -44,7 +44,6 @@ def show_profile(request):
                                     , 'alarm': madadju.ekhtar
                                     , 'madadkar': madadju.madadkar.staffID.stafID.user.username
                                     , 'hamiarha': hamiarha })
-# username : username karbar , first_name : first name karbar , last_name : last name karbar , alarm : alarm karbar , madadkar : username madadkare marbute , hamiarha :username hamiaran marbute
 
 @login_required
 def show_hamiar_profile(request):
@@ -69,8 +68,6 @@ def show_hamiar_profile(request):
                                       , 'hfName' : user.first_name
                                       , 'hlName' : user.last_name
                                       , 'madadjuyan' : madadjuyan})
-# username: username karbar , husername : username hamiar , hfName : first name hamiar , hlName : last name hamiar , madadjuyan : username madadjuyan tahte hemayat hamiar
-
 
 @login_required
 def show_madadju(request):
