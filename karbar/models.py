@@ -10,7 +10,7 @@ class UserKarbar(models.Model):
     def __str__(self):
         return self.user.username
     def __str__(self):
-        return "%s %s" % (self.first_name, self.last_name)
+        return "%s %s" % (self.user.first_name, self.user.last_name)
 
 
 
@@ -23,7 +23,7 @@ class staff_members(models.Model):
     pardakhti = models.PositiveIntegerField()#jame harchi ke pardakht kardan (momkene maslan madadkar az jib bezare)
     dariafti = models.PositiveIntegerField() #jame har chi dariaft kardan
     def __str__(self):
-        return self.user.username
+        return self.stafID.user.username
 # Create your models here.
 class Payam(models.Model):
     onvan = models.CharField(max_length=30)

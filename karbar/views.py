@@ -41,8 +41,7 @@ def show_sabtename_hamyar(request):
             ukarbar=UserKarbar.objects.create(user=user, phone_number=phone_number, address=address)
             staff=staff_members.objects.create(stafID=ukarbar,pardakhti=0,dariafti=0 )
             hamiar.models.Hamiar.objects.create(staffID=staff )
-            # login(request, user)
-
+            login(request, user)
             return render(request, 'karbar/afzayesh_etebar.html', {'form': form})
             # return HttpResponseRedirect(reverse("hamyar_panel")+"?success=1")  # this should be hamyar's own page
         else:
