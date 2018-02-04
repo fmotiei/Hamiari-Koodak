@@ -27,7 +27,7 @@ def akhbar_image():
 def progress():
     pr = []
     niaz = 100
-    if( Niaz.objects.count() != 0 ):
-        niaz = 100 * Niaz.objects.filter(mablagh_taminshodeh=0).count()/Niaz.objects.count()
+    if( len(Niaz.objects.all()) != 0 ):
+        niaz = 100 * len(Niaz.objects.filter(mablagh_taminshodeh=0))/len(Niaz.objects.all())
     pr.append([niaz,'٪ نیازهای مددجویان تامین شده است.'])
     return pr

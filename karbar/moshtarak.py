@@ -22,7 +22,6 @@ def user_type(user):
     elif userkarbarInstance.is_madadju:
         return 'madadju'
 
-
 def show_user(request,user):
     template = 'karbar/index.html'
     return render(request, template, {'tozihat': karbar.darbare_ma.tozihat_text()
@@ -30,7 +29,6 @@ def show_user(request,user):
         , 'progress': karbar.darbare_ma.progress()
         , 'utype': user
         , 'username': request.user })
-#TODO login
 
 @login_required
 def show_afzayesh_etebar(request,user):
@@ -93,7 +91,7 @@ def show_payam_ersali(request,user):
                                     , 'receiver': payam.reciever.username()
                                     , 'date': payam.zaman})
 
-
+@login_required
 def show_roydadha(request,user):
     template = 'karbar/roydadha.html'
     return render(request, template, {'utype' : user
@@ -102,7 +100,7 @@ def show_roydadha(request,user):
         , 'roydadha' : {} })
 #TODO roydadha shamel onvan,text,day,hour      aghaaa roydad darim ???:))
 
-
+@login_required
 def show_sandoghe_payamhaye_daryafti(request,user):
     template = 'karbar/sandoghe_payamhaye_daryafti.html'
     payamha = []
@@ -118,7 +116,7 @@ def show_sandoghe_payamhaye_daryafti(request,user):
         , 'username': request.user
         , 'payamha': payamha})
 
-
+@login_required
 def show_sandoghe_payamhaye_ersali(request,user):
     template = 'karbar/sandoghe_payamhaye_ersali.html'
     payamha = []
@@ -134,29 +132,22 @@ def show_sandoghe_payamhaye_ersali(request,user):
         , 'username': request.user
         , 'payamha': payamha })
 
-
+@login_required
 def show_amaliat_movafagh(request,user):
     template = 'karbar/amaliat_movafagh.html'
     return render(request, template, {'utype' : user
                                       , 'progress': karbar.darbare_ma.progress()
                                       ,'username':''})
 
-def show_hamiar_pri(request,user):
-    template = 'karbar/ahdaf.html'
-    return render(request, template, {'ahdaf': karbar.darbare_ma.ahdaf_text()
-                                      ,'progress':karbar.darbare_ma.progress()
-                                      ,'utype' : user
-                                      ,'username':''})
 
 
 def show_ahdaf(request,user):
     template = 'karbar/ahdaf.html'
     if request.method == 'GET':
         form = SignInForm()
-
         return render(request, template, {'form': form, 'utype' : user
         , 'progress': karbar.darbare_ma.progress()
-        , 'username':''
+        , 'username': ''
         , 'ahdaf': karbar.darbare_ma.ahdaf_text()})
 
     if request.method == 'POST':
@@ -176,6 +167,7 @@ def show_ahdaf(request,user):
                 login(request, user)
                 return HttpResponseRedirect('/'+utype+'/'+"?success=1")
         else:
+
             message = 'نام کاربری شما در سامانه ثبت نشده است'
             args = {'form': form, 'message': message, 'utype' : user
         , 'progress': karbar.darbare_ma.progress()
@@ -185,15 +177,6 @@ def show_ahdaf(request,user):
 
 def show_ashnai(request,user):
     template = 'karbar/ashnai.html'
-    return render(request, template, {'ashnai': karbar.darbare_ma.ashnai_text()
-                                      ,'progress':karbar.darbare_ma.progress()
-                                      ,'utype' : user
-                                      , 'username' : request.user})
-    # return render(request, template, {'ashnai': karbar.darbare_ma.ashnai_text()
-    #                                   ,'progress':karbar.darbare_ma.progress()
-    #                                   ,'utype' : user
-    #                                   , 'username' : ''})
-
     if request.method == 'GET':
         form = SignInForm()
 
@@ -266,18 +249,74 @@ def show_sakhtar_sazmani(request,user):
 def show_moshahede_list_koodakan(request,user):
     template = 'karbar/moshahede_list_koodakan.html'
     madadjuyan = Madadju.objects.all()
-    return render(request, template, {'madadjuyan':[(m.first_name,Niaz.objects.filter(niazmand=m),Niaz.niaz_taminnashode(m)) for m in madadjuyan]
+    if request.method == 'GET':
+        form = SignInForm()
+
+        return render(request, template, {'form': form, 'madadjuyan':[(m.user.user.first_name,Niaz.objects.filter(niazmand=m),Niaz.niaz_taminnashode(m)) for m in madadjuyan]
                                       ,'progress':karbar.darbare_ma.progress()
                                       ,'utype' : user
-                                      ,'username':''})
+                                      ,'username':request.user})
+
+    if request.method == 'POST':
+        form = SignInForm(request.POST)
+        if form.confirm_login_allowed(request):
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request, username=username, password=password)
+            if user is None:
+                message = 'گذرواژه اشتباه ‌است'
+                args = {'form': form, 'message': message, 'madadjuyan':[(m.user.user.first_name,Niaz.objects.filter(niazmand=m),Niaz.niaz_taminnashode(m)) for m in madadjuyan]
+                                      ,'progress':karbar.darbare_ma.progress()
+                                      ,'utype' : user
+                                      ,'username':request.user}
+                return render(request, template, args)
+            else:
+                utype = user_type(user)
+                login(request, user)
+                return HttpResponseRedirect('/' + utype + '/' + "?success=1")
+        else:
+            message = 'نام کاربری شما در سامانه ثبت نشده است'
+            args = {'form': form, 'message': message, 'madadjuyan':[(m.user.user.first_name,Niaz.objects.filter(niazmand=m),Niaz.niaz_taminnashode(m)) for m in madadjuyan]
+                                      ,'progress':karbar.darbare_ma.progress()
+                                      ,'utype' : user
+                                      ,'username':request.user}
+            return render(request, template, args)
 
 def show_moshahede_list_niazhaye_fori_taminnashode(request,user):
     template = 'karbar/moshahede_list_niazhaye_fori_taminnashode.html'
     madadjuyan = Madadju.objects.all()
-    return render(request, template, {'madadjuyan':[( m.first_name, ((niaz.onvan,niaz.mablagh_taminnashode()) for niaz in Niaz.niaz_taminnashode(m).filter(niazFori=True))) for m in madadjuyan]
+    if request.method == 'GET':
+        form = SignInForm()
+
+        return render(request, template, {'form': form, 'madadjuyan':[( m.user.user.first_name, ((niaz.onvan,niaz.mablagh_taminnashode()) for niaz in Niaz.objects.filter(niazFori=True))) for m in madadjuyan]
                                       ,'progress':karbar.darbare_ma.progress()
                                       ,'utype' : user
-                                      ,'username':''})
+                                      ,'username':request.user})
+
+    if request.method == 'POST':
+        form = SignInForm(request.POST)
+        if form.confirm_login_allowed(request):
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request, username=username, password=password)
+            if user is None:
+                message = 'گذرواژه اشتباه ‌است'
+                args = {'form': form, 'message': message, 'madadjuyan':[( m.user.user.first_name, ((niaz.onvan,niaz.mablagh_taminnashode()) for niaz in Niaz.objects.filter(niazFori=True))) for m in madadjuyan]
+                                      ,'progress':karbar.darbare_ma.progress()
+                                      ,'utype' : user
+                                      ,'username':request.user}
+                return render(request, template, args)
+            else:
+                utype = user_type(user)
+                login(request, user)
+                return HttpResponseRedirect('/' + utype + '/' + "?success=1")
+        else:
+            message = 'نام کاربری شما در سامانه ثبت نشده است'
+            args = {'form': form, 'message': message, 'madadjuyan':[( m.user.user.first_name, ((niaz.onvan,niaz.mablagh_taminnashode()) for niaz in Niaz.objects.filter(niazFori=True))) for m in madadjuyan]
+                                      ,'progress':karbar.darbare_ma.progress()
+                                      ,'utype' : user
+                                      ,'username':request.user}
+            return render(request, template, args)
 
 
 
