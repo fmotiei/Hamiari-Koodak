@@ -6,6 +6,7 @@ admin.site.register(staff_members )
 
 admin.site.register(UserKarbar )
 # admin.site.register(Payam)
+
 admin.site.register(Payam_Adi)
 admin.site.register(Payam_Madadju)
 admin.site.register(Payam_Madadju_Madadkar)
