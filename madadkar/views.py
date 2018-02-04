@@ -11,73 +11,132 @@ from madadju.models import Madadju, Niaz
 
 
 def show_afzoudan_niaz(request):
-    template = 'karbar/afzoudan_niaz.html'
-    return render(request, template, {})
+    template = 'madadkar/afzoudan_niaz.html'
+    return render(request, template, {'progress': karbar.darbare_ma.progress()})
+#todo transform form fields to db
 
 def show_moshahede_madadjuyan_taht_kefalat(request):
     template = 'madadkar/moshahede_madadjuyan_taht_kefalat.html'
-    return render(request, template, {})
+    return render(request, template, {'username' : '',
+                                      'progress': karbar.darbare_ma.progress(),
+                                      'madadjuyan': [(m.username, m.first_name, m.last_name, m.ekhtar) for m in []]
+        #Madadju.objects.filter(madadkar!=Null)
+                                      #todo link moshahede profile madadju
+                                      })
 
 
 def show_niaz_haye_madadju(request):
     template = 'madadkar/niaz_haye_madadju.html'
-    return render(request, template, {})
+    return render(request, template, {'username' : '',
+                                      'progress': karbar.darbare_ma.progress(),
+                                      'niazha' : [( n.onvan, n.mablagh-n.mablagh_taminshodeh, n.mablagh_taminshodeh, n.niazFori) for n in []],
+                                      #todo all niazha for this madadju
+                                      'madadju_un' : '',
+                                      'madadju_mablagh' : '',
+                                      'madadju_taminshode' :'',
+                                      'madadju_alarm' : ''
+                                      #todo madadju(un, mablagh, taminshode) fill for 1 madadju
+                                      })
 
 def show_niaz_haye_tamin_nashode(request):
     template = 'madadkar/niaz_haye_tamin_nashode.html'
-    return render(request, template, {})
+    return render(request, template, {'username' : '',
+                                      'progress': karbar.darbare_ma.progress(),
+                                      'niazha': [(n.niazmand.username, n.onvan, n.mablagh,n.niazFori) for n in []],
+                                      # todo niazhaye tamin nashode baraye hame madadju
+                                      'madadjuyan' : [m.username for m in []],
+                                      #todo hame madadjuha
+                                      })
 
 
 def show_niaz_haye_tamin_nashode_fori(request):
     template = 'madadkar/niaz_haye_tamin_nashode_fori.html'
-    return render(request, template, {})
+    return render(request, template, {'username' : '',
+                                      'progress': karbar.darbare_ma.progress(),
+                                      'niazha': [(n.niazmand.username, n.onvan, n.mablagh, n.niazFori) for n in []],
+                                      # todo niazhaye tamin nashode fori baraye hame madadju
+                                      'madadjuyan': [m.username for m in []],
+                                      # todo hame madadjuha
+
+                                      })
 
 def show_payam_entezar(request):
     template = 'madadkar/payam_entezar.html'
-    return render(request, template, {})
+    return render(request, template, {'username' : '',
+                                      'progress': karbar.darbare_ma.progress(),
+                                      'msg' : '',
+                                      'header' : '',
+                                      'rcvr' : '',
+                                      #todo reciver ro bayad kole obj ro dashtebashim
+                                      'time' : ''
+                                      })
 
 
 def show_profile(request):
     template = 'madadkar/profile.html'
-    return render(request, template, {})
+    return render(request, template, {'username' : '',
+                                      'progress': karbar.darbare_ma.progress(),
+
+                                      })
 
 
 def show_profile_madadju(request):
     template = 'madadkar/profile_madadju.html'
-    return render(request, template, {})
+    return render(request, template, {'username' : '',
+                                      'progress': karbar.darbare_ma.progress()})
 
 def show_sandoghe_payamhaye_entezar(request):
     template = 'madadkar/sandoghe_payamhaye_entezar.html'
-    return render(request, template, {})
+    return render(request, template, {'username' : '',
+                                      'progress': karbar.darbare_ma.progress()})
 
 
 def show_sabte_naam_madadju(request):
     template = 'madadkar/sabte_naam_madadju.html'
-    return render(request, template, {})
+    return render(request, template, {'username' : '',
+                                      'progress': karbar.darbare_ma.progress()})
 
 
 def show_virayesh_niaz(request):
     template = 'madadkar/virayesh_niaz.html'
-    return render(request, template, {})
+    return render(request, template, {'username' : '',
+                                      'progress': karbar.darbare_ma.progress()})
 
 
 def show_vaziat_tahsili(request):
     template = 'madadkar/vaziat_tahsili.html'
-    return render(request, template, {})
+    return render(request, template, {'username' : '',
+                                      'progress': karbar.darbare_ma.progress()})
 
 
 def show_moshahede_madadjuyan_dar_entezar_madadkar(request):
     template = 'madadkar/moshahede_madadjuyan_dar_entezar_madadkar.html'
-    return render(request, template, {})
+    return render(request, template, {'progress': karbar.darbare_ma.progress(),
+                                      'madadjuyan': [(m.first_name, m.last_name) for m in []],
+                                  #    Madadju.objects.filter(madadkar='Null')
+                                      'username' : ''
+                                      #todo link moshahede profile madadju
+                                      })
 
 
 def show_profile_madadju_bi_kefalat(request):
     template = 'madadkar/profile_madadju_bi_kefalat.html'
-    return render(request, template, {})
+    return render(request, template, {'username' : '',
+                                      'progress': karbar.darbare_ma.progress()})
 
 def show_niaz_haye_madadju_bi_kefalat(request):
     template = 'madadkar/niaz_haye_madadju_bi_kefalat.html'
-    return render(request, template, {})
+    return render(request, template, {'username' : '',
+                                      'progress': karbar.darbare_ma.progress(),
+                                      'niazha': [(n.onvan, n.mablagh - n.mablagh_taminshodeh, n.mablagh_taminshodeh,
+                                                  n.niazFori) for n in []],
+                                      # todo all niazha for this madadju
+                                      'madadju_un': '',
+                                      'madadju_mablagh': '',
+                                      'madadju_taminshode': '',
+                                      'madadju_alarm': ''
+                                      # todo madadju(un, mablagh, taminshode) fill for 1 madadju
+                                      })
 
 
 
