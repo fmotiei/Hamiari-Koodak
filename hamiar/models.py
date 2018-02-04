@@ -1,10 +1,10 @@
+
 from django.db import models
 from datetime import datetime
+
+from karbar.models import staff_members
 from madadju.models import *
-from madadkar.models import *
 from modir.models import *
-from karbar.models import *
-from django.contrib.auth.models import User
 
 
 # Create your models here.

@@ -9,9 +9,8 @@ import karbar.darbare_ma
 from django.views.decorators.csrf import csrf_exempt
 from .forms import SignUpForm
 from .models import *
-
-# Create your views here.
 from karbar import moshtarak
+import hamiar
 from madadju.models import Madadju, Niaz
 
 def show_profile(request):
@@ -40,8 +39,8 @@ def show_sabtename_hamyar(request):
             user = User.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name)
             user.save()
             ukarbar=UserKarbar.objects.create(user=user, phone_number=phone_number, address=address)
-            staff_members.objects.create(stafID=ukarbar,pardakhti=0,dariafti=0 )
-            Hamiar.objects.create(staffID=ukarbar )
+            staff=staff_members.objects.create(stafID=ukarbar,pardakhti=0,dariafti=0 )
+            hamiar.models.Hamiar.objects.create(staffID=staff )
             # login(request, user)
 
             return render(request, 'karbar/afzayesh_etebar.html', {'form': form})

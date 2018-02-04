@@ -1,20 +1,16 @@
 from django.db import models
-from django import forms
-from django.core.validators import RegexValidator
-from madadju.models import *
-from madadkar.models import *
-from hamiar.models import *
-from karbar.models import *
-
-
+from .models import *
+import karbar
 
 # Create your models here.
 
 
-class ModirArshad(staff_members):
+class ModirArshad(models.Model):
+    staffID =   models.OneToOneField(karbar.models.staff_members, on_delete=models.CASCADE, default='')
     hoghugh = models.PositiveIntegerField()
 
 
-class ModirKarshenas(staff_members):
+class ModirKarshenas(models.Model):
+    staffID =   models.OneToOneField(karbar.models.staff_members, on_delete=models.CASCADE, default='')
     hoghugh = models.PositiveIntegerField()
 
