@@ -1,8 +1,14 @@
 from django.db import models
 from .models import *
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 
 from datetime import datetime
+
+class User(AbstractUser):
+    is_hamiar = models.BooleanField('hamiar status', default=False)
+    is_madadju = models.BooleanField('madadju status', default=False)
+    is_madadkar = models.BooleanField('madadkar status', default=False)
+
 class UserKarbar(models.Model):
     user =   models.OneToOneField(User, on_delete=models.CASCADE, default='')
     address = models.CharField(max_length=100)

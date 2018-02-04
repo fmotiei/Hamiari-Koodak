@@ -11,7 +11,12 @@ from .forms import SignUpForm, SignInForm
 from .models import *
 from karbar import moshtarak
 import hamiar
+from karbar.models import *
 from madadju.models import Madadju, Niaz
+def user_type(user):
+    username=user.username
+    hamiar.models.Hamiar.staffID.stafID.user.objects.get(username=username)
+
 
 def show_profile(request):
     template = 'karbar/index.html'
@@ -35,6 +40,7 @@ def show_profile(request):
         , 'roydadha' : {} }
                 return render(request, template, args)
             else:
+                user_type(user)
                 login(request, user)
                 return redirect('/hamiar/')
         else:

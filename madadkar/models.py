@@ -8,7 +8,12 @@ from datetime import datetime
 from modir.models import *
 
 
-class Madadkar(staff_members):
+class Madadkar(models.Model):
+    staffID = models.OneToOneField(
+        staff_members,
+        on_delete=models.CASCADE,
+        primary_key=True, default=''
+    )
     termination_date = models.DateField(null=True,
                                         blank=True)  # age delete kard acountesho kolan hazfesh nemikonim. inja minevisim
     start_date = models.DateField(null=True, blank=True)
