@@ -42,7 +42,10 @@ def show_sabtename_hamyar(request):
             staff=staff_members.objects.create(stafID=ukarbar,pardakhti=0,dariafti=0 )
             hamiar.models.Hamiar.objects.create(staffID=staff )
             login(request, user)
-            return render(request, 'karbar/regiset_success.html', {'form': form})
+            return render(request, '/hamiar/', {'form': form, 'utype' : 'hamiar'
+        , 'progress': karbar.darbare_ma.progress()
+        , 'username':''
+        , 'roydadha' : {} })
             # return HttpResponseRedirect(reverse("hamyar_panel")+"?success=1")  # this should be hamyar's own page
         else:
             return render(request, template, {'form': form})
