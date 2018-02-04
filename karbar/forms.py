@@ -1,6 +1,20 @@
 import datetime
 from django import forms
 from django.contrib.auth.models import User
+
+class SignInForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'password']
+
+    def confirm_login_allowed(self, request):
+        username = request.POST['username']
+        print("users",User.objects.filter(username=username))
+        if len(User.objects.filter(username=username)) == 0:
+            return False
+        return True
+
+
 class SignUpInitial(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
