@@ -108,19 +108,16 @@
 			<div class="row">
 				<article class="col-xs-12">
 					{% for onvan,mablagh,user,day,hour in tarakoneshha %}
-					<p><strong>افزایش اعتبار</strong></p>
-					<p class="pull-right"><span class="label label-default">۱۰۰۰۰۰ هزار تومان</span></p>
+					<p><strong>{{onvan}}</strong></p>
+					<p class="pull-right"><span class="label label-default">{{mablagh}} هزار تومان</span></p>
 					<br><br>
-					<p><strong>توسط:</strong>کاربر</p>
+					<p><strong>توسط:{{user}}</strong>{{mablagh}}</p>
 					<br>
-					<p><strong>باقیمانده:</strong>۴۳۰۰۰</p>
-					<br>
-					<p>تاریخ ۲۱/۵/۹۶ , ساعت ۲۱:۳۰</p>
+					<p>تاریخ {{day}} , ساعت {{hour}}</p>
 					<hr>
 					{% endfor %}
 				</article>
 			</div>
-			<hr>
 		</div><!--/Center Column-->
 
 

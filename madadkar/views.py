@@ -7,7 +7,7 @@ from django.http import HttpResponse
 # Create your views here.
 import karbar
 from karbar import moshtarak
-from madadju.models import Madadju, Niaz
+from madadju.models import Madadju, Niaz, Madadkar, User, UserKarbar, staff_members
 
 
 def show_afzoudan_niaz(request):
@@ -17,9 +17,12 @@ def show_afzoudan_niaz(request):
 
 def show_moshahede_madadjuyan_taht_kefalat(request):
     template = 'madadkar/moshahede_madadjuyan_taht_kefalat.html'
-    return render(request, template, {'username' : '',
+    userKarbar = UserKarbar.objects.get(user = request.user)
+    staffMember = staff_members.objects.get(stafID=userKarbar)
+    madadkar = Madadkar.objects.get(staffID=staffMember)
+    return render(request, template, {'username' : request.user,
                                       'progress': karbar.darbare_ma.progress(),
-                                      'madadjuyan': [(m.username, m.first_name, m.last_name, m.ekhtar) for m in []]
+                                      'madadjuyan': [(m.user.user.username , m.user.user.first_name, m.user.user.last_name, m.ekhtar) for m in Madadju.objects.filter(madadkar=madadkar)]
         #Madadju.objects.filter(madadkar!=Null)
                                       #todo link moshahede profile madadju
                                       })
@@ -82,7 +85,10 @@ def show_profile(request):
 
 def show_profile_madadju(request):
     template = 'madadkar/profile_madadju.html'
-    return render(request, template, {'username' : '',
+    username = 'man'
+    if request.GET.get('salam'):
+        username = 'to'
+    return render(request, template, {'username' : request.GET.get('madadju'),
                                       'progress': karbar.darbare_ma.progress()})
 
 def show_sandoghe_payamhaye_entezar(request):

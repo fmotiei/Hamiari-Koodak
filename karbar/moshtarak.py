@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from karbar.forms import  SignInForm
 import karbar
+from karbar.models import Payam, Payam_Madadju, Payam_Adi
 from madadju.models import Madadju, Niaz
 from django import forms
 from django.contrib.auth.models import User
@@ -26,9 +27,7 @@ def show_user(request,user):
         , 'images': karbar.darbare_ma.akhbar_image()
         , 'progress': karbar.darbare_ma.progress()
         , 'utype': user
-        , 'username': ''})
-
-#TODO username: username karbar
+        , 'username': request.user })
 #TODO login
 
 
@@ -36,31 +35,30 @@ def show_afzayesh_etebar(request,user):
     template = 'karbar/afzayesh_etebar.html'
     return render(request, template, {'utype' : user
                                     , 'progress': karbar.darbare_ma.progress()
-                                    , 'username' : ''})
-#TODO username: username karbar
-#TODO etebar ra begirad
+                                    , 'username' : request.user})
+#TODO etebar ra begirad va afzayesh dahad
 
 
 def show_ersal_payam(request,user):
     template = 'karbar/ersal_payam.html'
     return render(request, template, {'utype' : user
                                     , 'progress': karbar.darbare_ma.progress()
-                                    ,'username' : ''})
-#TODO
+                                    ,'username' : request.user})
+#TODO shenase o onvan o matn ro begire va payam ro befreste
 
 def show_moshahede_tarakonesh_haye_mali(request,user):
     template = 'karbar/moshahede_tarakonesh_haye_mali.html'
     return render(request, template, {'utype' : user
                                         , 'progress': karbar.darbare_ma.progress()
-                                        , 'tarakoneshha' : {}
-                                        , 'username': ''})
-#TODO bayd tarakonesh haye mali ro behesh befrestim
+                                        , 'tarakoneshha' : []
+                                        , 'username': request.user})
+#TODO bayd tarakonesh haye mali ro behesh befrestim onvan,mablagh,user,day,hour
 
 def show_payam_daryafti(request,user):
     template = 'karbar/payam_daryafti.html'
     return render(request, template, {'utype' : user
                                     , 'progress': karbar.darbare_ma.progress()
-                                    , 'username':''
+                                    , 'username':request.user
                                     , 'onvan': ''
                                     , 'text' : ''
                                     , 'sender': ''
@@ -73,7 +71,7 @@ def show_payam_ersali(request,user):
     template = 'karbar/payam_ersali.html'
     return render(request, template, {'utype': user
                                     , 'progress': karbar.darbare_ma.progress()
-                                    , 'username': ''
+                                    , 'username': request.user
                                     , 'onvan': ''
                                     , 'text': ''
                                     , 'receiver': ''
@@ -92,6 +90,7 @@ def show_roydadha(request,user):
 
 def show_sandoghe_payamhaye_daryafti(request,user):
     template = 'karbar/sandoghe_payamhaye_daryafti.html'
+
     return render(request, template, {'utype': user
         , 'progress': karbar.darbare_ma.progress()
         , 'username': ''
@@ -101,11 +100,19 @@ def show_sandoghe_payamhaye_daryafti(request,user):
 
 def show_sandoghe_payamhaye_ersali(request,user):
     template = 'karbar/sandoghe_payamhaye_ersali.html'
+    payamha = []
+    if user == 'madadju':
+        for payam in Payam_Madadju.objects.all() :
+            if payam.sender.user.user == request.user :
+                payamha.append((payam.id,payam.reciever.staffID.stafID.user.username,payam.zaman,payam.onvan))
+    for payam in Payam_Adi.objects.all() :
+        if payam.sender.user.user == request.user :
+            payamha.append((payam.id,payam.reciever,payam.zaman,payam.onvan))
     return render(request, template, {'utype': user
         , 'progress': karbar.darbare_ma.progress()
-        , 'username': ''
-        , 'payamha': {}})
-    # TODO payamha shamele receiver,day,hour,onvan
+        , 'username': request.user
+        , 'payamha': payamha })
+    # TODO payamha shamele upayam,receiver,zaman,onvan
 
 
 def show_amaliat_movafagh(request,user):
@@ -158,6 +165,10 @@ def show_ahdaf(request,user):
 
 def show_ashnai(request,user):
     template = 'karbar/ashnai.html'
+    return render(request, template, {'ashnai': karbar.darbare_ma.ashnai_text()
+                                      ,'progress':karbar.darbare_ma.progress()
+                                      ,'utype' : user
+                                      , 'username' : request.user})
     # return render(request, template, {'ashnai': karbar.darbare_ma.ashnai_text()
     #                                   ,'progress':karbar.darbare_ma.progress()
     #                                   ,'utype' : user

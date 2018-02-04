@@ -123,12 +123,11 @@
 					<hr>
 					<p>نقش کاربر : مددجو</p>
 					<hr>
-					<p>مددکار مربوطه</p>
-					<a href="" >{{madadkar}}</a>
+					<p>مددکار مربوطه: {{madadkar}}</p>
 					<hr>
 					<p>همیاران مربوطه</p>
-					{% for hamiar in hamiaran %}
-					<a href="" >{{hamiar}}</a>
+					{% for hamiar in hamiarha %}
+					<a href="/madadju/hamiar_prof?hamiar={{hamiar}}" >{{hamiar}}</a>
 					<br>
 					{% endfor %}
 					<hr>

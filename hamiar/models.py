@@ -4,6 +4,7 @@ from datetime import datetime
 
 from karbar.models import staff_members
 from madadju.models import *
+from madadju.models import Niaz
 from modir.models import *
 
 

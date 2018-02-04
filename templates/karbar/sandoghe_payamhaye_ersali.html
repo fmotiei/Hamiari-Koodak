@@ -112,11 +112,11 @@
 					    <th style="width: 20%">تاریخ و ساعت</th>
 					    <th style="width: 60%">متن پیام</th>
 					  </tr>
-					 	{% for receiver,day,hour,onvan in payamha %}
+					 	{% for upayam,receiver,zaman,onvan in payamha %}
 						  <tr>
 							<td style="width: 20%">{{receiver}}۱</th>
-							<td style="width: 20%">{{day}} ساعت {{hour}}</th>
-							<td style="width: 60%"><a href="/{{utype}}/payam_daryafti">{{onvan}}</a></th>
+							<td style="width: 20%">{{zaman}}</th>
+							<td style="width: 60%"><a href="/{{utype}}/payam_daryafti?payam={{upayam}}">{{onvan}}</a></th>
 						  </tr>
 						{% endfor %}
 				</table>
