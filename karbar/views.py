@@ -36,7 +36,7 @@ def show_profile(request):
                 return render(request, template, args)
             else:
                 login(request, user)
-                return redirect('/karbar/sabtename_hamyar/')
+                return redirect('/hamiar/')
         else:
             message = 'نام کاربری شما در سامانه ثبت نشده است'
             args = {'form': form, 'message': message, 'utype' : 'karbar'
