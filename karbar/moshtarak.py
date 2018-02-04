@@ -83,7 +83,7 @@ def show_moshahede_tarakonesh_haye_mali(request,user):
                                         , 'progress': karbar.darbare_ma.progress()
                                         , 'tarakoneshha' : tarakoneshha
                                         , 'username': request.user})
-#TODO bayd tarakonesh haye mali ro behesh befrestim onvan,mablagh,user,date    bazi tarakonesh ha ro nadarim k :(
+#TODO (onvan,mablagh,user,date)    bazi tarakonesh ha ro nadarim k :(
 
 
 @login_required
