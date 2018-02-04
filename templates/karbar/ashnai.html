@@ -118,8 +118,7 @@
     {% endif %}
 
 <div class="container-fluid">
-
-	{% if utype == "karbar" %}
+		{% if utype == "karbar" %}
 	<!-- Left Column-->
     <div class="col-sm-3">
       <!--Form-->
@@ -128,16 +127,18 @@
                     <h1 class="panel-title"><strong>ورود</strong></h1>
                 </div>
                 <div class="panel-body" align="right">
-                    <form>
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="uid" name="uid" placeholder="Username">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Password">
-                        </div>
-                        <button type="add" class="btn btn-default"><a href="/karbar/sabtename_hamyar" style="color: white">ثبت نام همیار</a></button>
-                        <button type="submit" class="btn btn-default" style="color: white">تایید</button>
-                    </form>
+                    <form action="/karbar/" method="post">
+						{% csrf_token %}
+                        <!--<div class="form-group">-->
+                            <input type="text" class="form-control" id="uid" name="username" placeholder="Username">
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                          <br>   <input type="password" class="form-control" id="pwd" name="password" placeholder="Password">
+                        <!--</div>-->
+                        <button type="add" class="btn btn-default"><a href="/karbar/sabtename_hamyar" style="color: white">ثبت نام همیار جدید</a></button>
+                        <input type="submit" class="btn btn-default" style="color: white" value=" ورود">
+                                                    <p style="color: red">{{ message }}</p>
+					</form>
                 </div>
 	  </div>
 	</div><!--/Left Column-->
@@ -155,13 +156,14 @@
 				</div>
 				<div class="panel-body" align= right >
 					<form>
-						<button type="submit" class="btn btn-default"><a href="/karbar/profile/">خروج</a></button>
+						<button type="add" class="btn btn-default"><a href="{% url 'logout' %}">خروج</a></button>
 					</form>
 				</div>
 			</div>
 
 		</div><!--/Left Column-->
 	{% endif %}
+
 
 
 		<!-- Center Column -->

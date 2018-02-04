@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.template import Context
 from django.template.loader import get_template
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 import karbar.darbare_ma
 from django.views.decorators.csrf import csrf_exempt
@@ -13,10 +13,6 @@ from karbar import moshtarak
 import hamiar
 from karbar.models import *
 from madadju.models import Madadju, Niaz
-
-def karbar_logout(request):
-    logout(request)
-    redirect('/karbar/')
 
 def user_type(user):
     userkarbarInstance = karbar.models.UserKarbar.objects.get(user=user)
@@ -52,7 +48,7 @@ def show_profile(request):
             else:
                 utype=user_type(user)
                 login(request, user)
-                return redirect('/'+utype+'/')
+                return HttpResponseRedirect('/'+utype+'/'+"?success=1")
         else:
             message = 'نام کاربری شما در سامانه ثبت نشده است'
             args = {'form': form, 'message': message, 'utype' : 'karbar'

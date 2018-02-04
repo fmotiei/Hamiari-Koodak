@@ -1,7 +1,23 @@
 from django.shortcuts import render
-
+from karbar.forms import  SignInForm
 import karbar
 from madadju.models import Madadju, Niaz
+from django import forms
+from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
+from django.template import Context
+from django.template.loader import get_template
+from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth import authenticate, login, logout
+
+def user_type(user):
+    userkarbarInstance = karbar.models.UserKarbar.objects.get(user=user)
+    if userkarbarInstance.is_hamiar:
+        return 'hamiar'
+    elif userkarbarInstance.is_madadkar:
+        return 'madadkar'
+    elif userkarbarInstance.is_madadju:
+        return 'madadju'
 
 
 def show_user(request,user):
@@ -108,25 +124,113 @@ def show_hamiar_pri(request,user):
 
 def show_ahdaf(request,user):
     template = 'karbar/ahdaf.html'
-    return render(request, template, {'ahdaf': karbar.darbare_ma.ahdaf_text()
-                                      ,'progress':karbar.darbare_ma.progress()
-                                      ,'utype' : user
-                                      ,'username':''})
+    if request.method == 'GET':
+        form = SignInForm()
+
+        return render(request, template, {'form': form, 'utype' : 'karbar'
+        , 'progress': karbar.darbare_ma.progress()
+        , 'username':''
+        , 'ahdaf': karbar.darbare_ma.ahdaf_text()})
+
+    if request.method == 'POST':
+        form = SignInForm(request.POST)
+        if form.confirm_login_allowed(request):
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request, username=username, password=password)
+            if user is None:
+                message = 'گذرواژه اشتباه ‌است'
+                args = {'form': form, 'message': message ,'utype' : 'karbar'
+        , 'progress': karbar.darbare_ma.progress()
+        , 'ahdaf': karbar.darbare_ma.ahdaf_text() }
+                return render(request, template, args)
+            else:
+                utype=user_type(user)
+                login(request, user)
+                return HttpResponseRedirect('/'+utype+'/'+"?success=1")
+        else:
+            message = 'نام کاربری شما در سامانه ثبت نشده است'
+            args = {'form': form, 'message': message, 'utype' : 'karbar'
+        , 'progress': karbar.darbare_ma.progress()
+        , 'username':''
+        , 'ahdaf': karbar.darbare_ma.ahdaf_text() }
+            return render(request, template, args)
 
 def show_ashnai(request,user):
     template = 'karbar/ashnai.html'
-    return render(request, template, {'ashnai': karbar.darbare_ma.ashnai_text()
-                                      ,'progress':karbar.darbare_ma.progress()
-                                      ,'utype' : user
-                                      , 'username' : ''})
+    # return render(request, template, {'ashnai': karbar.darbare_ma.ashnai_text()
+    #                                   ,'progress':karbar.darbare_ma.progress()
+    #                                   ,'utype' : user
+    #                                   , 'username' : ''})
 
+    if request.method == 'GET':
+        form = SignInForm()
+
+        return render(request, template, {'form': form, 'utype' : user
+        , 'progress': karbar.darbare_ma.progress()
+        ,'ashnai': karbar.darbare_ma.ashnai_text()})
+
+    if request.method == 'POST':
+        form = SignInForm(request.POST)
+        if form.confirm_login_allowed(request):
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request, username=username, password=password)
+            if user is None:
+                message = 'گذرواژه اشتباه ‌است'
+                args = {'form': form, 'message': message ,'utype' : user
+        , 'progress': karbar.darbare_ma.progress(),
+                        'ashnai': karbar.darbare_ma.ashnai_text() }
+                return render(request, template, args)
+            else:
+                utype=user_type(user)
+                login(request, user)
+                return HttpResponseRedirect('/'+utype+'/'+"?success=1")
+        else:
+            message = 'نام کاربری شما در سامانه ثبت نشده است'
+            args = {'form': form, 'message': message, 'utype' : user
+        , 'progress': karbar.darbare_ma.progress()
+        , 'username':''
+        ,'ashnai': karbar.darbare_ma.ashnai_text() }
+            return render(request, template, args)
 
 def show_sakhtar_sazmani(request,user):
     template = 'karbar/sakhtar_sazmani.html'
-    return render(request, template, {'sakhtar_sazmani': karbar.darbare_ma.sakhtar_sazmani_text()
-                                      ,'progress':karbar.darbare_ma.progress()
-                                      ,'utype' : user
-                                      ,'username':''})
+    # return render(request, template, {'sakhtar_sazmani': karbar.darbare_ma.sakhtar_sazmani_text()
+    #                                   ,'progress':karbar.darbare_ma.progress()
+    #                                   ,'utype' : user
+    #                                   ,'username':''})
+    if request.method == 'GET':
+        form = SignInForm()
+
+        return render(request, template, {'form': form, 'utype' : user
+        , 'progress': karbar.darbare_ma.progress()
+        ,'sakhtar_sazmani': karbar.darbare_ma.sakhtar_sazmani_text()})
+
+    if request.method == 'POST':
+        form = SignInForm(request.POST)
+        if form.confirm_login_allowed(request):
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request, username=username, password=password)
+            if user is None:
+                message = 'گذرواژه اشتباه ‌است'
+                args = {'form': form, 'message': message ,'utype' : user
+        , 'progress': karbar.darbare_ma.progress(),
+                        'sakhtar_sazmani': karbar.darbare_ma.sakhtar_sazmani_text() }
+                return render(request, template, args)
+            else:
+                utype=user_type(user)
+                login(request, user)
+                return HttpResponseRedirect('/'+utype+'/'+"?success=1")
+        else:
+            message = 'نام کاربری شما در سامانه ثبت نشده است'
+            args = {'form': form, 'message': message, 'utype' : user
+        , 'progress': karbar.darbare_ma.progress()
+        , 'username':''
+        ,'sakhtar_sazmani': karbar.darbare_ma.sakhtar_sazmani_text() }
+            return render(request, template, args)
+
 
 def show_moshahede_list_koodakan(request,user):
     template = 'karbar/moshahede_list_koodakan.html'
@@ -143,3 +247,38 @@ def show_moshahede_list_niazhaye_fori_taminnashode(request,user):
                                       ,'progress':karbar.darbare_ma.progress()
                                       ,'utype' : user
                                       ,'username':''})
+
+
+
+def mylogin(template, request):
+    if request.method == 'GET':
+        form = SignInForm()
+
+        return render(request, template, {'form': form, 'utype' : 'karbar'
+        , 'progress': karbar.darbare_ma.progress()
+        , 'username':''
+        , 'roydadha' : {} })
+
+    if request.method == 'POST':
+        form = SignInForm(request.POST)
+        if form.confirm_login_allowed(request):
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request, username=username, password=password)
+            if user is None:
+                message = 'گذرواژه اشتباه ‌است'
+                args = {'form': form, 'message': message ,'utype' : 'karbar'
+        , 'progress': karbar.darbare_ma.progress()
+        , 'roydadha' : {} }
+                return render(request, template, args)
+            else:
+                utype=user_type(user)
+                login(request, user)
+                return HttpResponseRedirect('/'+utype+'/'+"?success=1")
+        else:
+            message = 'نام کاربری شما در سامانه ثبت نشده است'
+            args = {'form': form, 'message': message, 'utype' : 'karbar'
+        , 'progress': karbar.darbare_ma.progress()
+        , 'username':''
+        , 'roydadha' : {} }
+            return render(request, template, args)
