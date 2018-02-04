@@ -26,5 +26,6 @@ urlpatterns = [
     url(r'^moshahede_list_niazhaye_fori_taminnashode/$', karbar.views.show_moshahede_list_niazhaye_fori_taminnashode),
     url(r'^profile/$', karbar.views.show_profile),
     url(r'^sabtename_hamyar/$', karbar.views.show_sabtename_hamyar),
+    url(r'^regiset_success/$', karbar.views.show_register_success),
     url(r'^$', karbar.views.show_profile),
 ]

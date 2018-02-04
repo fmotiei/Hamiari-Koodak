@@ -42,7 +42,7 @@ def show_sabtename_hamyar(request):
             staff=staff_members.objects.create(stafID=ukarbar,pardakhti=0,dariafti=0 )
             hamiar.models.Hamiar.objects.create(staffID=staff )
             login(request, user)
-            return render(request, 'karbar/afzayesh_etebar.html', {'form': form})
+            return render(request, 'karbar/regiset_success.html', {'form': form})
             # return HttpResponseRedirect(reverse("hamyar_panel")+"?success=1")  # this should be hamyar's own page
         else:
             return render(request, template, {'form': form})
@@ -63,3 +63,6 @@ def show_moshahede_list_koodakan(request):
 
 def show_moshahede_list_niazhaye_fori_taminnashode(request):
     return moshtarak.show_moshahede_list_niazhaye_fori_taminnashode(request,'karbar')
+
+def show_register_success(request):
+    return render(request,"karbar/regiset_success.html")

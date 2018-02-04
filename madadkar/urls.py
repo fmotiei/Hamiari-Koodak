@@ -47,6 +47,8 @@ urlpatterns = [
     url(r'^virayesh_niaz/$',madadkar.views.show_virayesh_niaz),
     url(r'^vaziat_tahsili/$',madadkar.views.show_vaziat_tahsili),
     url(r'^moshahede_list_koodakan/$', madadkar.views.show_moshahede_list_koodakan),
+
+
     url(r'^moshahede_list_niazhaye_fori_taminnashode/$', madadkar.views.show_moshahede_list_niazhaye_fori_taminnashode),
     url(r'^$', madadkar.views.show_madadkar),
 ]
