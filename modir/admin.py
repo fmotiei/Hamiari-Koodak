@@ -1,4 +1,6 @@
 from django.contrib import admin
+from .models import *
 
 # Register your models here.
-#kjahfsd
+admin.site.register(ModirArshad)
+admin.site.register(ModirKarshenas)

@@ -89,7 +89,7 @@
 				<div class="panel-heading">
 					<h3 class="panel-title" align=right >
 						<span class="glyphicon glyphicon-log-in"></span>
-						نام کاربر
+						{{username}}
 					</h3>
 				</div>
 				<div class="panel-body" align= right >
@@ -304,19 +304,14 @@
 					</h3>
 				</div>
 				<div class="panel-body">
+					{% for num,pr in progress %}
 					<div class="progress">
-						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="97"
-						aria-valuemin="0" aria-valuemax="100" style="width:97%">
-							۹۷٪ نیازهای مددجویان تامین شده است.
+						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{num}}"
+						aria-valuemin="0" aria-valuemax="100" style="width:{{num}}%">
+							{{num}}{{pr}}
 						</div>
 					</div>
-					<div class="progress">
-						<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="80"
-						aria-valuemin="0" aria-valuemax="100" style="width:80%" align="right"><rtl>
-							۸۰٪ نیازهای فوری مددجویان تامین شده است.
-						</rtl>
-						</div>
-					</div>
+					{% endfor %}
 				</div>
 			</div>
 
