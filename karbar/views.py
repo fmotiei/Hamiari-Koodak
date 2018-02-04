@@ -1,27 +1,60 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.template import Context
 from django.template.loader import get_template
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 import karbar.darbare_ma
 from django.views.decorators.csrf import csrf_exempt
-from .forms import SignUpForm
+from .forms import SignUpForm, SignInForm
 from .models import *
 from karbar import moshtarak
 import hamiar
 from madadju.models import Madadju, Niaz
 
 def show_profile(request):
-    return moshtarak.show_user(request,'karbar')
+    template = 'karbar/index.html'
+    if request.method == 'GET':
+        form = SignInForm()
+        return render(request, template, {'form': form, 'utype' : 'karbar'
+        , 'progress': karbar.darbare_ma.progress()
+        , 'username':''
+        , 'roydadha' : {} })
+
+    if request.method == 'POST':
+        form = SignInForm(request.POST)
+        if form.confirm_login_allowed(request):
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request, username=username, password=password)
+            if user is None:
+                message = 'گذرواژه اشتباه ‌است'
+                args = {'form': form, 'message': message ,'utype' : 'karbar'
+        , 'progress': karbar.darbare_ma.progress()
+        , 'roydadha' : {} }
+                return render(request, template, args)
+            else:
+                login(request, user)
+                return redirect('/karbar/sabtename_hamyar/')
+        else:
+            message = 'نام کاربری شما در سامانه ثبت نشده است'
+            args = {'form': form, 'message': message, 'utype' : 'karbar'
+        , 'progress': karbar.darbare_ma.progress()
+        , 'username':''
+        , 'roydadha' : {} }
+            return render(request, template, args)
 
 
 def show_sabtename_hamyar(request):
     template = 'karbar/sabtename_hamyar.html'
     if request.method == 'GET':
         form = SignUpForm()
-        return render(request, template, {'form': form})
+        return  render(request, template, {'form': form, 'utype' : 'karbar'
+        , 'progress': karbar.darbare_ma.progress()
+        , 'username':''
+        , 'roydadha' : {} })
+
 
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -34,7 +67,10 @@ def show_sabtename_hamyar(request):
             password = form.cleaned_data['password']
             email = form.cleaned_data['email']
             if User.objects.filter(username=username).exists():
-                return render(request, template, {'form': form})
+                return render(request, template, {'form': form, 'utype' : 'karbar'
+        , 'progress': karbar.darbare_ma.progress()
+        , 'username':''
+        , 'roydadha' : {} })
 
             user = User.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name)
             user.save()
@@ -42,10 +78,7 @@ def show_sabtename_hamyar(request):
             staff=staff_members.objects.create(stafID=ukarbar,pardakhti=0,dariafti=0 )
             hamiar.models.Hamiar.objects.create(staffID=staff )
             login(request, user)
-            return render(request, '/hamiar/', {'form': form, 'utype' : 'hamiar'
-        , 'progress': karbar.darbare_ma.progress()
-        # , 'username':''
-        , 'roydadha' : {} })
+            return render(request, 'karbar/regiset_success.html', {'form': form})
             # return HttpResponseRedirect(reverse("hamyar_panel")+"?success=1")  # this should be hamyar's own page
         else:
             return render(request, template, {'form': form})
