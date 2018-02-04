@@ -14,8 +14,13 @@ import hamiar
 from karbar.models import *
 from madadju.models import Madadju, Niaz
 def user_type(user):
-    username=user.username
-    hamiar.models.Hamiar.staffID.stafID.user.objects.get(username=username)
+    userkarbarInstance = karbar.models.UserKarbar.objects.get(user=user)
+    if userkarbarInstance.is_hamiar:
+        return 'hamiar'
+    elif userkarbarInstance.is_madadkar:
+        return 'madadkar'
+    elif userkarbarInstance.is_madadju:
+        return 'madadju'
 
 
 def show_profile(request):
@@ -40,9 +45,9 @@ def show_profile(request):
         , 'roydadha' : {} }
                 return render(request, template, args)
             else:
-                user_type(user)
+                utype=user_type(user)
                 login(request, user)
-                return redirect('/hamiar/')
+                return redirect('/'+utype+'/')
         else:
             message = 'نام کاربری شما در سامانه ثبت نشده است'
             args = {'form': form, 'message': message, 'utype' : 'karbar'
@@ -80,7 +85,7 @@ def show_sabtename_hamyar(request):
 
             user = User.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name)
             user.save()
-            ukarbar=UserKarbar.objects.create(user=user, phone_number=phone_number, address=address)
+            ukarbar=UserKarbar.objects.create(user=user, phone_number=phone_number, address=address, is_hamiar=True)
             staff=staff_members.objects.create(stafID=ukarbar,pardakhti=0,dariafti=0 )
             hamiar.models.Hamiar.objects.create(staffID=staff )
             login(request, user)

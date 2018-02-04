@@ -1,18 +1,17 @@
 from django.db import models
 from .models import *
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
 
 from datetime import datetime
 
-class User(AbstractUser):
-    is_hamiar = models.BooleanField('hamiar status', default=False)
-    is_madadju = models.BooleanField('madadju status', default=False)
-    is_madadkar = models.BooleanField('madadkar status', default=False)
 
 class UserKarbar(models.Model):
-    user =   models.OneToOneField(User, on_delete=models.CASCADE, default='')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default='')
     address = models.CharField(max_length=100)
     phone_number = models.CharField( max_length=17, blank=True)  # validators should be a list
+    is_hamiar = models.BooleanField( default=False)
+    is_madadkar = models.BooleanField( default=False)
+    is_madadju = models.BooleanField( default=False)
     def __str__(self):
         return self.user.username
     def __str__(self):

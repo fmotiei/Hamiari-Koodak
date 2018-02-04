@@ -6,11 +6,11 @@ import karbar
 
 
 class ModirArshad(models.Model):
-    staffID =   models.OneToOneField(karbar.models.staff_members, on_delete=models.CASCADE, default='')
+    staffID =  models.OneToOneField(karbar.models.staff_members, on_delete=models.CASCADE, default='')
     hoghugh = models.PositiveIntegerField()
 
 
 class ModirKarshenas(models.Model):
-    staffID =   models.OneToOneField(karbar.models.staff_members, on_delete=models.CASCADE, default='')
+    staffID =  models.OneToOneField(karbar.models.staff_members, on_delete=models.CASCADE, default='')
     hoghugh = models.PositiveIntegerField()
 
