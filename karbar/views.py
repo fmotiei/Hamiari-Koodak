@@ -44,7 +44,7 @@ def show_sabtename_hamyar(request):
             login(request, user)
             return render(request, '/hamiar/', {'form': form, 'utype' : 'hamiar'
         , 'progress': karbar.darbare_ma.progress()
-        , 'username':''
+        # , 'username':''
         , 'roydadha' : {} })
             # return HttpResponseRedirect(reverse("hamyar_panel")+"?success=1")  # this should be hamyar's own page
         else:
