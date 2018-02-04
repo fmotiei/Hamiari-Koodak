@@ -15,6 +15,9 @@ from django.template.loader import get_template
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 
+from madadkar.models import Madadkar, hoghugh_dariafti
+
+
 def user_type(user):
     userkarbarInstance = karbar.models.UserKarbar.objects.get(user=user)
     if userkarbarInstance.is_hamiar:
@@ -70,16 +73,17 @@ def show_moshahede_tarakonesh_haye_mali(request,user):
     if user == 'madadkar' :
         userKarbar = UserKarbar.objects.get(user=request.user)
         staffMember = staff_members.objects.get(stafID=userKarbar)
-        hamiar = Hamiar.objects.get(staffID=staffMember)
-
-
+        madadkar = Madadkar.objects.get(staffID=staffMember)
+        for tarakonesh in hoghugh_dariafti.objects.all():
+            if tarakonesh.maddadkar == madadkar :
+                tarakoneshha.append(('پرداخت حقوق',tarakonesh.mablagh,'موسسه',tarakonesh.zaman))
 
 
     return render(request, template, {'utype' : user
                                         , 'progress': karbar.darbare_ma.progress()
                                         , 'tarakoneshha' : tarakoneshha
                                         , 'username': request.user})
-#TODO bayd tarakonesh haye mali ro behesh befrestim onvan,mablagh,user,date
+#TODO bayd tarakonesh haye mali ro behesh befrestim onvan,mablagh,user,date    bazi tarakonesh ha ro nadarim k :(
 
 
 @login_required
