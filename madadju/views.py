@@ -10,16 +10,14 @@ from karbar import moshtarak
 from madadju.models import Madadju, Niaz
 
 
-#TODO username befrestim
-
 def show_darkhast_taghir_madadkar(request):
     template = 'madadju/darkhast.html'
     return render(request, template, {'utype' : 'madadju'
                                     , 'progress': karbar.darbare_ma.progress()
-                                    ,'username' : ''})
-#TODO html to DB
-#TODO send madadju's madadkar name
-
+                                    ,'username' : ''
+                                      , 'mName' : ''})
+#TODO username : username karbar , mName : username madadkare marbute
+#TODO tozihat ra begirad
 
 def show_profile(request):
     template = 'madadju/profile.html'
@@ -28,10 +26,23 @@ def show_profile(request):
                                     , 'username' : ''
                                     , 'first_name': ''
                                     , 'last_name': ''
-                                    , 'alarm': '1'
+                                    , 'alarm': ''
                                     , 'madadkar': ''
-                                    , 'hamiarha': {}})
-#TODO vurudi takmil shavad
+                                    , 'hamiarha': []})
+#TODO username : username karbar , first_name : first name karbar , last_name : last name karbar , alarm : alarm karbar , madadkar : username madadkare marbute , hamiarha :username hamiaran marbute
+
+def show_hamiar_profile(request):
+    template = 'madadju/hamiar_profile.html'
+    return render(request, template, {'utype' : 'madadju'
+                                    , 'progress': karbar.darbare_ma.progress()
+                                    , 'username' : ''
+                                      , 'husername' : ''
+                                      , 'hfName' : ''
+                                      , 'hlName' : ''
+                                      , 'madadjuyan' : []})
+#TODO username: username karbar , husername : username hamiar , hfName : first name hamiar , hlName : last name hamiar , madadjuyan : username madadjuyan tahte hemayat hamiar
+
+
 
 def show_madadju(request):
     return moshtarak.show_user(request,'madadju')
@@ -59,15 +70,6 @@ def show_roydadha(request):
 
 def show_sandoghe_payamhaye_daryafti(request):
     return moshtarak.show_sandoghe_payamhaye_daryafti(request,'madadju')
-
-def show_hamiar_profile(request):
-    template = 'madadju/hamiar_profile.html'
-    return render(request, template, {'tozihat': karbar.darbare_ma.tozihat_text()
-        , 'images': karbar.darbare_ma.akhbar_image()
-        , 'progress': karbar.darbare_ma.progress()
-        , 'utype': 'madadju'
-        , 'username': ''})
-
 
 
 def show_sandoghe_payamhaye_ersali(request):
