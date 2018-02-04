@@ -91,6 +91,9 @@
 							<li><a href="/{{utype}}/ersal_payam">ارسال پیام به دیگر کاربران</a></li>
 							<li><a href="/{{utype}}/sandoghe_payamhaye_daryafti">صندوق پیام های دریافتی</a></li>
 							<li><a href="/{{utype}}/sandoghe_payamhaye_ersali">صندوق پیام های ارسالی</a></li>
+							{% if utype == 'madadkar' %}
+							<li><a href="/madadkar/sandoghe_payamhaye_entezar">صندوق پیام های در انتظار تایید</a></li>
+							{% endif %}
 						</ul>
 					</li>
                     <li>
