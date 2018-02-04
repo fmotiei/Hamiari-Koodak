@@ -56,25 +56,28 @@ def show_niaz_haye_madadju(request):
 
 def show_niaz_haye_tamin_nashode(request):
     template = 'madadkar/niaz_haye_tamin_nashode.html'
-    return render(request, template, {'username' : '',
+    niazha = []
+    for niaz in Niaz.objects.all():
+        if niaz.hemaiatshod == False:
+            niazha.append(niaz)
+    return render(request, template, {'username' : request.user,
                                       'progress': karbar.darbare_ma.progress(),
-                                      'niazha': [(n.niazmand.username, n.onvan, n.mablagh,n.niazFori) for n in []],
-                                      # todo niazhaye tamin nashode baraye hame madadju
-                                      'madadjuyan' : [m.username for m in []],
-                                      #todo hame madadjuha
+                                      'niazha': [(n.niazmand.username, n.onvan, n.mablagh,n.niazFori) for n in niazha],
                                       })
 
 
 def show_niaz_haye_tamin_nashode_fori(request):
     template = 'madadkar/niaz_haye_tamin_nashode_fori.html'
-    return render(request, template, {'username' : '',
+    niazha = []
+    for niaz in Niaz.objects.all():
+        if niaz.hemaiatshod == False:
+            if niaz.niazFori:
+                niazha.append(niaz)
+    return render(request, template, {'username': request.user,
                                       'progress': karbar.darbare_ma.progress(),
-                                      'niazha': [(n.niazmand.username, n.onvan, n.mablagh, n.niazFori) for n in []],
-                                      # todo niazhaye tamin nashode fori baraye hame madadju
-                                      'madadjuyan': [m.username for m in []],
-                                      # todo hame madadjuha
-
+                                      'niazha': [(n.niazmand.username, n.onvan, n.mablagh, n.niazFori) for n in niazha],
                                       })
+
 
 def show_payam_entezar(request):
     template = 'madadkar/payam_entezar.html'
@@ -120,6 +123,7 @@ def show_profile_madadju(request):
                                       'alarm':madadju.ekhtar,
                                       'progress': karbar.darbare_ma.progress(),
                                       'madadju_un' : request.GET.get('madadju_un'),
+                                      'src':request.GET.get('src'),
                                       'madadju_fn' : user.first_name,
                                       'madadju_ln' : user.last_name,
                                       'hamiars': hamiarha,

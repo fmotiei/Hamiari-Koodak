@@ -110,19 +110,20 @@
 			<div class="row" align= right>
 				<h2><strong>نیازهای تامین نشده فوری</strong></h2>
 				<article class="col-xs-12">
-					<!--todo check un-->
 					{%for un, onvan, mablagh, fori in niazha%}
-					<h2><a href="#" >un</a></h2>
-					<p>{{onvan}}</p>
-					<p class="pull-right"><span class="label label-default">{{mablagh}}</span>
+					<h2><a href="/madadkar/profile_madadju?madadju_un={{un}}" >{{un}}</a></h2>
+					<p>{{onvan}}
+					<span class="label label-default">هزینه: {{mablagh}}</span>
 						{%if fori %}
-						<span class="label label-default">فوری</span></p>
+						<span class="label label-default">فوری</span>
 						{%endif%}
-					<br><br>
+					</p>
+						<br>
 					</hr>
 					{%endfor%}
 				</article>
 			</div>
+			<hr>
 		</div><!--/Center Column-->
 
 
@@ -137,8 +138,8 @@
 					<h1 class="panel-title"><span class="glyphicon glyphicon-random"></span>امور اختصاصی </h1>
 				</div>
 				<div class="list-group">
-					<a href="/madadkar/moshahede_niaz_haye_tamin_nashode" class="list-group-item">مشاهده لیست نیازهای تامین نشده</a>
-					<a href="/madadkar/moshahede_niaz_haye_tamin_nashode_fori" class="list-group-item">مشاهده لیست نیازهای تامین نشده فوری</a>
+					<a href="/madadkar/niaz_haye_tamin_nashode" class="list-group-item">مشاهده لیست نیازهای تامین نشده</a>
+					<a href="/madadkar/niaz_haye_tamin_nashode_fori" class="list-group-item">مشاهده لیست نیازهای تامین نشده فوری</a>
 					<a href="/madadkar/moshahede_madadjuyan_dar_entezar_madadkar" class="list-group-item">مشاهده لیست مددجویان در انتظار مددکار</a>
 				</div>
 			</div>
