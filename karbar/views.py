@@ -1,19 +1,21 @@
 from django import forms
+from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.template import Context
 from django.template.loader import get_template
 from django.http import HttpResponse
+from django.contrib.auth import authenticate, login
 import karbar.darbare_ma
 from django.views.decorators.csrf import csrf_exempt
 from .forms import SignUpForm
 from .models import *
-
-# Create your views here.
 from karbar import moshtarak
+import hamiar
 from madadju.models import Madadju, Niaz
 
 def show_profile(request):
     return moshtarak.show_user(request,'karbar')
+
 
 def show_sabtename_hamyar(request):
     template = 'karbar/sabtename_hamyar.html'
@@ -23,21 +25,27 @@ def show_sabtename_hamyar(request):
 
     if request.method == 'POST':
         form = SignUpForm(request.POST)
-        args = {'form': form}
         if form.is_valid():
-            new_hamyar = hamiar.models.Hamyar()
-            new_hamyar.first_name = form.cleaned_data['first_name']
-            new_hamyar.last_name = form.cleaned_data['last_name']
-            new_hamyar.phone_number = form.cleaned_data['phone_number']
-            new_hamyar.address = form.cleaned_data['address']
-            new_hamyar.email = form.cleaned_data['email']
-            new_hamyar.password = form.cleaned_data['password']
-            new_hamyar.username = form.cleaned_data['username']
-            new_hamyar.save()
-            return redirect('hamiar') #TODO inja redirect kone to safhe sing in
+            last_name = form.cleaned_data['last_name']
+            first_name = form.cleaned_data['first_name']
+            phone_number = form.cleaned_data['phone_number']
+            address = form.cleaned_data['address']
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            email = form.cleaned_data['email']
+            if User.objects.filter(username=username).exists():
+                return render(request, template, {'form': form})
+
+            user = User.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name)
+            user.save()
+            ukarbar=UserKarbar.objects.create(user=user, phone_number=phone_number, address=address)
+            staff=staff_members.objects.create(stafID=ukarbar,pardakhti=0,dariafti=0 )
+            hamiar.models.Hamiar.objects.create(staffID=staff )
+            login(request, user)
+            return render(request, 'karbar/regiset_success.html', {'form': form})
+            # return HttpResponseRedirect(reverse("hamyar_panel")+"?success=1")  # this should be hamyar's own page
         else:
-            message='ثبت نام شما با خطا مواجه شد! دوباره تلاش کنید.'
-            return render(request, template, {'form': form,'message':message})
+            return render(request, template, {'form': form})
 
 
 def show_ahdaf(request):
@@ -55,3 +63,6 @@ def show_moshahede_list_koodakan(request):
 
 def show_moshahede_list_niazhaye_fori_taminnashode(request):
     return moshtarak.show_moshahede_list_niazhaye_fori_taminnashode(request,'karbar')
+
+def show_register_success(request):
+    return render(request,"karbar/regiset_success.html")

@@ -88,12 +88,12 @@
 				<div class="panel-heading">
 					<h3 class="panel-title" align=right >
 						<span class="glyphicon glyphicon-log-in"></span> 
-						نام کاربر
+						{{username}}
 					</h3>
 				</div>
 				<div class="panel-body" align= right >
 					<form>
-						<button type="submit" class="btn btn-default"><a href="/index/">خروج</a></button>
+						<button type="submit" class="btn btn-default"><a href="/karbar/profile">خروج</a></button>
 					</form>
 				</div>
 			</div>	
@@ -106,23 +106,21 @@
 		
 			<div class="panel panel-default" align=right>
 				<div class="panel-heading">
-					<h1 class="panel-title"><strong>همیار شماره ۱</strong></h1>
+					<h1 class="panel-title"><strong>{{username}}</strong></h1>
 				</div>
 				<div class="list-group">
 					<br>
-					<p>مسعود ساعدی</p>
+					<p>{{fn}}&nbsp{{ln}}</p>
 					<hr>
 					<p>همیار</p>
 					<hr>
 					<p>مددجویان تحت حمایت:</p>
-					<a href="/hamiar/profile_madadju" >مددجوی شماره ۱</a>
+					{% for madadju in madadjuyan %}
+                    <p>{{madadju}}</p>
 					<br>
-					<a href="/hamiar/profile_madadju" >مددجوی شماره ۲</a>
-					<br>
-					<a href="/hamiar/profile_madadju" >مددجوی شماره ۳</a>
-					<br>
+					{% endfor %}
 					<hr>
-					<p> اعتبار همیار : ۵۰۰۰۰ هزار تومان</p>
+					<p> اعتبار همیار : {{etebar}} هزار تومان</p>
 					<a href="/hamiar/moshahede_niaz_haye_taht_hemayat" class="list-group-item">مشاهده نیازهای تحت حمایت همیار</a>
 				</div>
 			</div>		
@@ -153,24 +151,19 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title" align="right">
+						<span class="glyphicon glyphicon-scale"></span>
 						نمودار تامین نیازها
-						<span class="glyphicon glyphicon-scale"></span> 
 					</h3>
 				</div>
 				<div class="panel-body">
+					{% for num,pr in progress %}
 					<div class="progress">
-						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="97"
-						aria-valuemin="0" aria-valuemax="100" style="width:97%">
-							۹۷٪ نیازهای مددجویان تامین شده است.
+						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{num}}"
+						aria-valuemin="0" aria-valuemax="100" style="width:{{num}}%">
+							{{num}}{{pr}}
 						</div>
 					</div>
-					<div class="progress">
-						<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="80"
-						aria-valuemin="0" aria-valuemax="100" style="width:80%" align="right"><rtl>
-							۸۰٪ نیازهای فوری مددجویان تامین شده است.
-						</rtl>
-						</div>
-					</div>
+					{% endfor %}
 				</div>
 			</div>
 
@@ -178,16 +171,14 @@
 
 	</div><!--/container-fluid-->
 	
-	<footer>
-		<center>
+	<footer style="text-align: center">
         <div class="small-print">
-          <div class="container">
-            <p><a href="#">Telegram</a> | <a href="#">Instagram</a> | <a href="#">Facebook</a></p>
-            <p>  تمامی حقوق برای بنیاد خیریه کودک محفوظ است.&copy; </p>
-          </div>
+        	<div class="container">
+        		<p><a href="#">Telegram</a> | <a href="#">Instagram</a> | <a href="#">Facebook</a></p>
+        		<p>  تمامی حقوق برای بنیاد خیریه کودک محفوظ است.&copy; </p>
+        	</div>
         </div>
-    	</center>
-  	</footer>
+	</footer>
 
 	
     <!-- jQuery -->

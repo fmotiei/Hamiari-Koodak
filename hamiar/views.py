@@ -11,38 +11,80 @@ from madadju.models import Madadju, Niaz
 
 def show_hemayat_az_moasese(request):
     template = 'hamiar/hemayat_az_moasese.html'
-    return render(request, template, {})
+    return render(request, template, {'utype':'hamiar'
+                                    , 'progress': karbar.darbare_ma.progress()
+                                    , 'username' : ''})
+#TODO html b DB username: username karbar
 
 def show_hemayat_az_niaz(request):
     template = 'hamiar/hemayat_az_niaz.html'
-    return render(request, template, {})
+    return render(request, template, {'utype':'hamiar'
+                                    , 'progress': karbar.darbare_ma.progress()
+                                    , 'username' : ''
+                                    , 'niazName' : ''
+                                      , 'hazineTaminShode' : ''
+                                      , 'hazineTaminNashode' : ''
+                                      , 'fori' : '' })
+#TODO username: username karbar , niazName : name niaz , hazine ha va fori marbut b niaz
 
 def show_moshahede_niaz_haye_taht_hemayat(request):
     template = 'hamiar/moshahede_niaz_haye_taht_hemayat.html'
-    return render(request, template, {})
+    return render(request, template, {'utype':'hamiar'
+                                    , 'progress': karbar.darbare_ma.progress()
+                                    , 'username' : ''
+                                      , 'madadjuyan' : [] })
+#TODO username: username karbar, madadjuyan : name,niazha k niazha : onvan , hazine tamin shode va nashode , fori marbut b niaz
 
 def show_niaz_haye_tamin_nashode(request):
     template = 'hamiar/niaz_haye_tamin_nashode.html'
-    return render(request, template, {})
+    return render(request, template, {'utype':'hamiar'
+                                    , 'progress': karbar.darbare_ma.progress()
+                                    , 'username' : ''
+                                      , 'madadjuyan' : [] })
+#TODO username: username karbar, madadjuyan : name,niazha k niazha : onvan , hazine tamin shode va nashode , fori marbut b niaz
 
 def show_niaz_haye_tamin_nashode_fori(request):
     template = 'hamiar/niaz_haye_tamin_nashode_fori.html'
-    return render(request, template, {})
-
+    return render(request, template, {'utype':'hamiar'
+                                    , 'progress': karbar.darbare_ma.progress()
+                                    , 'username' : ''
+                                      , 'madadjuyan' : [] })
+#TODO username: username karbar, madadjuyan : name,niazha k niazha : onvan , hazine tamin shode va nashode , fori marbut b niaz
 
 def show_niaz_haye_madadju(request):
     template = 'hamiar/niaz_haye_madadju.html'
-    return render(request, template, {})
+    return render(request, template, {'utype':'hamiar'
+                                    , 'progress': karbar.darbare_ma.progress()
+                                    , 'username' : ''
+                                      , 'alarm' : ''
+                                      , 'name' : ''
+                                      , 'niazha' : [] })
+#TODO username: username karbar, niazha : onvan , hazine tamin shode va nashode , fori marbut b niaz
 
 def show_profile(request):
     template = 'hamiar/profile.html'
-    return render(request, template, {})
+    return render(request, template, {'utype':'hamiar'
+                                    , 'progress': karbar.darbare_ma.progress()
+                                    , 'username' : ''
+                                      , 'fn' : ''
+                                      , 'ln' : ''
+                                      , 'madadjuyan' : []
+                                      , 'etebar' : ''})
+#TODO username : username karbar , fn : first name karbar , ln : last name karbar , madadjuyan : username madadjuyan marbut b karbar , etebar : etebare karbar
 
 def show_profile_madadju(request):
     template = 'hamiar/profile_madadju.html'
-    return render(request, template, {})
-
-
+    return render(request, template, {'utype':'hamiar'
+                                    , 'progress': karbar.darbare_ma.progress()
+                                    , 'username' : ''
+                                      ,'mName' : ''
+                                      , 'alarm' : ''
+                                      , 'mfName' : ''
+                                      , 'mlName' : ''
+                                      , 'hamiaran': []
+                                      , 'vaziatUmumi' : ''})
+#TODO username : username karbar , mName: esme madadju , alarm : alarme madadju , mlName: familie madadju , hamiaran araye az esme hamiaran marbut b madadju , vaziatUmumi : vaziat tahsili umumi madadju
+#TODO bayad madadju ra baraye list niaz hayash befrestad
 
 
 def show_hamiar(request):

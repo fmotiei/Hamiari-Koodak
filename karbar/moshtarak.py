@@ -12,13 +12,17 @@ def show_user(request,user):
         , 'utype': user
         , 'username': ''})
 
+#TODO username: username karbar
+#TODO login
+
 
 def show_afzayesh_etebar(request,user):
     template = 'karbar/afzayesh_etebar.html'
     return render(request, template, {'utype' : user
                                     , 'progress': karbar.darbare_ma.progress()
                                     , 'username' : ''})
-#TODO html to DB
+#TODO username: username karbar
+#TODO etebar ra begirad
 
 
 def show_ersal_payam(request,user):
@@ -26,6 +30,7 @@ def show_ersal_payam(request,user):
     return render(request, template, {'utype' : user
                                     , 'progress': karbar.darbare_ma.progress()
                                     ,'username' : ''})
+#TODO
 
 def show_moshahede_tarakonesh_haye_mali(request,user):
     template = 'karbar/moshahede_tarakonesh_haye_mali.html'

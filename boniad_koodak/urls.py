@@ -19,9 +19,9 @@ from django.conf.urls import include,url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url('hamiar/',include('hamiar.urls')),
-    url('madadkar/',include('madadkar.urls')),
-    url('modir/',include('modir.urls')),
-    url('madadju/',include('madadju.urls')),
-    url('karbar/',include('karbar.urls')),
+    url(r'^hamiar/',include('hamiar.urls')),
+    url(r'^madadkar/',include('madadkar.urls')),
+    url(r'^modir/',include('modir.urls')),
+    url(r'^madadju/',include('madadju.urls')),
+    url(r'^karbar/',include('karbar.urls')),
 ]

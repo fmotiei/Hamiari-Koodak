@@ -1,41 +1,29 @@
 from django.db import models
-from madadju.models import *
-from madadkar.models import *
-from modir.models import *
-from hamiar.models import *
+from .models import *
+from django.contrib.auth.models import User
 
 from datetime import datetime
-class User(models.Model):
-    username = models.CharField(max_length=30, primary_key=True, unique=True)
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
+class UserKarbar(models.Model):
+    user =   models.OneToOneField(User, on_delete=models.CASCADE, default='')
     address = models.CharField(max_length=100)
-    email = models.EmailField()
-    online = models.BooleanField()  # is online
-    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
-                                 message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
-
-    phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)  # validators should be a list
+    phone_number = models.CharField( max_length=17, blank=True)  # validators should be a list
     def __str__(self):
-        return "%s %s" % (self.first_name, self.last_name)
-
-
-# class Meta:
-#    abstract = True
-
-
-class UserForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput)
-    class Meta:
-        model = User
-        fields = '__all__'
+        return self.user.username
+    def __str__(self):
+        return "%s %s" % (self.user.first_name, self.user.last_name)
 
 
 
-class staff_members(User):
+class staff_members(models.Model):
+    stafID =  models.OneToOneField(
+        UserKarbar,
+        on_delete=models.CASCADE,
+        primary_key=True, default=''
+    )
     pardakhti = models.PositiveIntegerField()#jame harchi ke pardakht kardan (momkene maslan madadkar az jib bezare)
     dariafti = models.PositiveIntegerField() #jame har chi dariaft kardan
-
+    def __str__(self):
+        return self.stafID.user.username
 # Create your models here.
 class Payam(models.Model):
     onvan = models.CharField(max_length=30)
@@ -70,7 +58,7 @@ class Payam_Madadju_Madadkar(Payam):
 class events(models.Model):
     onvan = models.CharField(max_length=30)
     matn = models.CharField(max_length=100)
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    user = models.ForeignKey( User, on_delete=models.CASCADE)
     zaman = models.DateTimeField(default=datetime.now, blank=True)
 
 

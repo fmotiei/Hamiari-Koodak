@@ -85,22 +85,18 @@
 					</h3>
 				</div>
 				<div class="panel-body" align="right">
-					<form action="/karbar">
-   <div class="form-group" align="right" method="post">
 
-      <ul align="right">
+					<form action="/karbar/sabtename_hamyar/" method="post">
+   <div class="form-group" align="right" >
+
+      <!--<ul align="right" >-->
   		{% csrf_token %}
-		{{form.as_ul}}
+		{{form.as_p}}
+
 	   <input type="submit" class="btn btn-default" style="color: white" value="ثبت">
 
-      </ul>
-
-
-	   {% if message %}
-          {% block messages %}
-              <div class='imp_msg'>{{ message }} </div>
-          {% endblock %}
-     {% endif %}
+      <!--</ul>-->
+{#{% if form.errors %}<p>{{ form.errors }}</p>{% endif %}#}
    </div>
 </form>
 
