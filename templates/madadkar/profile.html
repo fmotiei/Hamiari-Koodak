@@ -94,7 +94,7 @@
 				</div>
 				<div class="panel-body" align= right >
 					<form>
-						<button type="submit" class="btn btn-default"><a href="/index/">خروج</a></button>
+						<button type="submit" class="btn btn-default"><a href= "{% url 'logout' %}">خروج</a></button>
 					</form>
 				</div>
 			</div>	
@@ -108,15 +108,15 @@
 		
 			<div class="panel panel-default" align=right>
 				<div class="panel-heading">
-					<h1 class="panel-title"><strong>مددکار شماره ۱</strong></h1>
+					<h1 class="panel-title"><strong>{{username}}</strong></h1>
 				</div>
 				<div class="list-group">
 					<br>
-					<p>سارا فلاحی</p>
+					<p>{{first_name}} &nbsp {{last_name}}</p>
 					<hr>
 					<p>مددکار</p>
 					<hr>
-					<p> اعتبار مددکار : ۵۰۰۰۰ هزار تومان</p>
+					<p> اعتبار مددکار :{{etebar}} </p>
 					<a href="/madadkar/moshahede_madadjuyan_taht_kefalat" class="list-group-item">مشاهده لیست مددجویان تحت کفالت</a>
 				</div>
 			</div>		

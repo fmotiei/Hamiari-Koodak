@@ -22,10 +22,13 @@ class Madadju(models.Model):
     start_date = models.DateField(null=True, blank=True)
     active = models.BooleanField(default=False)  # modir activesh mikone
 
+    def username(self):
+        return self.user.user.username
+
 
 class sharhe_tahsil(models.Model):
     madadju = models.ForeignKey(Madadju, on_delete=models.CASCADE)
-    madadkar = models.ForeignKey(Madadkar, on_delete=models.PROTECT)  # madadkari ke sharho minvise
+    madadkar = models.ForeignKey(Madadkar, on_delete=models.CASCADE)  # madadkari ke sharho minvise
     sharh = models.CharField(max_length=1000)
     onvan = models.CharField(max_length=50)
     Type = (

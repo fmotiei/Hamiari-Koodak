@@ -2,43 +2,56 @@ from django.shortcuts import render
 from django.template import Context
 from django.template.loader import get_template
 from django.http import HttpResponse
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+
 
 
 # Create your views here.
 import karbar
+import madadju
+from hamiar.models import hemaiatNiaz
 from karbar import moshtarak
-from madadju.models import Madadju, Niaz, Madadkar, User, UserKarbar, staff_members
+from madadju.models import Madadju, Niaz, Madadkar, UserKarbar, staff_members
 
 
 def show_afzoudan_niaz(request):
     template = 'madadkar/afzoudan_niaz.html'
-    return render(request, template, {'progress': karbar.darbare_ma.progress()})
+    return render(request, template, {'progress': karbar.darbare_ma.progress(),
+                                      'username': request.user})
 #todo transform form fields to db
 
 def show_moshahede_madadjuyan_taht_kefalat(request):
     template = 'madadkar/moshahede_madadjuyan_taht_kefalat.html'
-    userKarbar = UserKarbar.objects.get(user = request.user)
+    user = request.user
+    userKarbar = UserKarbar.objects.get(user=request.user)
     staffMember = staff_members.objects.get(stafID=userKarbar)
     madadkar = Madadkar.objects.get(staffID=staffMember)
+
     return render(request, template, {'username' : request.user,
                                       'progress': karbar.darbare_ma.progress(),
-                                      'madadjuyan': [(m.user.user.username , m.user.user.first_name, m.user.user.last_name, m.ekhtar) for m in Madadju.objects.filter(madadkar=madadkar)]
+                                      'madadjuyan': [(m.user.user.username , m.user.user.first_name, m.user.user.last_name, m.ekhtar) for m in Madadju.objects.filter(madadkar=madadkar)]#filter(user_user_id = user.id)]
         #Madadju.objects.filter(madadkar!=Null)
                                       #todo link moshahede profile madadju
                                       })
 
-
+@login_required
 def show_niaz_haye_madadju(request):
     template = 'madadkar/niaz_haye_madadju.html'
-    return render(request, template, {'username' : '',
+    madadju_un = request.GET.get('madadju_un')
+    user = User.objects.get(username=madadju_un)
+    userKarbar = UserKarbar.objects.get(user=user)
+    madadju = Madadju.objects.get(user=userKarbar)
+    niazha = []
+    for niaz in Niaz.objects.all():
+        if niaz.niazmand == madadju:
+            niazha.append(niaz)
+    return render(request, template, {'username' : request.user,
                                       'progress': karbar.darbare_ma.progress(),
-                                      'niazha' : [( n.onvan, n.mablagh-n.mablagh_taminshodeh, n.mablagh_taminshodeh, n.niazFori) for n in []],
-                                      #todo all niazha for this madadju
-                                      'madadju_un' : '',
-                                      'madadju_mablagh' : '',
-                                      'madadju_taminshode' :'',
-                                      'madadju_alarm' : ''
-                                      #todo madadju(un, mablagh, taminshode) fill for 1 madadju
+                                      'niazha' :[( n.onvan, n.mablagh-n.mablagh_taminshodeh, n.mablagh_taminshodeh, n.niazFori) for n in niazha], # [ (type(n.niazmand),1,1,1) for n in Niaz.objects.all()],#= 'Madadju object (1)')],
+                                      'madadju_un' : madadju_un,
+                                      'madadju_alarm' : madadju.ekhtar
                                       })
 
 def show_niaz_haye_tamin_nashode(request):
@@ -77,19 +90,42 @@ def show_payam_entezar(request):
 
 def show_profile(request):
     template = 'madadkar/profile.html'
-    return render(request, template, {'username' : '',
+    userKarbar = UserKarbar.objects.get(user=request.user)
+    staffMember = staff_members.objects.get(stafID=userKarbar)
+    # madadkar = Madadkar.objects.get(staffID=staffMember)
+    return render(request, template, {'username' : request.user,
                                       'progress': karbar.darbare_ma.progress(),
-
+                                      'first_name': request.user.first_name,
+                                      'last_name': request.user.last_name,
+                                      'etebar': staffMember.dariafti - staffMember.pardakhti
                                       })
 
 
 def show_profile_madadju(request):
     template = 'madadkar/profile_madadju.html'
-    username = 'man'
-    if request.GET.get('salam'):
-        username = 'to'
-    return render(request, template, {'username' : request.GET.get('madadju'),
-                                      'progress': karbar.darbare_ma.progress()})
+    madadju_un = request.GET.get('madadju_un')
+    user = User.objects.get(username = madadju_un)
+    userKarbar = UserKarbar.objects.get(user=user)
+    madadju = Madadju.objects.get(user=userKarbar)
+    niazha = []
+    for niaz in hemaiatNiaz.objects.all():
+        if niaz.niaz.niazmand == madadju:
+            niazha.append(niaz)
+    hamiarha = []
+    for niaz in niazha:
+        if not hamiarha.contains(niaz.hamiar):
+            hamiarha.append(niaz.hamiar.staffID.stafID.user.username)
+
+    return render(request, template, {'username' : madadju_un,
+                                      'alarm':madadju.ekhtar,
+                                      'progress': karbar.darbare_ma.progress(),
+                                      'madadju_un' : request.GET.get('madadju_un'),
+                                      'madadju_fn' : user.first_name,
+                                      'madadju_ln' : user.last_name,
+                                      'hamiars': hamiarha,
+                                      'sharh': "onvan" + "-" + "sharh"
+                                      # 'sharh_kh': (madadju.sharhe_tahsil.Field_Taghir, madadju.sharhe_tahsil.ُType)
+                                      })
 
 def show_sandoghe_payamhaye_entezar(request):
     template = 'madadkar/sandoghe_payamhaye_entezar.html'
@@ -111,37 +147,62 @@ def show_virayesh_niaz(request):
 
 def show_vaziat_tahsili(request):
     template = 'madadkar/vaziat_tahsili.html'
-    return render(request, template, {'username' : '',
+    return render(request, template, {'username' : request.user,
+                                      'un': request.GET.get('madadju_un'),
                                       'progress': karbar.darbare_ma.progress()})
 
 
 def show_moshahede_madadjuyan_dar_entezar_madadkar(request):
     template = 'madadkar/moshahede_madadjuyan_dar_entezar_madadkar.html'
     return render(request, template, {'progress': karbar.darbare_ma.progress(),
-                                      'madadjuyan': [(m.first_name, m.last_name) for m in []],
+                                      'madadjuyan': [(m.username,m.user.user.first_name, m.user.user.last_name) for m in Madadju.objects.filter(madadkar=None)],
                                   #    Madadju.objects.filter(madadkar='Null')
-                                      'username' : ''
+                                      'username' : request.user
                                       #todo link moshahede profile madadju
                                       })
 
 
 def show_profile_madadju_bi_kefalat(request):
     template = 'madadkar/profile_madadju_bi_kefalat.html'
-    return render(request, template, {'username' : '',
-                                      'progress': karbar.darbare_ma.progress()})
+    madadju_un = request.GET.get('madadju_un')
+    user = User.objects.get(username=madadju_un)
+    userKarbar = UserKarbar.objects.get(user=user)
+    madadju = Madadju.objects.get(user=userKarbar)
+    niazha = []
+    for niaz in hemaiatNiaz.objects.all():
+        if niaz.niaz.niazmand == madadju:
+            niazha.append(niaz)
+    hamiarha = []
+    for niaz in niazha:
+        if not hamiarha.contains(niaz.hamiar):
+            hamiarha.append(niaz.hamiar.staffID.stafID.user.username)
+
+    return render(request, template, {'username' : request.user,
+                                      'alarm':madadju.ekhtar,
+                                      'progress': karbar.darbare_ma.progress(),
+                                      'madadju_un' : request.GET.get('madadju_un'),
+                                      'madadju_fn' : user.first_name,
+                                      'madadju_ln' : user.last_name,
+                                      'hamiars': hamiarha,
+                                      'sharh': "onvan" + "-" + "sharh"
+                                      })
 
 def show_niaz_haye_madadju_bi_kefalat(request):
     template = 'madadkar/niaz_haye_madadju_bi_kefalat.html'
-    return render(request, template, {'username' : '',
+    madadju_un = request.GET.get('madadju_un')
+    user = User.objects.get(username=madadju_un)
+    userKarbar = UserKarbar.objects.get(user=user)
+    madadju = Madadju.objects.get(user=userKarbar)
+    niazha = []
+    for niaz in Niaz.objects.all():
+        if niaz.niazmand == madadju:
+            niazha.append(niaz)
+    return render(request, template, {'username' : request.user,
                                       'progress': karbar.darbare_ma.progress(),
                                       'niazha': [(n.onvan, n.mablagh - n.mablagh_taminshodeh, n.mablagh_taminshodeh,
-                                                  n.niazFori) for n in []],
-                                      # todo all niazha for this madadju
-                                      'madadju_un': '',
-                                      'madadju_mablagh': '',
-                                      'madadju_taminshode': '',
-                                      'madadju_alarm': ''
-                                      # todo madadju(un, mablagh, taminshode) fill for 1 madadju
+                                                  n.niazFori) for n in niazha],
+                                      'madadju_un': madadju_un,
+                                      'madadju_alarm': madadju.ekhtar
                                       })
 
 

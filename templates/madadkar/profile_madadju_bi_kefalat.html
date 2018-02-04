@@ -109,23 +109,29 @@
 			<!-- Alert -->
 			<div class="panel panel-default" align=right>
 				<div class="panel-heading">
-					<h1 class="panel-title"><img src="/static/img/alarm.jpg" width="3%" alt="avatar" style="padding-left: 5px"><strong>مددجوی شماره ۱</strong> </h1>
+					<h1 class="panel-title">
+						{%if alarm %}
+						<img src="/static/img/alarm.jpg" width="3%" alt="avatar" style="padding-left: 5px">
+						{%else%}
+						<img src="/static/img/not_alarm.jpg" width="3%" alt="avatar" style="padding-left: 5px">
+						{%endif%}
+						<strong>{{madadju_un}}</strong> </h1>
 				</div>
 				<div class="list-group">
 					<br>
-					<p style="padding-right: 10px">علی سهیلی نژاد</p>
+					<p style="padding-right: 10px">{{madadju_fn}} &nbsp {{madadju_ln}}</p>
 					<hr>
+					{%for h in hamiars%}
 					<p><strong>همیاران مربوط:</strong></p>
-					<a style="padding-right: 10px" href="" >همیار شماره۱</a>
+					<a style="padding-right: 10px" href="" >{{h}}</a>
 					<br>
-					<a style="padding-right: 10px" href="" >همیار شماره۲</a>
+					{%endfor%}
 					<hr>
-					<strong>شرح حال و وضعیت تحصیلی عمومی:</strong>
-					<p style="padding-right: 10px">دانش آموز پیشرفت تحصیلی داشته است.</p>
+					<strong>شرح حال و وضعیت تحصیلی:</strong>
+					<p style="padding-right: 10px">{{sharh}}</p>
 					<hr>
-					<strong>شرح حال و وضعیت تحصیلی خصوصی:</strong>
-					<p style="padding-right: 10px">متنی وجود ندارد.</p>
-					<a href="/madadkar/niaz_haye_madadju_bi_kefalat" class="list-group-item">نیازهای مددجو</a>
+					<a href="/madadkar/niaz_haye_madadju?madadju_un={{madadju_un}}" class="list-group-item">نیازهای مددجو</a>
+					<a href="/madadkar/vaziat_tahsili?madadju_un={{madadju_un}}" class="list-group-item">ویرایش شرح حال و وضعیت تحصیلی</a>
 				</div>
 			</div>
 			<button type="add" class="btn btn-default"><a href = "/madadkar/moshahede_madadjuyan_dar_entezar_madadkar" style="color: black">بازگشت</a></button>

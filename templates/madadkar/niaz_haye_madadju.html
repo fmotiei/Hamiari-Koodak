@@ -113,22 +113,22 @@
 						{%if madadju_alarm%}
 						<img src="/static/img/alarm.jpg" width="3%" alt="avatar" style="padding-left: 5px">
 						{%else%}
-						<img src="/static/img/not_alarm.jpg" width="3%" alt="avatar" style="padding-left: 5px">
+						<img src="/static/img/not_alarm.png" width="3%" alt="avatar" style="padding-left: 5px">
 						{%endif%}
 						<strong>{{madadju_un}}</strong> </h1>
 				</div>
 				<div class="list-group">
 					<div class="list-group-item">
 					<table>
-						{%for onvan, mablagh_tamin_na_shodeh, mablagh_taminshodeh, fori in niazha %}
+						{%for onvan, mablagh_tamin_na_shodeh, mablaghtaminshodeh, fori in niazha %}
 						<tr>
 							<td>
 								<p><strong>{{onvan}}</strong></p>
 							</td>
 							<td style="padding-right: 5px">
 								<p class="pull-right">
-									<span class="label label-default">تامین شده:{{mablagh_taminshode}} </span>
-									<span class="label label-default">تامین نشده: {{mablagh_tamin_na_shode}}</span>
+									<span class="label label-default">تامین شده:{{mablaghtaminshodeh}} </span>
+									<span class="label label-default">تامین نشده: {{mablagh_tamin_na_shodeh}}</span>
 									{%if fori%}
 									<span class="label label-default">فوری</span>
 									{%endif%}
@@ -150,7 +150,7 @@
 				</div>
 			</div>
 			<button type="add" class="btn btn-default"><a href = "/madadkar/afzoudan_niaz" >افزودن نیاز جدید</a></button>
-			<button type="add" class="btn btn-default"><a href = "/madadkar/profile_madadju" >بازگشت</a></button>
+			<button type="add" class="btn btn-default"><a href="/madadkar/profile_madadju?madadju_un={{madadju_un}}">بازگشت</a></button>
 
 			<hr>
 		</div>

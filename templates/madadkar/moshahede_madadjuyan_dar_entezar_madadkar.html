@@ -115,11 +115,11 @@
               <th style="width: 40%">نام خانوادگی</th>
               <th style="width: 20%">پروفایل مددجو</th>
             </tr>
-				{%for fn, ln in madadjuyan%}
+				{%for un,fn, ln in madadjuyan%}
             <tr>
               <td style="width: 40%">{{fn}}</th>
               <td style="width: 40%">{{ln}}</th>
-              <td style="width: 20%"><a href="/madadkar/profile_madadju_bi_kefalat">مشاهده</a></th>
+              <td style="width: 20%"><a href="/madadkar/profile_madadju_bi_kefalat?madadju_un={{un}}">مشاهده</a></th>
             </tr>
 				{% endfor%}
         </table>
