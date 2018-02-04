@@ -22,7 +22,8 @@ class Hamiar(models.Model):
                                         blank=True)  # age delete kard acountesho kolan hazfesh nemikonim. inja minevisim
     start_date = models.DateField(null=True, blank=True)
     active = models.BooleanField(default=False)  # modir activesh mikone
-
+    def username(self):
+        return self.staffID.stafID.user.username
 
 class hemaiatNiaz(models.Model):
     hamiar = models.ForeignKey(Hamiar, on_delete=models.PROTECT)

@@ -21,6 +21,8 @@ class Madadju(models.Model):
                                     blank=True)  # age delete kard acountesho kolan hazfesh nemikonim. inja minevisim
     start_date = models.DateField(null=True, blank=True)
     active = models.BooleanField(default=False)  # modir activesh mikone
+    def username(self):
+        return self.user.user.username
 
     def username(self):
         return self.user.user.username
