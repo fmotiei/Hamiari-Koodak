@@ -17,6 +17,8 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 import karbar.views
+from django.conf import settings
+from django.contrib.auth.views import logout
 
 urlpatterns = [
     url(r'^ahdaf/$', karbar.views.show_ahdaf),
@@ -29,4 +31,6 @@ urlpatterns = [
     url(r'^sabtename_hamyar/$', karbar.views.show_sabtename_hamyar),
     url(r'^regiset_success/$', karbar.views.show_register_success),
     url(r'^$', karbar.views.show_profile),
+    url(r'^logout/$', logout, {'next_page': '/karbar/'}, name='logout')
+    # path(r'^karbar_logout/$', karbar.views.karbar_logout, name='karbar_logout'),
 ]

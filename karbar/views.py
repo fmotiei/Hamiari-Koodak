@@ -13,6 +13,11 @@ from karbar import moshtarak
 import hamiar
 from karbar.models import *
 from madadju.models import Madadju, Niaz
+
+def karbar_logout(request):
+    logout(request)
+    redirect('/karbar/')
+
 def user_type(user):
     userkarbarInstance = karbar.models.UserKarbar.objects.get(user=user)
     if userkarbarInstance.is_hamiar:
