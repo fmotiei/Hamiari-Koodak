@@ -127,7 +127,7 @@ def show_ahdaf(request,user):
     if request.method == 'GET':
         form = SignInForm()
 
-        return render(request, template, {'form': form, 'utype' : 'karbar'
+        return render(request, template, {'form': form, 'utype' : user
         , 'progress': karbar.darbare_ma.progress()
         , 'username':''
         , 'ahdaf': karbar.darbare_ma.ahdaf_text()})
@@ -140,7 +140,7 @@ def show_ahdaf(request,user):
             user = authenticate(request, username=username, password=password)
             if user is None:
                 message = 'گذرواژه اشتباه ‌است'
-                args = {'form': form, 'message': message ,'utype' : 'karbar'
+                args = {'form': form, 'message': message ,'utype' : user
         , 'progress': karbar.darbare_ma.progress()
         , 'ahdaf': karbar.darbare_ma.ahdaf_text() }
                 return render(request, template, args)
@@ -150,7 +150,7 @@ def show_ahdaf(request,user):
                 return HttpResponseRedirect('/'+utype+'/'+"?success=1")
         else:
             message = 'نام کاربری شما در سامانه ثبت نشده است'
-            args = {'form': form, 'message': message, 'utype' : 'karbar'
+            args = {'form': form, 'message': message, 'utype' : user
         , 'progress': karbar.darbare_ma.progress()
         , 'username':''
         , 'ahdaf': karbar.darbare_ma.ahdaf_text() }
