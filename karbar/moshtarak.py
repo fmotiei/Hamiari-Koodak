@@ -266,7 +266,7 @@ def show_amaliat_movafagh(request,user):
     template = 'karbar/amaliat_movafagh.html'
     return render(request, template, {'utype' : user
                                       , 'progress': karbar.darbare_ma.progress()
-                                      ,'username':''})
+                                      ,'username':request.user})
 
 
 def show_ahdaf(request,user):

@@ -12,7 +12,8 @@ import karbar
 from hamiar.models import hemaiatNiaz, Hamiar
 from karbar import moshtarak
 from karbar.models import UserKarbar, staff_members, Payment, events
-from madadju.models import Madadju, Niaz
+from madadju.models import Madadju, Niaz, sharhe_tahsil
+
 
 def is_hamiar(user):
     if not UserKarbar.objects.filter(user=user).exists():
@@ -24,6 +25,7 @@ def is_hamiar(user):
         else:
             staffMember = staff_members.objects.get(stafID=userKarbar)
             return Hamiar.objects.filter(staffID=staffMember).exists()
+
 
 
 @login_required(login_url='/permission/')
@@ -45,7 +47,7 @@ def show_hemayat_az_moasese(request):
             ukarbar.mojudi -= mablagh
             ukarbar.save()
             if User.objects.filter(username = "kheirieh").exists():
-                khairiehU=User.objects.get(username="kheireih")
+                khairiehU=User.objects.get(username="kheirieh")
                 UK=UserKarbar.objects.get(user=khairiehU)
                 UK.mojudi +=mablagh
                 UK.save()
@@ -61,6 +63,8 @@ def show_hemayat_az_moasese(request):
             return render(request, template, {'utype': 'hamiar'
                 , 'progress': karbar.darbare_ma.progress()
                 , 'username': request.user, 'form': form})
+
+
 
 @login_required(login_url='/permission/')
 @user_passes_test(is_hamiar,login_url='/permission/')
@@ -123,12 +127,12 @@ def Enseraf(request):
     hn=hemaiatNiaz.objects.get(niaz=niaz,hamiar = ourHamiar)
     niaz.mablagh-=hn.mablagh
     events.objects.create(onvan='انصراف از حمایت نیاز',
-                          matn='نیاز'+niaz.onvan+' از حمایت شما خارج شد.',
+                          matn='نیاز '+niaz.onvan+' از '+ niaz.niazmand.username() +' از حمایت شما خارج شد.',
                           user=request.user, zaman=datetime.datetime.now())
 
     events.objects.create(onvan='انصراف از حمایت نیاز',
-                          matn='یکی از حمایت های نیاز'+niaz.onvan+' از پوشش حمایتی خارج شد.',
-                          user=request.user, zaman=datetime.datetime.now())
+                          matn='یکی از حمایت های نیاز '+niaz.onvan+' از پوشش حمایتی خارج شد.',
+                          user=niaz.niazmand.user.user, zaman=datetime.datetime.now())
     hemaiatNiaz.objects.filter(niaz=niaz, hamiar=ourHamiar).delete()
 
     return HttpResponseRedirect(reverse("movafaghshodimHamiar"))
@@ -213,7 +217,8 @@ def show_niaz_haye_madadju(request):
                                     , 'username' : request.user,
                                       'niazha': [(n.id, n.onvan, n.mablagh - n.mablagh_taminshodeh,
                                                   n.mablagh_taminshodeh, n.niazFori) for n in niazha],
-                                      'madadju_un': madadju_un, })
+                                      'madadju_un': madadju_un,
+                                      'alarm' : madadju.ekhtar })
 
 @login_required(login_url='/permission/')
 @user_passes_test(is_hamiar,login_url='/permission/')
@@ -243,16 +248,26 @@ def show_profile_madadju(request):
     user = User.objects.get(username=madadju_un)
     userKarbar = UserKarbar.objects.get(user=user)
     madadju = Madadju.objects.get(user=userKarbar)
-    return render(request, template, {'utype':'hamiar',
-                                      'username': request.user,
-                                     'progress': karbar.darbare_ma.progress(),
+    niazha = []
+    for niaz in hemaiatNiaz.objects.all():
+        if niaz.niaz.niazmand == madadju:
+            niazha.append(niaz)
+    hamiarha = []
+    for niaz in niazha:
+        if not hamiarha.__contains__(niaz.hamiar.username()):
+            hamiarha.append(niaz.hamiar.staffID.stafID.user.username)
+    shoruh = sharhe_tahsil.objects.get(madadju=madadju)
+    return render(request, template, {'username': madadju_un,
                                       'alarm': madadju.ekhtar,
+                                      'progress': karbar.darbare_ma.progress(),
                                       'madadju_un': request.GET.get('madadju_un'),
                                       'src': request.GET.get('src'),
                                       'madadju_fn': user.first_name,
                                       'madadju_ln': user.last_name,
-                                      'madadkar_un':madadju.madadkar,
-                                      'sharh': "onvan" + "-" + "sharh"})
+                                      'hamiars': hamiarha,
+                                      'sharh': shoruh.sharh,
+                                      # 'sharh_kh': (madadju.sharhe_tahsil.Field_Taghir, madadju.sharhe_tahsil.ُType)
+                                      })
 
 
 @login_required(login_url='/permission/')

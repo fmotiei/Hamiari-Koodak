@@ -109,7 +109,7 @@
 				<h2><strong>فهرست نیازهای تحت حمایت شما</strong></h2>
 				<article class="col-xs-12">
 					{% for name,niazha in madadjuyan %}
-					<h2>{{name}}</h2>
+					<h2><a href="/hamiar/profile_madadju?madadju_un={{name}}" >{{name}}</a></h2>
 					{% for niazid,onvan,hazineTaminShode,hazineTaminNashode,fori in niazha %}
 					<p>{{onvan}}</p>
 					<p class="pull-right">
@@ -121,7 +121,9 @@
 						<!--<span class="label label-default">سالانه</span>-->
 					</p>
 					<br><br>
+					{% if fori == False %}
 					<p><button class="btn btn-default"><a href="/hamiar/Enseraf?niaz={{niazid}}">انصراف</a></button></p>
+					{% endif %}
 					{% endfor %}
 					<hr>
 					{% endfor %}
