@@ -236,7 +236,7 @@ def show_virayesh_niaz(request):
         else:
             return render(request, template, {'username': request.user,
                                               'progress': karbar.darbare_ma.progress(),
-                                              'form': form,'madadju_un':madadju,'niaz_id':niaz})
+                                              'form': form,'madadju_un':madadju,'niaz_id':request.GET.get('niaz')})
 
 
 
