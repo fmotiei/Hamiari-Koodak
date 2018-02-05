@@ -118,7 +118,7 @@ def show_profile_madadju(request):
     for niaz in niazha:
         if not hamiarha.__contains__(niaz.hamiar):
             hamiarha.append(niaz.hamiar.staffID.stafID.user.username)
-
+    shoruh=sharhe_tahsil.objects.get(madadju=madadju)
     return render(request, template, {'username' : madadju_un,
                                       'alarm':madadju.ekhtar,
                                       'progress': karbar.darbare_ma.progress(),
@@ -127,7 +127,7 @@ def show_profile_madadju(request):
                                       'madadju_fn' : user.first_name,
                                       'madadju_ln' : user.last_name,
                                       'hamiars': hamiarha,
-                                      'sharh': "onvan" + "-" + "sharh"
+                                      'sharh': shoruh.sharh,
                                   # 'sharh_kh': (madadju.sharhe_tahsil.Field_Taghir, madadju.sharhe_tahsil.ُType)
                                       })
 

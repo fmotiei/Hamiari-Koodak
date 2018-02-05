@@ -9,18 +9,32 @@ from django.http import HttpResponse
 import karbar
 from hamiar.models import hemaiatNiaz, Hamiar, User
 from karbar import moshtarak
-from madadju.models import Madadju, Niaz, staff_members, UserKarbar
-
+from madadju.models import Madadju, Niaz, staff_members, UserKarbar,taghire_madadkar
+from madadju.forms import taghirMadadkarForm
 
 @login_required
 def show_darkhast_taghir_madadkar(request):
     template = 'madadju/darkhast.html'
     userKarbar = UserKarbar.objects.get(user=request.user)
     madadju = Madadju.objects.get(user=userKarbar)
-    return render(request, template, {'utype' : 'madadju'
+    if request.method == "GET":
+        form=taghirMadadkarForm()
+        return render(request, template, {'utype' : 'madadju'
                                     , 'progress': karbar.darbare_ma.progress()
                                     ,'username' : request.user
-                                      , 'mName' : madadju.madadkar.staffID.stafID.user.username})
+                                      , 'mName' : madadju.madadkar.staffID.stafID.user.username,'form':form})
+    if request.method == "POST":
+        form=taghirMadadkarForm(request.POST)
+        if form.is_valid():
+            sharh = form.cleaned_data['sharh']
+            taghire_madadkar.objects.create(madadju=madadju,sharh=sharh)
+            return moshtarak.show_amaliat_movafagh(request, 'madadju')
+        else:
+            return render(request, template, {'utype': 'madadju'
+                , 'progress': karbar.darbare_ma.progress()
+                , 'username': request.user
+                , 'mName': madadju.madadkar.staffID.stafID.user.username, 'form': form})
+
 #TODO tozihat ra begirad
 
 @login_required
