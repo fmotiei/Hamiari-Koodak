@@ -28,6 +28,8 @@ urlpatterns = [
     url(r'^moshahede_madadjuyan_dar_entezar_madadkar/$', madadkar.views.show_moshahede_madadjuyan_dar_entezar_madadkar),
     url(r'^moshahede_tarakonesh_haye_mali/$', madadkar.views.show_moshahede_tarakonesh_haye_mali),
     url(r'^niaz_haye_tamin_nashode/$', madadkar.views.show_niaz_haye_tamin_nashode),
+    url(r'^taieed_payam/$', madadkar.views.accPayam,name="taieed_payam"),
+    url(r'^rad_payam/$', madadkar.views.delPayam,name="rad_payam"),
     url(r'^niaz_haye_madadju/$', madadkar.views.show_niaz_haye_madadju,name="niaz_haye_madadju"),
     url(r'^niaz_haye_madadju_bi_kefalat/$', madadkar.views.show_niaz_haye_madadju_bi_kefalat),
     url(r'^niaz_haye_tamin_nashode_fori/$', madadkar.views.show_niaz_haye_tamin_nashode_fori),

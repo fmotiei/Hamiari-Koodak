@@ -54,11 +54,7 @@ class Payam_Madadju_Madadkar(models.Model):
     payam = models.OneToOneField(Payam,on_delete=models.CASCADE,primary_key=True,default='')
     sender = models.ForeignKey('madadju.Madadju', null=False, on_delete=models.PROTECT)
     reciever = models.ForeignKey('madadkar.Madadkar', on_delete=models.PROTECT)
-    Type = (
-        ('GD', 'تشکر'),
-        ('NU', 'پیشنهاد'),
-        ('BD', 'انتقاد')
-    )
+
 
 
 class events(models.Model):
