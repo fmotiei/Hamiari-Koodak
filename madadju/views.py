@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render
 from django.template import Context
@@ -9,6 +11,7 @@ from django.http import HttpResponse
 import karbar
 from hamiar.models import hemaiatNiaz, Hamiar, User
 from karbar import moshtarak
+from karbar.models import events
 from madadju.models import Madadju, Niaz, staff_members, UserKarbar,taghire_madadkar
 from madadju.forms import taghirMadadkarForm
 
@@ -37,6 +40,8 @@ def show_darkhast_taghir_madadkar(request):
         if form.is_valid():
             sharh = form.cleaned_data['sharh']
             taghire_madadkar.objects.create(madadju=madadju,sharh=sharh)
+            events.objects.create(onvan='درخواست تغییر مددکار',matn='همیار عزیز! به بنیاد خیریه کودک خوش آمدید. شما با موفقیت در بنیاد ثبت نام شدید.',user = request.user,zaman=datetime.datetime.now())
+            events.objects.create(onvan='درخواست تغییر مددکار',matn='مددکار گرامی، مددجوی'+madadju.username()+' درخواست تغییر مددکار داده است.',user = madadju.madadkar.staffID.stafID.user,zaman=datetime.datetime.now())
             return moshtarak.show_amaliat_movafagh(request, 'madadju')
         else:
             return render(request, template, {'utype': 'madadju'

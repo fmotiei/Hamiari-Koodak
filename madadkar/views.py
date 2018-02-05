@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from karbar.models import Payam_Madadju, Payam
+from karbar.models import Payam_Madadju, Payam, events
 from madadkar.forms import taghireNiazForm, afzoodanNiazForm, SignUpForm, VirayeshTahsilForm
 from django.contrib.auth.models import User
 import datetime
@@ -58,6 +58,13 @@ def show_afzoudan_niaz(request):
                                                   'message': 'نیازی به این نام برای مددجو وجود دارد.در صورتی که می‌خواهید مبلغ آن را تغییر دهید به ویرایش نیاز مراجعه کنید.'
                                                   })
             Niaz.objects.create(niazmand=madadju_our, onvan=onvan, mablagh=mablagh, Type=Type, niazFori=niazFori)
+            events.objects.create(onvan='افزودن نیاز',
+                                  matn='مددکار محترم، نیاز مربوط به مددجوی '+madadju_our.username+'افزوده شد.',
+                                  user=request.user, zaman=datetime.datetime.now())
+            events.objects.create(onvan='افزودن نیاز',
+                                  matn='مددجوی عزیز! نیازی به نیازهای شما افزوده شد.',
+                                  user=madadju_user, zaman=datetime.datetime.now())
+
             return moshtarak.show_amaliat_movafagh(request, 'madadkar')
         else:
             return render(request, template, {'progress': karbar.darbare_ma.progress(),
@@ -139,10 +146,18 @@ def accPayam(request):
     payam=request.GET.get('payam')
     payamak=Payam_Madadju.objects.filter(pk= payam)
     payamak.update(taieed=True)
+    events.objects.create(onvan='پذیرش پیام',
+                          matn='مددجوی عزیز! پیام شما به'+payamak.reciever.username+' تایید و ارسال شد.',
+                          user=payamak.sender.user.user, zaman=datetime.datetime.now())
+
     return HttpResponseRedirect(reverse( "movafaghshodim"))
 
 def delPayam(request):
     payam =request.GET.get('payam')
+    payamak=Payam_Madadju.objects.filter(pk= payam)
+    events.objects.create(onvan='رد پیام',
+                          matn='مددجوی عزیز! متاسفانه ارسال پیام شما به'+payamak.reciever.username+' رد شد.',
+                          user=payamak.sender.user.user, zaman=datetime.datetime.now())
     Payam_Madadju.objects.filter(pk=payam).delete()
     return HttpResponseRedirect(reverse( "movafaghshodim"))
 
@@ -260,6 +275,13 @@ def show_sabte_naam_madadju(request):
             ukarbar = UserKarbar.objects.create(user=user, phone_number=mPhone, address=mAddress, is_madadju=True)
             new_madadju = Madadju.objects.create(user=ukarbar, school=mSchool, GPA=mGPA, madadkar_init=Mymadadkar,
                                                  start_date=datetime.datetime.now())
+
+            events.objects.create(onvan='ثبت نام مددجو',
+                                  matn='مددجوی عزیز !‌خوش آمدید. ثبت نام شما توسط '+request.user+' با موفقیت انجام شد.',
+                                  user=user, zaman=datetime.datetime.now())
+            events.objects.create(onvan='ثبت نام مددجو',
+                                  matn='مددکار گرامی، مددجوی '+user.username+' با موفقیت ثبت نام شد.',
+                                  user=request.user, zaman=datetime.datetime.now())
             template = 'karbar/amaliat_movafagh.html'
             return render(request, template, {'utype': 'madadkar'
                 , 'progress': karbar.darbare_ma.progress()
@@ -287,6 +309,9 @@ def show_virayesh_niaz(request):
             new_mablagh = form.cleaned_data['mablagh']
             mNiaz.mablagh = new_mablagh
             mNiaz.save()
+            events.objects.create(onvan='ویرایش نیاز',
+                                  matn='مددجوی عزیز، نیاز ' + mNiaz.onvan + ' شما تغییر یافت.',
+                                  user=mNiaz.niazmand.user.user, zaman=datetime.datetime.now())
             template = 'karbar/amaliat_movafagh.html'
             return render(request, template, {'utype': 'madadkar'
                 , 'progress': karbar.darbare_ma.progress()
@@ -352,6 +377,9 @@ def ekhtar(request):
     if madadju_our.ekhtar == True:
         madadju_our.ekhtar = False
     else:
+        events.objects.create(onvan='اخطار!',
+                              matn='مددجوی گرامی! چراغ اخطار شما روشن شد !',
+                              user=madadju_user, zaman=datetime.datetime.now())
         madadju_our.ekhtar = True
     madadju_our.save()
     return HttpResponseRedirect(reverse("movafaghshodim"))
@@ -360,6 +388,10 @@ def ekhtar(request):
 @login_required(login_url='/permission/')
 @user_passes_test(is_madadkar, login_url='/permission/')
 def hazfNiaz(request):
+    niaz = Niaz.objects.get(id=request.GET.get('niaz'))
+    events.objects.create(onvan='حذف نیاز',
+                              matn='مددجوی گرامی! نیاز'+niaz.onvan+' شما حذف شد.',
+                              user=niaz.niazmand.user.user, zaman=datetime.datetime.now())
     Niaz.objects.filter(id=request.GET.get('niaz')).delete()
     return HttpResponseRedirect(reverse("movafaghshodim"))
 

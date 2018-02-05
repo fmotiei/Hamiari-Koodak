@@ -56,6 +56,9 @@ def show_afzayesh_etebar(request,user):
             ukarbar.mojudi += afzayesh
             ukarbar.save()
             Payment.objects.create(onvan='افزایش اعتبار',mablagh=afzayesh,pardakht_konande=ukarbar,girande=ukarbar,zaman=datetime.datetime.now())
+            events.objects.create(onvan='افزایش اعتبار',
+                                  matn='اعتبار شما به مبلغ'+afzayesh+' تومان افزایش یافت',
+                                  user=request.user, zaman=datetime.datetime.now())
             template = 'karbar/amaliat_movafagh.html'
             return render(request, template, {'utype': user
                 , 'progress': karbar.darbare_ma.progress()
