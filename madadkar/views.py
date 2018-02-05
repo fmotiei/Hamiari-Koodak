@@ -304,6 +304,11 @@ def ekhtar(request):
     madadju_our.save()
     return HttpResponseRedirect(reverse( "movafaghshodim"))
 
+def hazfNiaz(request):
+    Niaz.objects.filter(id=request.GET.get('niaz')).delete()
+    return HttpResponseRedirect(reverse( "movafaghshodim"))
+
+
 def show_profile_madadju_bi_kefalat(request):
     template = 'madadkar/profile_madadju_bi_kefalat.html'
     madadju_un = request.GET.get('madadju_un')

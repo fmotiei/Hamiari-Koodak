@@ -28,7 +28,7 @@ urlpatterns = [
     url(r'^moshahede_madadjuyan_dar_entezar_madadkar/$', madadkar.views.show_moshahede_madadjuyan_dar_entezar_madadkar),
     url(r'^moshahede_tarakonesh_haye_mali/$', madadkar.views.show_moshahede_tarakonesh_haye_mali),
     url(r'^niaz_haye_tamin_nashode/$', madadkar.views.show_niaz_haye_tamin_nashode),
-    url(r'^niaz_haye_madadju/$', madadkar.views.show_niaz_haye_madadju),
+    url(r'^niaz_haye_madadju/$', madadkar.views.show_niaz_haye_madadju,name="niaz_haye_madadju"),
     url(r'^niaz_haye_madadju_bi_kefalat/$', madadkar.views.show_niaz_haye_madadju_bi_kefalat),
     url(r'^niaz_haye_tamin_nashode_fori/$', madadkar.views.show_niaz_haye_tamin_nashode_fori),
     url(r'^payam_daryafti/$', madadkar.views.show_payam_daryafti),
@@ -48,6 +48,7 @@ urlpatterns = [
     url(r'^vaziat_tahsili/$',madadkar.views.show_vaziat_tahsili),
     url(r'^moshahede_list_koodakan/$', madadkar.views.show_moshahede_list_koodakan),
     url(r'^ekhtar/$',madadkar.views.ekhtar, name='ekhtar'),
+    url(r'^hazfNiaz/$',madadkar.views.hazfNiaz, name='hazfNiaz'),
     url(r'^moshahede_list_niazhaye_fori_taminnashode/$', madadkar.views.show_moshahede_list_niazhaye_fori_taminnashode),
     url(r'^$', madadkar.views.show_madadkar),
 
