@@ -66,14 +66,17 @@ def show_hemayat_az_moasese(request):
 @user_passes_test(is_hamiar,login_url='/permission/')
 def show_hemayat_az_niaz(request):
     template = 'hamiar/hemayat_az_niaz.html'
+    niazID = request.GET.get('niaz')
+    niaz = Niaz.objects.get(id=niazID)
     return render(request, template, {'utype':'hamiar'
                                     , 'progress': karbar.darbare_ma.progress()
                                     , 'username' : request.user
-                                    , 'niazName' : ''
-                                      , 'hazineTaminShode' : ''
-                                      , 'hazineTaminNashode' : ''
-                                      , 'fori' : '' })
-#TODO username: username karbar , niazName : name niaz , hazine ha va fori marbut b niaz
+                                    , 'niazName' : niaz.onvan
+                                      , 'hazineTaminShode' : niaz.mablagh_taminshodeh
+                                      , 'hazineTaminNashode' : niaz.mablagh_taminnashode()
+                                      , 'fori' : niaz.niazFori })
+#TODO mablagh ro az form begire va b un meghdar ziad kone
+#TODO events esh ham add beshe b madadju va hamiar
 
 @login_required(login_url='/permission/')
 @user_passes_test(is_hamiar,login_url='/permission/')
@@ -104,6 +107,9 @@ def show_moshahede_niaz_haye_taht_hemayat(request):
                                     , 'username' : request.user
                                       , 'madadjuyan' : madadjus })
 
+
+@login_required(login_url='/permission/')
+@user_passes_test(is_hamiar,login_url='/permission/')
 def Enseraf(request):
     niazid=request.GET.get('niaz')
     niaz=Niaz.objects.get(id=niazid)
@@ -116,6 +122,13 @@ def Enseraf(request):
 
     hn=hemaiatNiaz.objects.get(niaz=niaz,hamiar = ourHamiar)
     niaz.mablagh-=hn.mablagh
+    events.objects.create(onvan='انصراف از حمایت نیاز',
+                          matn='نیاز'+niaz.onvan+' از حمایت شما خارج شد.',
+                          user=request.user, zaman=datetime.datetime.now())
+
+    events.objects.create(onvan='انصراف از حمایت نیاز',
+                          matn='یکی از حمایت های نیاز'+niaz.onvan+' از پوشش حمایتی خارج شد.',
+                          user=request.user, zaman=datetime.datetime.now())
     hemaiatNiaz.objects.filter(niaz=niaz, hamiar=ourHamiar).delete()
 
     return HttpResponseRedirect(reverse("movafaghshodimHamiar"))
@@ -148,6 +161,13 @@ def hemaiat(request):
     ourNiaz.mablagh_taminshodeh=ourNiaz.mablagh
     ourNiaz.hemaiatshod = True
     ourNiaz.save()
+    events.objects.create(onvan='حمایت از نیاز',
+                          matn='با تشکر از حمایت شما از نیاز مددجوی'+ourNiaz.niazmand.username+' . نیاز '+ ourNiaz.onvan +' تحت حمایت شما قرار گرفت.',
+                          user=request.user, zaman=datetime.datetime.now())
+
+    events.objects.create(onvan='حمایت از نیاز',
+                          matn='از نیاز '+ourNiaz.onvan+' توسط '+ouruser.username+' حمایت شد.',
+                          user=ourNiaz.niazmand.user.user, zaman=datetime.datetime.now())
     if hemaiatNiaz.objects.filter(hamiar=ourHamiar, niaz=ourNiaz).exists():
         hniaz=hemaiatNiaz.objects.get(hamiar=ourHamiar, niaz=ourNiaz)
         hniaz.mablagh=ourNiaz.mablagh
@@ -227,15 +247,12 @@ def show_profile_madadju(request):
                                       'username': request.user,
                                      'progress': karbar.darbare_ma.progress(),
                                       'alarm': madadju.ekhtar,
-                                      'progress': karbar.darbare_ma.progress(),
                                       'madadju_un': request.GET.get('madadju_un'),
                                       'src': request.GET.get('src'),
                                       'madadju_fn': user.first_name,
                                       'madadju_ln': user.last_name,
                                       'madadkar_un':madadju.madadkar,
                                       'sharh': "onvan" + "-" + "sharh"})
-#TODO username : username karbar , mName: esme madadju , alarm : alarme madadju , mlName: familie madadju , hamiaran araye az esme hamiaran marbut b madadju , vaziatUmumi : vaziat tahsili umumi madadju
-#TODO bayad madadju ra baraye list niaz hayash befrestad
 
 
 @login_required(login_url='/permission/')
