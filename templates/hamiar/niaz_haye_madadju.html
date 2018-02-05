@@ -113,34 +113,34 @@
 						{% else %}
 							<img src="/static/img/not_alarm.png" width="3%" alt="avatar" style="padding-left: 5px">
 						{% endif %}
-						<strong>{{name}}</strong>
+						<strong>{{madadju_un}}</strong>
 					</h1>
 				</div>
 				<div class="list-group">
-					{% for onvan,taminShode,taminNashode,fori in niazha %}
 					<div class="list-group-item">
 					<table>
+						{%for niaz_id, onvan, mablagh_tamin_na_shodeh, mablaghtaminshodeh, fori in niazha %}
 						<tr>
 							<td>
 								<p><strong>{{onvan}}</strong></p>
 							</td>
 							<td style="padding-right: 5px">
 								<p class="pull-right">
-						            <span class="label label-default">{{hazineTaminShode}}  تومان تامین نشده</span>
-                                    <span class="label label-default">{{hazineTaminNashode}}  تومان تامین شده</span>
-                                    {% if fori %}
-						            <span class="label label-default">فوری</span>
-					                {% endif %}
-						            <!--<span class="label label-default">سالانه</span>-->
-					            </p>
+									<span class="label label-default">تامین شده:{{mablaghtaminshodeh}} </span>
+									<span class="label label-default">تامین نشده: {{mablagh_tamin_na_shodeh}}</span>
+									{%if fori%}
+									<span class="label label-default">فوری</span>
+									{%endif%}
+								</p>
 							</td>
+							<td style="width: 20px"></td>
 						</tr>
+						{%endfor%}
 					</table>
 					</div>
-					{% endfor %}
 				</div>
 			</div>
-			<button type="add" class="btn btn-default"><a href = "/hamiar/profile_madadju" >بازگشت</a></button>
+			<button type="add" class="btn btn-default"><a href = "/hamiar/profile_madadju?madadju_un={{madadju_un}}" >بازگشت</a></button>
 
 			<hr>
 		</div>

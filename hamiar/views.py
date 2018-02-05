@@ -74,13 +74,20 @@ def show_niaz_haye_tamin_nashode(request):
 
 def show_niaz_haye_madadju(request):
     template = 'hamiar/niaz_haye_madadju.html'
+    madadju_un = request.GET.get('madadju_un')
+    user = User.objects.get(username=madadju_un)
+    userKarbar = UserKarbar.objects.get(user=user)
+    madadju = Madadju.objects.get(user=userKarbar)
+    niazha = []
+    for niaz in Niaz.objects.all():
+        if niaz.niazmand == madadju:
+            niazha.append(niaz)
     return render(request, template, {'utype':'hamiar'
                                     , 'progress': karbar.darbare_ma.progress()
-                                    , 'username' : ''
-                                      , 'alarm' : ''
-                                      , 'name' : ''
-                                      , 'niazha' : [] })
-#TODO username: username karbar, niazha : onvan , hazine tamin shode va nashode , fori marbut b niaz
+                                    , 'username' : request.user,
+                                      'niazha': [(n.id, n.onvan, n.mablagh - n.mablagh_taminshodeh,
+                                                  n.mablagh_taminshodeh, n.niazFori) for n in niazha],
+                                      'madadju_un': madadju_un, })
 
 def show_profile(request):
     template = 'hamiar/profile.html'
