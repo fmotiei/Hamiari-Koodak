@@ -15,6 +15,7 @@ from django.template.loader import get_template
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 
+from hamiar.forms import afzayeshEtebar
 from madadkar.models import Madadkar, hoghugh_dariafti
 
 
@@ -38,7 +39,27 @@ def show_user(request,user):
 @login_required
 def show_afzayesh_etebar(request,user):
     template = 'karbar/afzayesh_etebar.html'
-    return render(request, template, {'utype' : user
+    if request.method == 'GET':
+        form = afzayeshEtebar()
+        return render(request, template, {'form':form,'utype' : user
+                                    , 'progress': karbar.darbare_ma.progress()
+                                    , 'username' : request.user})
+    if request.method == 'POST':
+        form = afzayeshEtebar(request.POST)
+        if form.is_valid():
+            afzayesh=form.cleaned_data['mablagh']
+            userUK = User.objects.get(username=request.user)
+            ukarbar=UserKarbar.objects.get(user=userUK)
+            ustmember=staff_members.objects.get(stafID=ukarbar)
+            uhamiar = Hamiar.objects.get(staffID=ustmember)
+            uhamiar.mojudi += afzayesh
+            uhamiar.save()
+            template = 'karbar/amaliat_movafagh.html'
+            return render(request, template, {'utype': user
+                , 'progress': karbar.darbare_ma.progress()
+                , 'username': ''})
+        else:
+            return render(request, template, {'form':form,'utype' : user
                                     , 'progress': karbar.darbare_ma.progress()
                                     , 'username' : request.user})
 #TODO etebar ra begirad va afzayesh dahad
