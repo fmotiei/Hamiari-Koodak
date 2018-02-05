@@ -135,6 +135,16 @@ def show_niaz_haye_tamin_nashode_fori(request):
                                       'niazha': [(n.niazmand.username, n.onvan, n.mablagh, n.niazFori) for n in niazha],
                                       })
 
+def accPayam(request):
+    payam=request.GET.get('payam')
+    payamak=Payam_Madadju.objects.filter(pk= payam)
+    payamak.update(taieed=True)
+    return HttpResponseRedirect(reverse( "movafaghshodim"))
+
+def delPayam(request):
+    payam =request.GET.get('payam')
+    Payam_Madadju.objects.filter(pk=payam).delete()
+    return HttpResponseRedirect(reverse( "movafaghshodim"))
 
 @login_required(login_url='/permission/')
 @user_passes_test(is_madadkar, login_url='/permission/')
@@ -153,7 +163,8 @@ def show_payam_entezar(request):
         , 'text': payam1.matn
         , 'sender': sender
         , 'receiver': receiver
-        , 'date': payam1.zaman})
+        , 'date': payam1.zaman
+        , 'payam':payam.pk})
 
 
 @login_required(login_url='/permission/')
