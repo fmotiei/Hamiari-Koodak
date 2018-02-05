@@ -28,7 +28,7 @@ def show_profile(request):
     template = 'karbar/index.html'
     if request.method == 'GET':
         form = SignInForm()
-        return render(request, template, {'form': form, 'utype' : 'karbar'
+        return render(request, template, {'tozihat': karbar.darbare_ma.tozihat_text(),'form': form, 'utype' : 'karbar'
         , 'progress': karbar.darbare_ma.progress()
         , 'username':''
         , 'roydadha' : {} })
@@ -41,7 +41,7 @@ def show_profile(request):
             user = authenticate(request, username=username, password=password)
             if user is None:
                 message = 'گذرواژه اشتباه ‌است'
-                args = {'form': form, 'message': message ,'utype' : 'karbar'
+                args = {'tozihat': karbar.darbare_ma.tozihat_text(),'form': form, 'message': message ,'utype' : 'karbar'
         , 'progress': karbar.darbare_ma.progress()
         , 'roydadha' : {} }
                 return render(request, template, args)
@@ -51,7 +51,7 @@ def show_profile(request):
                 return HttpResponseRedirect('/'+utype+'/'+"?success=1")
         else:
             message = 'نام کاربری شما در سامانه ثبت نشده است'
-            args = {'form': form, 'message': message, 'utype' : 'karbar'
+            args = {'tozihat': karbar.darbare_ma.tozihat_text(),'form': form, 'message': message, 'utype' : 'karbar'
         , 'progress': karbar.darbare_ma.progress()
         , 'username':''
         , 'roydadha' : {} }

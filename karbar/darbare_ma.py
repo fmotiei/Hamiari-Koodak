@@ -7,16 +7,19 @@ from madadju.models import Niaz
 
 
 def ashnai_text():
-    return 'این یک موسسه خیریه است'
+    f = open('static/text/ashnai.txt')
+    return f.read()
 
 def ahdaf_text():
-    return 'هدف کمک به کودکان با استعداد است.'
+    f = open('static/text/ahdaf.txt')
+    return f.read()
 
 def sakhtar_sazmani_text():
     return '/static/img/sakhtar.jpg' # badan url image bedim
 
 def tozihat_text():
-    return 'بنیاد خیریه کودک تلاش میکند تا هیچ کودک مستعدی بی سرپرست و دور از تحصیل نماند.'
+    f = open('static/text/tozihat.txt')
+    return f.read()
 
 def akhbar_image():
     images = []

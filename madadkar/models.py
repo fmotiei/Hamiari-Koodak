@@ -20,7 +20,7 @@ class Madadkar(models.Model):
     active = models.BooleanField(default=False)  # modir activesh mikone
     ekhtar = models.BooleanField(default=False)
     hoghugh = models.PositiveIntegerField()
-    
+
     def username(self):
         return self.staffID.stafID.user.username
 
