@@ -217,10 +217,11 @@ def show_profile_madadju(request):
     for niaz in niazha:
         if not hamiarha.__contains__(niaz.hamiar.username()):
             hamiarha.append(niaz.hamiar.staffID.stafID.user.username)
-    if sharhe_tahsil.objects.filter(madadju=madadju).exists():
-        shoruh = sharhe_tahsil.objects.get(madadju=madadju).sharh
-    else:
-        shoruh = 'شرح تحصیلی ندارد.'
+    shoruh = [ s.sharh for s in sharhe_tahsil.objects.filter(madadju=madadju)]
+    shoruh_text = ''
+    for s in shoruh :
+        shoruh_text = shoruh_text + s + ' - '
+
     return render(request, template, {'username': request.user,
                                       'alarm': madadju.ekhtar,
                                       'progress': karbar.darbare_ma.progress(),
@@ -228,7 +229,7 @@ def show_profile_madadju(request):
                                       'madadju_fn': user.first_name,
                                       'madadju_ln': user.last_name,
                                       'hamiars': hamiarha,
-                                      'sharh': shoruh,
+                                      'sharh': shoruh_text,
                                       'virayesh' : virayesh
                                       # 'sharh_kh': (madadju.sharhe_tahsil.Field_Taghir, madadju.sharhe_tahsil.ُType)
                                       })
@@ -304,12 +305,13 @@ def show_virayesh_niaz(request):
     template = 'madadkar/virayesh_niaz.html'
     virayesh = request.GET.get('virayesh')
     madadju_user = request.GET.get('madadju_un')
+    niaz = Niaz.objects.get(id=request.GET.get('niaz'))
     if request.method == 'GET':
         form = taghireNiazForm()
         return render(request, template, {'username': request.user,
                                           'progress': karbar.darbare_ma.progress(),
                                           'form': form, 'madadju': request.GET.get('madadju'),
-                                          'niaz': request.GET.get('niaz'),
+                                          'niaz': niaz,
                                           'virayesh' : virayesh,
                                           'madadju_un' : madadju_user})
     if request.method == 'POST':
@@ -330,9 +332,10 @@ def show_virayesh_niaz(request):
         else:
             return render(request, template, {'username': request.user,
                                               'progress': karbar.darbare_ma.progress(),
-                                              'form': form, 'madadju_un': madadju, 'niaz_id': request.GET.get('niaz')
-                                              , 'virayesh' : virayesh,
-                                          'madadju_un' : madadju_user})
+                                              'form': form, 'niaz_id': request.GET.get('niaz')
+                                              ,'niaz' : niaz
+                                              , 'virayesh' : virayesh
+                                              ,'madadju_un' : madadju_user})
 
 
 @login_required(login_url='/permission/')
@@ -340,14 +343,12 @@ def show_virayesh_niaz(request):
 def show_vaziat_tahsili(request):
     template = 'madadkar/vaziat_tahsili.html'
     virayesh = request.GET.get('virayesh')
-    madadju_user = request.GET.get('madadju_un')
     if request.method == "GET":
         form = VirayeshTahsilForm()
         return render(request, template, {'username': request.user,
                                           'madadju_un': request.GET.get('madadju_un'),
                                           'progress': karbar.darbare_ma.progress(), 'form': form
-                                          ,'virayesh' : virayesh
-                                          ,'madadju_un':madadju_user})
+                                          ,'virayesh' : virayesh})
     if request.method == "POST":
         form = VirayeshTahsilForm(request.POST)
         madadju_u = User.objects.get(username=request.GET.get('madadju_un'))
@@ -380,7 +381,6 @@ def show_moshahede_madadjuyan_dar_entezar_madadkar(request):
                                                      in Madadju.objects.filter(madadkar=None)],
                                       #    Madadju.objects.filter(madadkar='Null')
                                       'username': request.user
-                                      # todo link moshahede profile madadju
                                       })
 
 
