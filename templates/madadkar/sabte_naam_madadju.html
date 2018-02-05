@@ -123,63 +123,38 @@
 							<table align="right">
 								<tr>
 									<td style="padding: 5px 10px 5px 5px;"> نام مددجو</td>
-									<td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="madadju_name" name="madadju_name" placeholder="نام مددجو"> </td>
+									<td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control"  name="first_name" placeholder="نام مددجو"> </td>
 									<td style="padding: 5px 10px 5px 5px;">نام خانوادگی مددجو</td>
-                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="madadju_family" name="madadju_family" placeholder="نام خانوادگی مددجو"> </td>
+                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control"  name="last_name" placeholder="نام خانوادگی مددجو"> </td>
 								</tr>
-                                <!--<tr>-->
-									<!--<td style="padding: 5px 10px 5px 5px;"> شماره شناسنامه</td>-->
-									<!--<td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="madadkar_" name="madadkar_name" placeholder="شماره شناسنامه"> </td>-->
-								<!--</tr>-->
                                 <tr>
 									<td style="padding: 5px 10px 5px 5px;">پست الکترونیکی مددجو</td>
                                     <td style="padding: 5px 10px 5px 5px;"><input type="email" class="form-control" id="email" name="email" placeholder="email used as username"></td>
+
+
 									<td style="padding: 5px 10px 5px 5px;">شماره تماس مددجو</td>
-                                    <td style="padding: 5px 10px 5px 5px;"><input type="telNo" class="form-control" id="phone_madadju" name="phone_madadju" placeholder="شماره تماس مددجو"></td>
+                                    <td style="padding: 5px 10px 5px 5px;"> {{form.phone_number}}</td>
 								</tr>
 								<tr>
 									<td style="padding: 5px 10px 5px 5px;">آدرس محل سکونت</td>
-                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="address_mahale_sokunat" name="address_mahale_sokunat" placeholder="آدرس محل سکونت" style="width: 100% ; height: 100px;"></td>
+                                    <td style="padding: 5px 10px 5px 5px;">{{form.address}}</td>
 								</tr>
                                 <tr>
 
 									<td style="padding: 5px 10px 5px 5px;">نام محل تحصیل</td>
-                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="mahal_tahsil" name="mahal_tahsil" placeholder="نام محل تحصیل"></td>
+                                    <td style="padding: 5px 10px 5px 5px;">{{form.school}}</td>
 
-                                    <td style="padding: 5px 10px 5px 5px;">مقطع </td>
-                                    <td style="padding: 5px 10px 5px 5px;"><select id="maghta" name="maghta" style="width: 100%">
-	<option value="1">اول</option>
-	<option value="2">دوم</option>
-	<option value="3">سوم</option>
-	<option value="4">چهارم</option>
-	<option value="5">پنجم</option>
-	<option value="6">ششم</option>
-	<option value="7">هفتم</option>
-	<option value="8">هشتم</option>
-	<option value="9">نهام</option>
-	<option value="10">دهم</option>
-	<option value="11">یازدهم</option>
-	<option value="12">پیش دانشگاهی</option>
-   </select></td>
-									</tr>
+								</tr>
                                 <tr>
 									<td style="padding: 5px 10px 5px 5px;">معدل</td>
-                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="moadel" name="moadel" placeholder="معدل"></td>
+                                    <td style="padding: 5px 10px 5px 5px;">{{form.GPA}}</td>
                                 </tr>
-                                <tr>
-                                    <td style="padding: 5px 10px 5px 5px;">شماره حساب</td>
-                                    <td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="shomare_hesab" name="shomarehesab" placeholder="شماره حساب"></td>
-                                </tr>
-                                <!--<tr>-->
-									<!--<td style="padding: 5px 10px 5px 5px;">توضیحات خصوصی</td>-->
-                                    <!--<td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="khosusi" name="khosusi" placeholder="توضیحات" style="width: 100% ; height: 200px;"></td>-->
-                                    <!--<td style="padding: 5px 10px 5px 5px;">شرح حال عمومی</td>-->
-                                    <!--<td style="padding: 5px 10px 5px 5px;"><input type="text" class="form-control" id="omumi" name="omumi" placeholder="توضیحات" style="width: 100% ; height: 200px;"></td>-->
-                                <!--</tr>-->
-
 							</table>
 						</div>
-						<button type="add" class="btn btn-default"><a href="/madadkar/amaliat_movafagh">تایید</a></button>
+			            <input type="submit" class="btn btn-default" style="color:white" value="تایید">
+
+{#{% if form.errors %}<p>{{ form.errors }}</p>{% endif %}#}
+							<p style="color: red">{{ message }}</p>
 					</form>
 				</div>
 			</div>

@@ -5,9 +5,9 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from madadkar.forms import taghireNiazForm, SignUpInitialMadadju,SignUpForm
-
-
+from madadkar.forms import taghireNiazForm, SignUpInitialMadadju,SignUpForm, VirayeshTahsilForm
+from django.contrib.auth.models import User
+import datetime
 # Create your views here.
 import karbar
 import madadju
@@ -140,34 +140,76 @@ def show_sandoghe_payamhaye_entezar(request):
 #todo YEGANE
 def show_sabte_naam_madadju(request):
     template = 'madadkar/sabte_naam_madadju.html'
-    return render(request, template, {'username' : request.user,
-                                      'progress': karbar.darbare_ma.progress()})
+    Umadadkar = UserKarbar.objects.get(user=request.user)
+    Staffmadadkar = staff_members.objects.get(stafID=Umadadkar)
+    Mymadadkar = Madadkar.objects.get(staffID=Staffmadadkar)
+
+    if request.method=="GET":
+        form =  SignUpForm()
+        return render(request, template, {'username' : request.user,
+                                      'progress': karbar.darbare_ma.progress(),'form':form})
+    if request.method=="POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            mGPA = form.cleaned_data['GPA']
+            mEmail =  form.cleaned_data['email']
+            mFirstName =  form.cleaned_data['first_name']
+            mFamilyName =  form.cleaned_data['last_name']
+            mPhone =  form.cleaned_data['phone_number']
+            mAddress = form.cleaned_data['address']
+            mSchool =  form.cleaned_data['school']
+            if User.objects.filter(username=mEmail).exists():
+                return render(request, template, {'form': form, 'username' : request.user,
+                                      'progress': karbar.darbare_ma.progress(),'message':'این ایمیل قبلا استفاده شده است.'})
+            user = User.objects.create_user(username=mEmail, password="sabzipolo", email=mEmail, first_name=mFirstName,
+                                            last_name=mFamilyName)
+            user.save()
+            ukarbar = UserKarbar.objects.create(user=user, phone_number=mPhone, address=mAddress, is_madadju=True)
+            new_madadju = Madadju.objects.create(user= ukarbar, school=mSchool, GPA=mGPA, madadkar_init=Mymadadkar, start_date = datetime.datetime.now())
+            template = 'karbar/amaliat_movafagh.html'
+            return render(request, template, {'utype': 'madadkar'
+            , 'progress': karbar.darbare_ma.progress()
+            , 'username': request.user})
+        else:
+            return render(request, template, {'username' : request.user,
+                                      'progress': karbar.darbare_ma.progress(),'form':form})
+
+
 
 
 def show_virayesh_niaz(request):
     template = 'madadkar/virayesh_niaz.html'
-    niazID=request.GET.get('niaz_id')
-    mNiaz=Niaz.objects.get(id=niazID)
     if request.method == 'GET':
         form= taghireNiazForm()
         return render(request, template, {'username' : request.user,
                                       'progress': karbar.darbare_ma.progress(),
-                                          'form':form})
+                                          'form':form,'madadju':request.GET.get('madadju'),'niaz':request.GET.get('niaz')})
     if request.method == 'POST':
+        niazID = request.GET.get('niaz')
+        mNiaz = Niaz.objects.get(id=niazID)
         form = taghireNiazForm(request.POST)
-        new_mablagh = form.cleaned_data['mablagh']
-        mNiaz.mablagh=new_mablagh
-        template = 'karbar/amaliat_movafagh.html'
-        return render(request, template, {'utype': 'madadkar'
+        if form.is_valid():
+            new_mablagh = form.cleaned_data['mablagh']
+            mNiaz.mablagh=new_mablagh
+            mNiaz.save()
+            template = 'karbar/amaliat_movafagh.html'
+            return render(request, template, {'utype': 'madadkar'
             , 'progress': karbar.darbare_ma.progress()
             , 'username': request.user})
+        else:
+            return render(request, template, {'username': request.user,
+                                              'progress': karbar.darbare_ma.progress(),
+                                              'form': form,'madadju_un':madadju,'niaz_id':niaz})
+
 
 
 def show_vaziat_tahsili(request):
     template = 'madadkar/vaziat_tahsili.html'
-    return render(request, template, {'username' : request.user,
+    if request.method =="GET":
+        form = VirayeshTahsilForm()
+        return render(request, template, {'username' : request.user,
                                       'un': request.GET.get('madadju_un'),
-                                      'progress': karbar.darbare_ma.progress()})
+                                      'progress': karbar.darbare_ma.progress(),'form':form})
 
 
 def show_moshahede_madadjuyan_dar_entezar_madadkar(request):

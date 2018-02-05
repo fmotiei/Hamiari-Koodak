@@ -21,7 +21,8 @@ class Madadju(models.Model):
                                     blank=True)  # age delete kard acountesho kolan hazfesh nemikonim. inja minevisim
     start_date = models.DateField(null=True, blank=True)
     active = models.BooleanField(default=False)  # modir activesh mikone
-
+    GPA = models.PositiveIntegerField(default=0)
+    school = models.CharField(default='', max_length=50)
     def username(self):
         return self.user.user.username
 
@@ -30,17 +31,20 @@ class sharhe_tahsil(models.Model):
     madadju = models.ForeignKey(Madadju, on_delete=models.CASCADE)
     madadkar = models.ForeignKey(Madadkar, on_delete=models.CASCADE)  # madadkari ke sharho minvise
     sharh = models.CharField(max_length=1000)
-    onvan = models.CharField(max_length=50)
-    Type = (
-        ('GD', 'تغییر مثبت'),
-        ('BD', 'تغییر منفی'))
-    Field_Taghir = (
-        ('gpa', 'تغییر چشمگیر در معدل'),
-        ('olamp', 'شرکت در المپیاد دانش آموزی'),
-        ('konkoor', 'شرکت در کنکور'),
-        ('teacher', 'گزارش از معلم دانش آموز یا کادر مدرسه'),
-        ('finals', 'گزارش امتحانات پایان سال')
-    )
+    onvan = models.CharField(max_length=50,default='')
+    Type = models.CharField(max_length=100,default='')
+
+        # (
+        # ('GD', 'تغییر مثبت'),
+        # ('BD', 'تغییر منفی'))
+    Field_Taghir = models.CharField(max_length=100,default='')
+
+        # (
+        # ('gpa', 'تغییر چشمگیر در معدل'),
+        # ('olamp', 'شرکت در المپیاد دانش آموزی'),
+        # ('konkoor', 'شرکت در کنکور'),
+        # ('teacher', 'گزارش از معلم دانش آموز یا کادر مدرسه'),
+        # ('finals', 'گزارش امتحانات پایان سال'))
 
 
 class taghire_madadkar(models.Model):

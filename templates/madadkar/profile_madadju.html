@@ -134,7 +134,7 @@
 					<a href="/madadkar/vaziat_tahsili?madadju_un={{madadju_un}}" class="list-group-item">ویرایش شرح حال و وضعیت تحصیلی</a>
 				</div>
 			</div>
-			<button type="add" class="btn btn-default"><a href = "/madadkar/profile_madadju" >تغییر علامت اخطار</a></button>
+						<button type="add" class="btn btn-default"><a href="{% url 'ekhtar' %}">تغییر علامت اخطار</a></button>
 			{%if src == '1' %}
 				<button type="add" class="btn btn-default"><a href = "/madadkar/moshahede_madadjuyan_taht_kefalat" >بازگشت</a></button>
 			{%endif%}
