@@ -50,10 +50,8 @@ def show_afzayesh_etebar(request,user):
             afzayesh=form.cleaned_data['mablagh']
             userUK = User.objects.get(username=request.user)
             ukarbar=UserKarbar.objects.get(user=userUK)
-            ustmember=staff_members.objects.get(stafID=ukarbar)
-            uhamiar = Hamiar.objects.get(staffID=ustmember)
-            uhamiar.mojudi += afzayesh
-            uhamiar.save()
+            ukarbar.mojudi += afzayesh
+            ukarbar.save()
             template = 'karbar/amaliat_movafagh.html'
             return render(request, template, {'utype': user
                 , 'progress': karbar.darbare_ma.progress()

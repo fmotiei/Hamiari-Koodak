@@ -14,3 +14,5 @@ class SignUpInitialMadadju(forms.ModelForm):
 class SignUpForm(SignUpInitial):
     class Meta(SignUpInitial.Meta):
         fields = SignUpInitial.Meta.fields + ('phone_number',) + ('school',) + ('address',)+('GPA',)+('paaye',)
+
+

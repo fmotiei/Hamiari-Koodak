@@ -116,11 +116,12 @@
 			        </div>
 			        <div class="panel-body" align="right">
 			          <form action="/madadkar/virayesh_niaz/" method="post">
+                            {% csrf_token %}
 			          	<p>مبلغ جدید را وارد نمایید.</p>
 			            <div class="form-group">
-							<input type="number" class="form-control" id="uid" name="uid" placeholder="مبلغ">
+							<input type="number" class="form-control" id="mablagh" name="mablagh" placeholder="مبلغ">
 						</div>
-			            <button type="add" class="btn btn-default"><a href = "/madadkar/amaliat_movafagh">تایید</a></button>
+			            <input type="submit" class="btn btn-default" style="color:white" value="تایید">
 			            <button type="add" class="btn btn-default"><a href = "/madadkar/niaz_haye_madadju">بازگشت</a></button>
 			          </form>
 			        </div>

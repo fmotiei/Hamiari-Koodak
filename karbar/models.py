@@ -8,6 +8,7 @@ from datetime import datetime
 class UserKarbar(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, default='')
     address = models.CharField(max_length=100)
+    mojudi = models.PositiveIntegerField(default=0 )
     phone_number = models.CharField( max_length=17, blank=True)  # validators should be a list
     is_hamiar = models.BooleanField( default=False)
     is_madadkar = models.BooleanField( default=False)
@@ -25,10 +26,10 @@ class staff_members(models.Model):
         on_delete=models.CASCADE,
         primary_key=True, default=''
     )
-    pardakhti = models.PositiveIntegerField()#jame harchi ke pardakht kardan (momkene maslan madadkar az jib bezare)
-    dariafti = models.PositiveIntegerField() #jame har chi dariaft kardan
     def __str__(self):
         return self.stafID.user.username
+
+
 # Create your models here.
 class Payam(models.Model):
     onvan = models.CharField(max_length=30)
@@ -78,3 +79,9 @@ class akhbar(models.Model):
     onvan = models.CharField(max_length=30)
     matn = models.CharField(max_length=100)
     zaman = models.DateTimeField(default=datetime.now, blank=True)
+
+class Payment(models.Model):
+    mablagh = models.PositiveIntegerField(default=0)
+    onvan = models.CharField(default='', max_length=50)
+    pardakht_konande = models.ForeignKey(staff_members, null=False, on_delete=models.PROTECT,related_name='pardakht_konande')
+    girande = models.ForeignKey(staff_members, null=False, on_delete=models.PROTECT,related_name='girande')

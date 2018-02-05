@@ -17,7 +17,6 @@ class Hamiar(models.Model):
         on_delete=models.CASCADE,
         primary_key=True, default=''
     )
-    mojudi = models.PositiveIntegerField(default=0)
     termination_date = models.DateField(null=True,
                                         blank=True)  # age delete kard acountesho kolan hazfesh nemikonim. inja minevisim
     start_date = models.DateField(null=True, blank=True)
