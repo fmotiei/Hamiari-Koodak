@@ -13,7 +13,7 @@ import karbar
 import madadju
 from hamiar.models import hemaiatNiaz
 from karbar import moshtarak
-from madadju.models import Madadju, Niaz, Madadkar, UserKarbar, staff_members
+from madadju.models import Madadju, Niaz, Madadkar, UserKarbar, staff_members,sharhe_tahsil
 
 
 def show_afzoudan_niaz(request):
@@ -208,8 +208,28 @@ def show_vaziat_tahsili(request):
     if request.method =="GET":
         form = VirayeshTahsilForm()
         return render(request, template, {'username' : request.user,
-                                      'un': request.GET.get('madadju_un'),
+                                      'madadju_un': request.GET.get('madadju_un'),
                                       'progress': karbar.darbare_ma.progress(),'form':form})
+    if request.method == "POST":
+        form =VirayeshTahsilForm(request.POST)
+        madadju_user=request.GET.get('madadju_un')
+        madadju_u=User.objects.get(username=request.GET.get('madadju_un'))
+        madadju_uk=UserKarbar.objects.get(user=madadju_u)
+        madadju_ma=Madadju.objects.get(user=madadju_uk)
+        madadkar_uk=UserKarbar.objects.get(user=request.user)
+        madadkar_st=staff_members.objects.get(stafID=madadkar_uk)
+        madadkar_ma=Madadkar.objects.get(staffID=madadkar_st)
+        if form.is_valid():
+            Field_Taghir=form.cleaned_data['Field_Taghir']
+            sharh=form.cleaned_data['sharh']
+            onvan=form.cleaned_data['onvan']
+            Type=form.cleaned_data['Type']
+            sharhe_tahsil.objects.create(madadju=madadju_ma, madadkar = madadkar_ma,onvan=onvan, Type=Type,sharh=sharh,Field_Taghir=Field_Taghir)
+            return moshtarak.show_amaliat_movafagh(request, 'madadkar')
+        else:
+            return render(request, template, {'username': request.user,
+                                              'madadju_un': request.GET.get('madadju_un'),
+                                              'progress': karbar.darbare_ma.progress(), 'form': form})
 
 
 def show_moshahede_madadjuyan_dar_entezar_madadkar(request):

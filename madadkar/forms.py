@@ -5,6 +5,9 @@ from madadju.models import sharhe_tahsil
 
 
 class VirayeshTahsilForm(forms.ModelForm):
+    tip=(
+    ('GD', 'تغییر مثبت'),
+    ('BD', 'تغییر منفی'))
     Taghirat=(
     ('gpa', 'تغییر چشمگیر در معدل'),
     ('olamp', 'شرکت در المپیاد دانش آموزی'),
@@ -12,6 +15,8 @@ class VirayeshTahsilForm(forms.ModelForm):
     ('teacher', 'گزارش از معلم دانش آموز یا کادر مدرسه'),
     ('finals', 'گزارش امتحانات پایان سال'))
     Field_Taghir=forms.ChoiceField(choices=Taghirat, widget=forms.Select(attrs={'class':'form-control','name':'Field_Taghir'}))
+
+    Type=forms.ChoiceField(choices=tip, widget=forms.Select(attrs={'class':'form-control','name':'Type'}))
     class Meta:
         model = sharhe_tahsil
         fields = ('onvan', 'sharh','Field_Taghir','Type')
