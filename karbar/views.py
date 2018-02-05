@@ -112,3 +112,7 @@ def show_moshahede_list_niazhaye_fori_taminnashode(request):
 
 def show_register_success(request):
     return render(request,"karbar/regiset_success.html")
+
+def show_bi_ejaze(request):
+    template = 'karbar/bi_ejazeh.html'
+    return render(request,template,{})

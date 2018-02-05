@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include,url
 
+import karbar
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^hamiar/',include('hamiar.urls')),
@@ -24,4 +26,5 @@ urlpatterns = [
     url(r'^modir/',include('modir.urls')),
     url(r'^madadju/',include('madadju.urls')),
     url(r'^karbar/',include('karbar.urls')),
+    url(r'^permission/',karbar.views.show_bi_ejaze)
 ]

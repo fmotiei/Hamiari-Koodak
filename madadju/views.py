@@ -20,8 +20,8 @@ def is_madadju(user):
         return Madadju.objects.filter(user = userKarbar).exists()
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadju,login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadju,login_url='/permission/')
 def show_darkhast_taghir_madadkar(request):
     template = 'madadju/darkhast.html'
     userKarbar = UserKarbar.objects.get(user=request.user)
