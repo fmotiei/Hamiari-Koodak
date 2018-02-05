@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.template import Context
@@ -12,6 +13,20 @@ from karbar import moshtarak
 from karbar.models import UserKarbar, staff_members, Payment
 from madadju.models import Madadju, Niaz
 
+def is_hamiar(user):
+    if not UserKarbar.objects.filter(user=user).exists():
+        return False
+    else:
+        userKarbar = UserKarbar.objects.get(user=user)
+        if not staff_members.objects.filter(stafID =userKarbar).exists():
+            return False
+        else:
+            staffMember = staff_members.objects.get(stafID=userKarbar)
+            return Hamiar.objects.filter(staffID=staffMember).exists()
+
+
+@login_required(login_url='/karbar/')
+@user_passes_test(is_hamiar,login_url='/karbar/')
 def show_hemayat_az_moasese(request):
 
     template = 'hamiar/hemayat_az_moasese.html'
@@ -42,7 +57,8 @@ def show_hemayat_az_moasese(request):
                 , 'progress': karbar.darbare_ma.progress()
                 , 'username': request.user, 'form': form})
 
-
+@login_required(login_url='/karbar/')
+@user_passes_test(is_hamiar,login_url='/karbar/')
 def show_hemayat_az_niaz(request):
     template = 'hamiar/hemayat_az_niaz.html'
     return render(request, template, {'utype':'hamiar'
@@ -54,6 +70,8 @@ def show_hemayat_az_niaz(request):
                                       , 'fori' : '' })
 #TODO username: username karbar , niazName : name niaz , hazine ha va fori marbut b niaz
 
+@login_required(login_url='/karbar/')
+@user_passes_test(is_hamiar,login_url='/karbar/')
 def show_moshahede_niaz_haye_taht_hemayat(request):
     template = 'hamiar/moshahede_niaz_haye_taht_hemayat.html'
     user = User.objects.get(username=request.user)
@@ -82,6 +100,8 @@ def show_moshahede_niaz_haye_taht_hemayat(request):
                                       , 'madadjuyan' : madadjus })
 #TODO ba zadane enseraf enseraf dahad
 
+@login_required(login_url='/karbar/')
+@user_passes_test(is_hamiar,login_url='/karbar/')
 def show_niaz_haye_tamin_nashode(request):
     template = 'hamiar/niaz_haye_tamin_nashode.html'
     niazha = []
@@ -95,6 +115,8 @@ def show_niaz_haye_tamin_nashode(request):
                                       })
 #TODO ba zadane hemayat hemayat konad
 
+@login_required(login_url='/karbar/')
+@user_passes_test(is_hamiar,login_url='/karbar/')
 def show_niaz_haye_madadju(request):
     template = 'hamiar/niaz_haye_madadju.html'
     madadju_un = request.GET.get('madadju_un')
@@ -112,6 +134,8 @@ def show_niaz_haye_madadju(request):
                                                   n.mablagh_taminshodeh, n.niazFori) for n in niazha],
                                       'madadju_un': madadju_un, })
 
+@login_required(login_url='/karbar/')
+@user_passes_test(is_hamiar,login_url='/karbar/')
 def show_profile(request):
     template = 'hamiar/profile.html'
     userKarbar = UserKarbar.objects.get(user=request.user)
@@ -129,6 +153,8 @@ def show_profile(request):
                                       , 'etebar' : userKarbar.mojudi
                                     })
 
+@login_required(login_url='/karbar/')
+@user_passes_test(is_hamiar,login_url='/karbar/')
 def show_profile_madadju(request):
     template = 'hamiar/profile_madadju.html'
     madadju_un = request.GET.get('madadju_un')
@@ -150,54 +176,84 @@ def show_profile_madadju(request):
 #TODO bayad madadju ra baraye list niaz hayash befrestad
 
 
+@login_required(login_url='/karbar/')
+@user_passes_test(is_hamiar,login_url='/karbar/')
 def show_hamiar(request):
     return moshtarak.show_user(request,'hamiar')
 
 
+@login_required(login_url='/karbar/')
+@user_passes_test(is_hamiar,login_url='/karbar/')
 def show_afzayesh_etebar(request):
     return moshtarak.show_afzayesh_etebar(request,'hamiar')
 
 
+@login_required(login_url='/karbar/')
+@user_passes_test(is_hamiar,login_url='/karbar/')
 def show_ersal_payam(request):
     return moshtarak.show_ersal_payam(request,'hamiar')
 
+@login_required(login_url='/karbar/')
+@user_passes_test(is_hamiar,login_url='/karbar/')
 def show_moshahede_tarakonesh_haye_mali(request):
     return moshtarak.show_moshahede_tarakonesh_haye_mali(request,'hamiar')
 
+@login_required(login_url='/karbar/')
+@user_passes_test(is_hamiar,login_url='/karbar/')
 def show_payam_daryafti(request):
     return moshtarak.show_payam_daryafti(request,'hamiar')
 
+@login_required(login_url='/karbar/')
+@user_passes_test(is_hamiar,login_url='/karbar/')
 def show_payam_ersali(request):
     return moshtarak.show_payam_ersali(request,'hamiar')
 
 
+@login_required(login_url='/karbar/')
+@user_passes_test(is_hamiar,login_url='/karbar/')
 def show_roydadha(request):
     return moshtarak.show_roydadha(request,'hamiar')
 
 
+@login_required(login_url='/karbar/')
+@user_passes_test(is_hamiar,login_url='/karbar/')
 def show_sandoghe_payamhaye_daryafti(request):
     return moshtarak.show_sandoghe_payamhaye_daryafti(request,'hamiar')
 
 
+@login_required(login_url='/karbar/')
+@user_passes_test(is_hamiar,login_url='/karbar/')
 def show_sandoghe_payamhaye_ersali(request):
     return moshtarak.show_sandoghe_payamhaye_ersali(request,'hamiar')
 
 
+@login_required(login_url='/karbar/')
+@user_passes_test(is_hamiar,login_url='/karbar/')
 def show_amaliat_movafagh(request):
     return moshtarak.show_amaliat_movafagh(request,'hamiar')
 
+@login_required(login_url='/karbar/')
+@user_passes_test(is_hamiar,login_url='/karbar/')
 def show_ahdaf(request):
     return moshtarak.show_ahdaf(request,'hamiar')
 
+@login_required(login_url='/karbar/')
+@user_passes_test(is_hamiar,login_url='/karbar/')
 def show_ashnai(request):
     return moshtarak.show_ashnai(request,'hamiar')
 
 
+@login_required(login_url='/karbar/')
+@user_passes_test(is_hamiar,login_url='/karbar/')
 def show_sakhtar_sazmani(request):
     return moshtarak.show_sakhtar_sazmani(request,'hamiar')
 
+@login_required(login_url='/karbar/')
+@user_passes_test(is_hamiar,login_url='/karbar/')
 def show_moshahede_list_koodakan(request):
     return moshtarak.show_moshahede_list_koodakan(request,'hamiar')
 
+@login_required(login_url='/karbar/')
+@user_passes_test(is_hamiar,login_url='/karbar/')
 def show_moshahede_list_niazhaye_fori_taminnashode(request):
     return moshtarak.show_moshahede_list_niazhaye_fori_taminnashode(request,'hamiar')

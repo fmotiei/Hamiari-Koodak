@@ -1,4 +1,4 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render
 from django.template import Context
 from django.template.loader import get_template
@@ -12,7 +12,16 @@ from karbar import moshtarak
 from madadju.models import Madadju, Niaz, staff_members, UserKarbar,taghire_madadkar
 from madadju.forms import taghirMadadkarForm
 
-@login_required
+def is_madadju(user):
+    if not UserKarbar.objects.filter(user=user).exists():
+        return False
+    else:
+        userKarbar = UserKarbar.objects.get(user=user)
+        return Madadju.objects.filter(user = userKarbar).exists()
+
+
+@login_required(login_url='/karbar/')
+@user_passes_test(is_madadju,login_url='/karbar/')
 def show_darkhast_taghir_madadkar(request):
     template = 'madadju/darkhast.html'
     userKarbar = UserKarbar.objects.get(user=request.user)
@@ -36,7 +45,8 @@ def show_darkhast_taghir_madadkar(request):
                 , 'mName': madadju.madadkar.staffID.stafID.user.username, 'form': form})
 
 
-@login_required
+@login_required(login_url='/karbar/')
+@user_passes_test(is_madadju,login_url='/karbar/')
 def show_profile(request):
     template = 'madadju/profile.html'
     userKarbar = UserKarbar.objects.get(user=request.user)
@@ -58,7 +68,8 @@ def show_profile(request):
                                     , 'madadkar': madadju.madadkar.staffID.stafID.user.username
                                     , 'hamiarha': hamiarha })
 
-@login_required
+@login_required(login_url='/karbar/')
+@user_passes_test(is_madadju,login_url='/karbar/')
 def show_niaz_haye_madadju(request):
     template = 'madadju/niaz_haye_madadju.html'
     madadju_un = request.user
@@ -77,7 +88,8 @@ def show_niaz_haye_madadju(request):
                                       })
 
 
-@login_required
+@login_required(login_url='/karbar/')
+@user_passes_test(is_madadju,login_url='/karbar/')
 def show_hamiar_profile(request):
     template = 'madadju/hamiar_profile.html'
     hamiarName = request.GET.get('hamiar')
@@ -101,62 +113,77 @@ def show_hamiar_profile(request):
                                       , 'hlName' : user.last_name
                                       , 'madadjuyan' : madadjuyan})
 
-@login_required
+@login_required(login_url='/karbar/')
+@user_passes_test(is_madadju,login_url='/karbar/')
 def show_madadju(request):
     return moshtarak.show_user(request,'madadju')
 
-@login_required
+@login_required(login_url='/karbar/')
+@user_passes_test(is_madadju,login_url='/karbar/')
 def show_afzayesh_etebar(request):
     return moshtarak.show_afzayesh_etebar(request,'madadju')
 
-@login_required
+@login_required(login_url='/karbar/')
+@user_passes_test(is_madadju,login_url='/karbar/')
 def show_ersal_payam(request):
     return moshtarak.show_ersal_payam(request,'madadju')
 
-@login_required
+@login_required(login_url='/karbar/')
+@user_passes_test(is_madadju,login_url='/karbar/')
 def show_moshahede_tarakonesh_haye_mali(request):
     return moshtarak.show_moshahede_tarakonesh_haye_mali(request,'madadju')
 
-@login_required
+@login_required(login_url='/karbar/')
+@user_passes_test(is_madadju,login_url='/karbar/')
 def show_payam_daryafti(request):
     return moshtarak.show_payam_daryafti(request,'madadju')
 
-@login_required
+@login_required(login_url='/karbar/')
+@user_passes_test(is_madadju,login_url='/karbar/')
 def show_payam_ersali(request):
     return moshtarak.show_payam_ersali(request,'madadju')
 
-@login_required
+@login_required(login_url='/karbar/')
+@user_passes_test(is_madadju,login_url='/karbar/')
 def show_roydadha(request):
     return moshtarak.show_roydadha(request,'madadju')
 
-@login_required
+@login_required(login_url='/karbar/')
+@user_passes_test(is_madadju,login_url='/karbar/')
 def show_sandoghe_payamhaye_daryafti(request):
     return moshtarak.show_sandoghe_payamhaye_daryafti(request,'madadju')
 
-@login_required
+@login_required(login_url='/karbar/')
+@user_passes_test(is_madadju,login_url='/karbar/')
 def show_sandoghe_payamhaye_ersali(request):
     return moshtarak.show_sandoghe_payamhaye_ersali(request,'madadju')
 
-@login_required
+@login_required(login_url='/karbar/')
+@user_passes_test(is_madadju,login_url='/karbar/')
 def show_amaliat_movafagh(request):
     return moshtarak.show_amaliat_movafagh(request,'madadju')
 
-@login_required
+@login_required(login_url='/karbar/')
+@user_passes_test(is_madadju,login_url='/karbar/')
 def show_ahdaf(request):
     return moshtarak.show_ahdaf(request,'madadju')
 
-@login_required
+@login_required(login_url='/karbar/')
+@user_passes_test(is_madadju,login_url='/karbar/')
 def show_ashnai(request):
     return moshtarak.show_ashnai(request,'madadju')
 
-@login_required
+@login_required(login_url='/karbar/')
+@user_passes_test(is_madadju,login_url='/karbar/')
 def show_sakhtar_sazmani(request):
     return moshtarak.show_sakhtar_sazmani(request,'madadju')
 
-@login_required
+@login_required(login_url='/karbar/')
+@user_passes_test(is_madadju,login_url='/karbar/')
 def show_moshahede_list_koodakan(request):
     return moshtarak.show_moshahede_list_koodakan(request,'madadju')
 
-@login_required
+@login_required(login_url='/karbar/')
+@user_passes_test(is_madadju,login_url='/karbar/')
 def show_moshahede_list_niazhaye_fori_taminnashode(request):
     return moshtarak.show_moshahede_list_niazhaye_fori_taminnashode(request,'madadju')
