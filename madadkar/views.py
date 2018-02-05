@@ -100,7 +100,7 @@ def show_profile(request):
                                       'progress': karbar.darbare_ma.progress(),
                                       'first_name': request.user.first_name,
                                       'last_name': request.user.last_name,
-                                      'etebar': staffMember.dariafti - staffMember.pardakhti
+                                      'etebar': userKarbar.mojudi
                                       })
 
 
@@ -128,7 +128,7 @@ def show_profile_madadju(request):
                                       'madadju_ln' : user.last_name,
                                       'hamiars': hamiarha,
                                       'sharh': "onvan" + "-" + "sharh"
-                                      # 'sharh_kh': (madadju.sharhe_tahsil.Field_Taghir, madadju.sharhe_tahsil.ُType)
+                                  # 'sharh_kh': (madadju.sharhe_tahsil.Field_Taghir, madadju.sharhe_tahsil.ُType)
                                       })
 
 #todo FAEZEH

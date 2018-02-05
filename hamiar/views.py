@@ -18,6 +18,7 @@ def show_hemayat_az_moasese(request):
                                     , 'progress': karbar.darbare_ma.progress()
                                     , 'username' : request.user })
 #TODO mablagh ro begire va b hesab moassese (?) ezafe kone
+#todo YEGANE
 
 def show_hemayat_az_niaz(request):
     template = 'hamiar/hemayat_az_niaz.html'
@@ -60,18 +61,15 @@ def show_moshahede_niaz_haye_taht_hemayat(request):
 
 def show_niaz_haye_tamin_nashode(request):
     template = 'hamiar/niaz_haye_tamin_nashode.html'
-    madadjus = []
-    for madadju in Madadju.objects.all():
-        niazs = []
-        for niaz in Niaz.objects.all():
-            if niaz.niazmand == madadju:
-                niazs.append((niaz.id, niaz.onvan, niaz.mablagh_taminshodeh,
-                              niaz.mablagh_taminnashode(), niaz.niazFori))
-        madadjus.append((madadju.user.user.username, niazs))
+    niazha = []
+    for niaz in Niaz.objects.all():
+        if niaz.hemaiatshod == False:
+            niazha.append(niaz)
     return render(request, template, {'utype':'hamiar'
                                     , 'progress': karbar.darbare_ma.progress()
                                     , 'username' : request.user
-                                      , 'madadjuyan' : madadjus })
+                                      , 'niazha': [(n.niazmand.username, n.onvan, n.mablagh,n.niazFori) for n in niazha]
+                                      })
 #TODO ba zadane hemayat hemayat konad
 
 def show_niaz_haye_madadju(request):
@@ -86,26 +84,38 @@ def show_niaz_haye_madadju(request):
 
 def show_profile(request):
     template = 'hamiar/profile.html'
+    userKarbar = UserKarbar.objects.get(user=request.user)
+    staffMember = staff_members.objects.get(stafID=userKarbar)
+    hamiar = Hamiar.objects.get(staffID=staffMember)
+    madadjuha = []
+    for niaz in hemaiatNiaz.objects.filter(hamiar=hamiar):
+            madadjuha.append(niaz.niazmand.username())
     return render(request, template, {'utype':'hamiar'
                                     , 'progress': karbar.darbare_ma.progress()
-                                    , 'username' : ''
-                                      , 'fn' : ''
-                                      , 'ln' : ''
-                                      , 'madadjuyan' : []
-                                      , 'etebar' : ''})
-#TODO username : username karbar , fn : first name karbar , ln : last name karbar , madadjuyan : username madadjuyan marbut b karbar , etebar : etebare karbar
+                                    , 'username' : request.user
+                                      , 'fn' : request.user.first_name
+                                      , 'ln' : request.user.last_name
+                                      , 'madadjuyan' : madadjuha
+                                      , 'etebar' : userKarbar.mojudi
+                                    })
 
 def show_profile_madadju(request):
     template = 'hamiar/profile_madadju.html'
-    return render(request, template, {'utype':'hamiar'
-                                    , 'progress': karbar.darbare_ma.progress()
-                                    , 'username' : ''
-                                      ,'mName' : ''
-                                      , 'alarm' : ''
-                                      , 'mfName' : ''
-                                      , 'mlName' : ''
-                                      , 'hamiaran': []
-                                      , 'vaziatUmumi' : ''})
+    madadju_un = request.GET.get('madadju_un')
+    user = User.objects.get(username=madadju_un)
+    userKarbar = UserKarbar.objects.get(user=user)
+    madadju = Madadju.objects.get(user=userKarbar)
+    return render(request, template, {'utype':'hamiar',
+                                      'username': request.user,
+                                     'progress': karbar.darbare_ma.progress(),
+                                      'alarm': madadju.ekhtar,
+                                      'progress': karbar.darbare_ma.progress(),
+                                      'madadju_un': request.GET.get('madadju_un'),
+                                      'src': request.GET.get('src'),
+                                      'madadju_fn': user.first_name,
+                                      'madadju_ln': user.last_name,
+                                      'madadkar_un':madadju.madadkar,
+                                      'sharh': "onvan" + "-" + "sharh"})
 #TODO username : username karbar , mName: esme madadju , alarm : alarme madadju , mlName: familie madadju , hamiaran araye az esme hamiaran marbut b madadju , vaziatUmumi : vaziat tahsili umumi madadju
 #TODO bayad madadju ra baraye list niaz hayash befrestad
 
