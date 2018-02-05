@@ -57,7 +57,7 @@ def show_afzayesh_etebar(request,user):
             ukarbar.save()
             Payment.objects.create(onvan='افزایش اعتبار',mablagh=afzayesh,pardakht_konande=ukarbar,girande=ukarbar,zaman=datetime.datetime.now())
             events.objects.create(onvan='افزایش اعتبار',
-                                  matn='اعتبار شما به مبلغ'+afzayesh+' تومان افزایش یافت',
+                                  matn='اعتبار شما به مبلغ '+str(afzayesh)+' تومان افزایش یافت',
                                   user=request.user, zaman=datetime.datetime.now())
             template = 'karbar/amaliat_movafagh.html'
             return render(request, template, {'utype': user
@@ -201,7 +201,7 @@ def show_payam_ersali(request,user):
         , 'username': request.user
         , 'onvan': payam1.onvan
         , 'text': payam1.matn
-        , 'sender': receiver
+        , 'receiver': receiver
         , 'date': payam1.zaman})
 
 @login_required
