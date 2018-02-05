@@ -14,7 +14,7 @@ from django.template import Context
 from django.template.loader import get_template
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
-
+from karbar.models import Payment
 from hamiar.forms import afzayeshEtebar
 from madadkar.models import Madadkar, hoghugh_dariafti
 
@@ -52,6 +52,7 @@ def show_afzayesh_etebar(request,user):
             ukarbar=UserKarbar.objects.get(user=userUK)
             ukarbar.mojudi += afzayesh
             ukarbar.save()
+            Payment.objects.create(onvan='افزایش اعتبار',mablagh=afzayesh,pardakht_konande=ukarbar,girande=ukarbar,zaman=datetime.datetime.now())
             template = 'karbar/amaliat_movafagh.html'
             return render(request, template, {'utype': user
                 , 'progress': karbar.darbare_ma.progress()

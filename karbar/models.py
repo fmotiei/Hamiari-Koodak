@@ -83,6 +83,6 @@ class akhbar(models.Model):
 class Payment(models.Model):
     mablagh = models.PositiveIntegerField(default=0)
     onvan = models.CharField(default='', max_length=50)
-    pardakht_konande = models.ForeignKey(staff_members, null=False, on_delete=models.PROTECT,related_name='pardakht_konande')
-    girande = models.ForeignKey(staff_members, null=False, on_delete=models.PROTECT,related_name='girande')
+    pardakht_konande = models.ForeignKey(UserKarbar, null=False, on_delete=models.PROTECT,related_name='pardakht_konande')
+    girande = models.ForeignKey(UserKarbar, null=False, on_delete=models.PROTECT,related_name='girande')
     zaman = models.DateTimeField(default=datetime.now, blank=True)
