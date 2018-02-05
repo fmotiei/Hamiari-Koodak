@@ -118,7 +118,10 @@
 			        <div class="panel-body" align="right">
 			          <form action="/madadkar/vaziat_tahsili/?madadju_un={{madadju_un}}" method="post">
 						  {% csrf_token %}
-
+			          	<p>نوع تغییر :</p>
+			            <div class="form-group">
+							{{form.Type}}
+						</div>
 			          	<p>عنوان :</p>
 			            <div class="form-group">
 							<input type="text" class="form-control"  name="onvan" placeholder="مثال: کسب رتبه اول کنکور">
@@ -129,10 +132,10 @@
 						</div>
 			          	<p>شرح حال و وضعیت تحصیلی خصوصی:</p>
 			            <div class="form-group">
-							<input type="number" class="form-control" name="sharh" placeholder="توضیحات" style="height: 300px; width: 100%">
+							<input type="text" class="form-control" name="sharh" placeholder="توضیحات" style="height: 300px; width: 100%">
 						</div>
 			            <input type="submit" class="btn btn-default" style="color:white" value="تایید">
-			            <button type="add" class="btn btn-default"><a href="/madadkar/profile_madadju?madadju_un={{un}}">بازگشت</a></button>
+			            <button type="add" class="btn btn-default"><a href="/madadkar/profile_madadju?madadju_un={{madadju_un}}">بازگشت</a></button>
 			          </form>
 			        </div>
 			      </div>

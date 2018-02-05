@@ -34,18 +34,8 @@ class sharhe_tahsil(models.Model):
     sharh = models.CharField(max_length=1000)
     onvan = models.CharField(max_length=50,default='')
     Type = models.CharField(max_length=100,default='')
-
-        # (
-        # ('GD', 'تغییر مثبت'),
-        # ('BD', 'تغییر منفی'))
     Field_Taghir = models.CharField(max_length=100,default='')
 
-        # (
-        # ('gpa', 'تغییر چشمگیر در معدل'),
-        # ('olamp', 'شرکت در المپیاد دانش آموزی'),
-        # ('konkoor', 'شرکت در کنکور'),
-        # ('teacher', 'گزارش از معلم دانش آموز یا کادر مدرسه'),
-        # ('finals', 'گزارش امتحانات پایان سال'))
 
 
 class taghire_madadkar(models.Model):
