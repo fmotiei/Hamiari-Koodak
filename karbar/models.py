@@ -36,22 +36,22 @@ class Payam(models.Model):
     matn = models.CharField(max_length=1000)
     zaman = models.DateTimeField(default=datetime.now, blank=True)
 
-    class Meta:
-        abstract = True
 
-
-class Payam_Adi(Payam):
+class Payam_Adi(models.Model):
+    payam = models.OneToOneField(Payam,on_delete=models.CASCADE,primary_key=True,default='')
     sender = models.ForeignKey(staff_members, null=False, on_delete=models.PROTECT,related_name='Sender')
     reciever = models.ForeignKey(User, on_delete=models.PROTECT,related_name='Reciever')
 
 
-class Payam_Madadju(Payam):
+class Payam_Madadju(models.Model):
+    payam = models.OneToOneField(Payam,on_delete=models.CASCADE,primary_key=True,default='')
     sender = models.ForeignKey('madadju.Madadju', null=False,  on_delete=models.PROTECT)
     reciever = models.ForeignKey('hamiar.Hamiar', on_delete=models.PROTECT)
     taieed = models.BooleanField(default=False)
 
 
-class Payam_Madadju_Madadkar(Payam):
+class Payam_Madadju_Madadkar(models.Model):
+    payam = models.OneToOneField(Payam,on_delete=models.CASCADE,primary_key=True,default='')
     sender = models.ForeignKey('madadju.Madadju', null=False, on_delete=models.PROTECT)
     reciever = models.ForeignKey('madadkar.Madadkar', on_delete=models.PROTECT)
     Type = (

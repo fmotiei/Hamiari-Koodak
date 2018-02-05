@@ -63,7 +63,6 @@ def show_afzayesh_etebar(request,user):
             return render(request, template, {'form':form,'utype' : user
                                     , 'progress': karbar.darbare_ma.progress()
                                     , 'username' : request.user})
-#TODO etebar ra begirad va afzayesh dahad (bara hamiar mikone)
 
 @login_required
 def show_ersal_payam(request,user):
@@ -90,7 +89,8 @@ def show_ersal_payam(request,user):
             ukarbar=UserKarbar.objects.get(user=userUK)
             if staff_members.objects.filter(stafID=ukarbar).exists():# halati ke ye staff payam mide
                 ustmember = staff_members.objects.get(stafID=ukarbar)
-                Payam_Adi.objects.create(sender=ustmember, reciever=recieverUser,onvan=onvan,matn=matn, zaman=datetime.datetime.now())
+                payam = Payam.objects.create(onvan=onvan,matn=matn, zaman=datetime.datetime.now())
+                Payam_Adi.objects.create(payam = payam ,sender=ustmember, reciever=recieverUser)
                 template = 'karbar/amaliat_movafagh.html'
                 return render(request, template, {'utype': user
                     , 'progress': karbar.darbare_ma.progress()
@@ -103,7 +103,8 @@ def show_ersal_payam(request,user):
                     recieverStaff=staff_members.objects.get(stafID=recieverUkarbar)
                     if Hamiar.objects.filter(staffID=recieverStaff).exists(): #payam madadju be hamiar
                         recieverhamiar=Hamiar.objects.get(staffID=recieverStaff)
-                        Payam_Madadju.objects.create(sender=ustmember, reciever=recieverhamiar,onvan=onvan,matn=matn, zaman=datetime.datetime.now(),taieed=False)
+                        payam = Payam.objects.create(onvan=onvan,matn=matn, zaman=datetime.datetime.now())
+                        Payam_Madadju.objects.create(payam = payam ,sender=ustmember, reciever=recieverhamiar,taieed=False)
                         template = 'karbar/amaliat_movafagh.html'
                         return render(request, template, {'utype': user
                             , 'progress': karbar.darbare_ma.progress()
@@ -111,7 +112,8 @@ def show_ersal_payam(request,user):
                     else: #payam madadju be madadkar
                         if Madadkar.objects.filter(staffID=recieverStaff):
                             recieverMadadkar = Madadkar.objects.get(staffID=recieverStaff)
-                            Payam_Madadju_Madadkar.objects.create(sender=ustmember, reciever=recieverMadadkar,onvan=onvan,matn=matn, zaman=datetime.datetime.now(),taieed=False)
+                            payam = Payam.objects.create(onvan=onvan, matn=matn, zaman=datetime.datetime.now())
+                            Payam_Madadju_Madadkar.objects.create(payam = payam ,sender=ustmember, reciever=recieverMadadkar,taieed=False)
                             template = 'karbar/amaliat_movafagh.html'
                             return render(request, template, {'utype': user
                                 , 'progress': karbar.darbare_ma.progress()
@@ -138,10 +140,10 @@ def show_moshahede_tarakonesh_haye_mali(request,user):
 
     userKarbar = UserKarbar.objects.get(user=request.user)
     for payment in Payment.objects.all():
-        if payment.pardakht_konande == userKarbar :
-            tarakoneshha.append((payment.onvan,0-payment.mablagh,payment.girande,payment.zaman))
         if payment.girande == userKarbar :
-            tarakoneshha.append((payment.onvan,payment.mablagh,payment.pardakht_konande,payment.zaman))
+            tarakoneshha.append((payment.onvan,payment.mablagh,payment.pardakht_konande.user.username,payment.zaman))
+        elif payment.pardakht_konande == userKarbar :
+            tarakoneshha.append((payment.onvan,0-payment.mablagh,payment.girande.user.username,payment.zaman))
 
     return render(request, template, {'utype' : user
                                         , 'progress': karbar.darbare_ma.progress()
@@ -153,42 +155,50 @@ def show_moshahede_tarakonesh_haye_mali(request,user):
 def show_payam_daryafti(request, user):
     template = 'karbar/payam_daryafti.html'
     upayam = request.GET.get('payam')
-    try:
-        payam = Payam_Madadju.objects.get(id=upayam)
-    except ObjectDoesNotExist:
-        try:
-            payam = Payam_Adi.objects.get(id=upayam)
-        except :
-            payam = Payam_Madadju_Madadkar.objects.get(id=upayam)
+    payam1 = Payam.objects.get(pk=upayam)
+    if not (len(Payam_Madadju.objects.filter(payam=payam1)) == 0) :
+        payam = Payam_Madadju.objects.get(payam=payam1)
+        sender = payam.sender.username
+    else:
+        if not (len(Payam_Adi.objects.filter(payam=payam1))==0) :
+            payam = Payam_Adi.objects.get(payam=payam1)
+            sender = payam.sender.stafID.user.username
+        else:
+            payam = Payam_Madadju_Madadkar.objects.get(payam=payam1)
+            sender = payam.sender.username
 
     return render(request, template, {'utype': user
         , 'progress': karbar.darbare_ma.progress()
         , 'username': request.user
-        , 'onvan': payam.onvan
-        , 'text': payam.matn
-        , 'sender': payam.sender.username()
-        , 'date': payam.zaman})
+        , 'onvan': payam1.onvan
+        , 'text': payam1.matn
+        , 'sender': sender
+        , 'date': payam1.zaman})
 
 
 @login_required
 def show_payam_ersali(request,user):
     template = 'karbar/payam_ersali.html'
     upayam = request.GET.get('payam')
-    try:
-        payam = Payam_Madadju.objects.get(id=upayam)
-    except ObjectDoesNotExist:
-        try:
-            payam = Payam_Adi.objects.get(id=upayam)
-        except :
-            payam = Payam_Madadju_Madadkar.objects.get(id=upayam)
+    payam1 = Payam.objects.get(pk=upayam)
+    if not (len(Payam_Madadju.objects.filter(payam=payam1)) == 0):
+        payam = Payam_Madadju.objects.get(payam=payam1)
+        receiver = payam.reciever.username
+    else:
+        if not (len(Payam_Adi.objects.filter(payam=payam1)) == 0):
+            payam = Payam_Adi.objects.get(payam=payam1)
+            receiver = payam.reciever.username
+        else:
+            payam = Payam_Madadju_Madadkar.objects.get(payam=payam1)
+            receiver = payam.reciever.username
 
     return render(request, template, {'utype': user
-                                    , 'progress': karbar.darbare_ma.progress()
-                                    , 'username': request.user
-                                    , 'onvan': payam.onvan
-                                    , 'text': payam.matn
-                                    , 'receiver': payam.reciever.username()
-                                    , 'date': payam.zaman})
+        , 'progress': karbar.darbare_ma.progress()
+        , 'username': request.user
+        , 'onvan': payam1.onvan
+        , 'text': payam1.matn
+        , 'sender': receiver
+        , 'date': payam1.zaman})
 
 @login_required
 def show_roydadha(request,user):
@@ -207,16 +217,18 @@ def show_sandoghe_payamhaye_daryafti(request,user):
     payamha = []
     if user == 'hamiar':
         for payam in Payam_Madadju.objects.all():
-            if payam.reciever.staffID.stafID.user == request.user:
-                payamha.append((payam.pk, payam.sender.username, payam.zaman, payam.onvan))
+            if (payam.reciever.staffID.stafID.user == request.user) & ( payam.taieed == True ):
+                payamha.append((payam.payam.pk, payam.sender.username, payam.payam.zaman, payam.payam.onvan))
 
     if user == 'madadkar':
         for payam in Payam_Madadju_Madadkar.objects.all():
             if payam.reciever.staffID.stafID.user == request.user:
-                payamha.append((payam.pk, payam.sender.username, payam.zaman, payam.onvan))
+                payamha.append((payam.payam.pk, payam.sender.username, payam.payam.zaman, payam.payam.onvan))
+
     for payam in Payam_Adi.objects.all():
         if payam.reciever == request.user:
-            payamha.append((payam.pk, payam.sender.username , payam.zaman, payam.onvan))
+            payamha.append((payam.payam.pk, payam.sender.stafID.user.username , payam.payam.zaman, payam.payam.onvan))
+
     return render(request, template, {'utype': user
         , 'progress': karbar.darbare_ma.progress()
         , 'username': request.user
@@ -225,14 +237,21 @@ def show_sandoghe_payamhaye_daryafti(request,user):
 @login_required
 def show_sandoghe_payamhaye_ersali(request,user):
     template = 'karbar/sandoghe_payamhaye_ersali.html'
+
     payamha = []
     if user == 'madadju':
         for payam in Payam_Madadju.objects.all() :
             if payam.sender.user.user == request.user :
-                payamha.append((payam.pk,payam.reciever.username,payam.zaman,payam.onvan))
+                payamha.append((payam.payam.pk,payam.reciever.username,payam.payam.zaman,payam.payam.onvan))
+
+        for payam in Payam_Madadju_Madadkar.objects.all():
+            if payam.sender.user.user == request.user:
+                payamha.append((payam.payam.pk, payam.reciever.username, payam.payam.zaman, payam.payam.onvan))
+
     for payam in Payam_Adi.objects.all() :
-        if payam.sender.user.user == request.user :
-            payamha.append((payam.pk,payam.reciever.username,payam.zaman,payam.onvan))
+        if payam.sender.stafID.user == request.user :
+            payamha.append((payam.payam.pk,payam.reciever.username,payam.payam.zaman,payam.payam.onvan))
+
     return render(request, template, {'utype': user
         , 'progress': karbar.darbare_ma.progress()
         , 'username': request.user

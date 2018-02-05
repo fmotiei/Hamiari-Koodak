@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
 from madadkar.models import *
+from madadkar.models import Madadkar
 from modir.models import *
 from karbar.models import *
 
