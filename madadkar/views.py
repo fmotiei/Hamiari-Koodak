@@ -96,6 +96,7 @@ def show_moshahede_madadjuyan_taht_kefalat(request):
 @user_passes_test(is_madadkar, login_url='/permission/')
 def show_niaz_haye_madadju(request):
     template = 'madadkar/niaz_haye_madadju.html'
+    virayesh = request.GET.get('virayesh')
     madadju_un = request.GET.get('madadju_un')
     user = User.objects.get(username=madadju_un)
     userKarbar = UserKarbar.objects.get(user=user)
@@ -111,6 +112,7 @@ def show_niaz_haye_madadju(request):
                                       # [ (type(n.niazmand),1,1,1) for n in Niaz.objects.all()],#= 'Madadju object (1)')],
                                       'madadju_un': madadju_un,
                                       'madadju_alarm': madadju.ekhtar
+                                      ,'virayesh': virayesh
                                       })
 
 
@@ -201,6 +203,7 @@ def show_profile(request):
 @user_passes_test(is_madadkar, login_url='/permission/')
 def show_profile_madadju(request):
     template = 'madadkar/profile_madadju.html'
+    virayesh = request.GET.get('virayesh')
     madadju_un = request.GET.get('madadju_un')
     user = User.objects.get(username=madadju_un)
     userKarbar = UserKarbar.objects.get(user=user)
@@ -218,11 +221,11 @@ def show_profile_madadju(request):
                                       'alarm': madadju.ekhtar,
                                       'progress': karbar.darbare_ma.progress(),
                                       'madadju_un': request.GET.get('madadju_un'),
-                                      'src': request.GET.get('src'),
                                       'madadju_fn': user.first_name,
                                       'madadju_ln': user.last_name,
                                       'hamiars': hamiarha,
                                       'sharh': shoruh.sharh,
+                                      'virayesh' : virayesh
                                       # 'sharh_kh': (madadju.sharhe_tahsil.Field_Taghir, madadju.sharhe_tahsil.ُType)
                                       })
 

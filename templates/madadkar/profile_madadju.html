@@ -129,19 +129,19 @@
 					<hr>
 					<strong>شرح حال و وضعیت تحصیلی:</strong>
 					<p style="padding-right: 10px">{{sharh}}</p>
-					<a href="/madadkar/niaz_haye_madadju?madadju_un={{madadju_un}}" class="list-group-item">نیازهای مددجو</a>
+					<a href="/madadkar/niaz_haye_madadju?madadju_un={{madadju_un}}&virayesh={{virayesh}}" class="list-group-item">نیازهای مددجو</a>
+                    {% if virayesh == '1' %}
 					<a href="/madadkar/vaziat_tahsili?madadju_un={{madadju_un}}" class="list-group-item">ویرایش شرح حال و وضعیت تحصیلی</a>
+                    {% endif %}
 				</div>
 			</div>
-			<form>
+            <form>
+            {% if virayesh == '1' %}
 						<button type="add" class="btn btn-default"><a href="/madadkar/ekhtar?madadju_un={{madadju_un}}"> تغییر علامت اخطار</a></button>
-			{%if src == '1' %}
-				<button type="add" class="btn btn-default"><a href = "/madadkar/moshahede_madadjuyan_taht_kefalat" >بازگشت</a></button>
-			{%endif%}
-			{%if src == '2' %}
-				<button type="add" class="btn btn-default"><a href = "/madadkar/niaz_haye_tamin_nashode" >بازگشت</a></button>
-			{%endif%}
-				</form>
+            {% endif %}
+            <button type="add" class="btn btn-default"><a href = "/madadkar/profile" >بازگشت</a></button>
+            </form>
+
 			<hr>
 		</div>
 
