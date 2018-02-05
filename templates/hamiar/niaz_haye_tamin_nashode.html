@@ -107,20 +107,25 @@
 			<div class="row" align= right>
 				<h2><strong>نیازهای تامین نشده</strong></h2>
 				<article class="col-xs-12">
-					{%for un, onvan, mablagh, fori in niazha%}
-					<h2><a href="/hamiar/profile_madadju?madadju_un={{un}}&src=2" >{{un}}</a></h2>
-					<p>{{onvan}}
-					<span class="label label-default">هزینه کل: {{mablagh}}</span>
-						{%if fori %}
-						<span class="label label-default">فوری</span>
-						{%endif%}
-					</p>
-						<br>
-					</hr>
-					{%endfor%}
+					{% for name,niazha in madadjuyan %}
+					<h2><a href="#" >{{name}}</a></h2>
+					{% for niazid,onvan,hazineTaminShode,hazineTaminNashode,fori in niazha %}
+					<p>{{onvan}}</p>
+					<p class="pull-right">
+						            <span class="label label-default">{{hazineTaminShode}}  تومان تامین نشده</span>
+                                    <span class="label label-default">{{hazineTaminNashode}}  تومان تامین شده</span>
+                                    {% if fori %}
+						            <span class="label label-default">فوری</span>
+					                {% endif %}
+						            <!--<span class="label label-default">سالانه</span>-->
+                    </p>
+					<br><br>
+					<p><button class="btn btn-default"><a href="/hamiar/amaliat_movafagh">حمایت</a></button></p>
+					{% endfor %}
+					<hr>
+					{% endfor %}
 				</article>
 			</div>
-			<hr>
 		</div><!--/Center Column-->
 
 
@@ -137,6 +142,7 @@
 				<div class="list-group">
 					<a href="/hamiar/hemayat_az_moasese" class="list-group-item">حمایت از موسسه</a>
 					<a href="/hamiar/niaz_haye_tamin_nashode" class="list-group-item">مشاهده لیست نیازهای تامین نشده</a>
+					<a href="/hamiar/niaz_haye_tamin_nashode_fori" class="list-group-item">مشاهده لیست نیازهای تامین نشده فوری</a>
 				</div>
 			</div>
 

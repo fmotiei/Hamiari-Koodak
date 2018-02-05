@@ -31,8 +31,8 @@ def is_madadkar(user):
             return Madadkar.objects.filter(staffID=staffMember).exists()
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_afzoudan_niaz(request):
     template = 'madadkar/afzoudan_niaz.html'
     if request.method == "GET":
@@ -65,8 +65,8 @@ def show_afzoudan_niaz(request):
                 , 'form': form})
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_moshahede_madadjuyan_taht_kefalat(request):
     template = 'madadkar/moshahede_madadjuyan_taht_kefalat.html'
     user = request.user
@@ -85,8 +85,8 @@ def show_moshahede_madadjuyan_taht_kefalat(request):
                                       })
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_niaz_haye_madadju(request):
     template = 'madadkar/niaz_haye_madadju.html'
     madadju_un = request.GET.get('madadju_un')
@@ -107,8 +107,8 @@ def show_niaz_haye_madadju(request):
                                       })
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_niaz_haye_tamin_nashode(request):
     template = 'madadkar/niaz_haye_tamin_nashode.html'
     niazha = []
@@ -121,8 +121,8 @@ def show_niaz_haye_tamin_nashode(request):
                                       })
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_niaz_haye_tamin_nashode_fori(request):
     template = 'madadkar/niaz_haye_tamin_nashode_fori.html'
     niazha = []
@@ -136,8 +136,8 @@ def show_niaz_haye_tamin_nashode_fori(request):
                                       })
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_payam_entezar(request):
     template = 'madadkar/payam_entezar.html'
     upayam = request.GET.get('payam')
@@ -156,8 +156,8 @@ def show_payam_entezar(request):
         , 'date': payam1.zaman})
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_profile(request):
     template = 'madadkar/profile.html'
     userKarbar = UserKarbar.objects.get(user=request.user)
@@ -171,8 +171,8 @@ def show_profile(request):
                                       })
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_profile_madadju(request):
     template = 'madadkar/profile_madadju.html'
     madadju_un = request.GET.get('madadju_un')
@@ -201,8 +201,8 @@ def show_profile_madadju(request):
                                       })
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_sandoghe_payamhaye_entezar(request):
     template = 'madadkar/sandoghe_payamhaye_entezar.html'
     payamha = []
@@ -217,8 +217,8 @@ def show_sandoghe_payamhaye_entezar(request):
         , 'payamha': payamha})
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_sabte_naam_madadju(request):
     template = 'madadkar/sabte_naam_madadju.html'
     Umadadkar = UserKarbar.objects.get(user=request.user)
@@ -258,8 +258,8 @@ def show_sabte_naam_madadju(request):
                                               'progress': karbar.darbare_ma.progress(), 'form': form})
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_virayesh_niaz(request):
     template = 'madadkar/virayesh_niaz.html'
     if request.method == 'GET':
@@ -286,8 +286,8 @@ def show_virayesh_niaz(request):
                                               'form': form, 'madadju_un': madadju, 'niaz_id': request.GET.get('niaz')})
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_vaziat_tahsili(request):
     template = 'madadkar/vaziat_tahsili.html'
     if request.method == "GET":
@@ -318,8 +318,8 @@ def show_vaziat_tahsili(request):
                                               'progress': karbar.darbare_ma.progress(), 'form': form})
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_moshahede_madadjuyan_dar_entezar_madadkar(request):
     template = 'madadkar/moshahede_madadjuyan_dar_entezar_madadkar.html'
     return render(request, template, {'progress': karbar.darbare_ma.progress(),
@@ -331,8 +331,8 @@ def show_moshahede_madadjuyan_dar_entezar_madadkar(request):
                                       })
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def ekhtar(request):
     madadju_un = request.GET.get('madadju_un')
     madadju_user = User.objects.get(username=madadju_un)
@@ -346,15 +346,15 @@ def ekhtar(request):
     return HttpResponseRedirect(reverse("movafaghshodim"))
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def hazfNiaz(request):
     Niaz.objects.filter(id=request.GET.get('niaz')).delete()
     return HttpResponseRedirect(reverse("movafaghshodim"))
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_profile_madadju_bi_kefalat(request):
     template = 'madadkar/profile_madadju_bi_kefalat.html'
     madadju_un = request.GET.get('madadju_un')
@@ -381,8 +381,8 @@ def show_profile_madadju_bi_kefalat(request):
                                       })
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_niaz_haye_madadju_bi_kefalat(request):
     template = 'madadkar/niaz_haye_madadju_bi_kefalat.html'
     madadju_un = request.GET.get('madadju_un')
@@ -402,91 +402,91 @@ def show_niaz_haye_madadju_bi_kefalat(request):
                                       })
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_madadkar(request):
     return moshtarak.show_user(request, 'madadkar')
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_afzayesh_etebar(request):
     return moshtarak.show_afzayesh_etebar(request, 'madadkar')
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_ersal_payam(request):
     return moshtarak.show_ersal_payam(request, 'madadkar')
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_moshahede_tarakonesh_haye_mali(request):
     return moshtarak.show_moshahede_tarakonesh_haye_mali(request, 'madadkar')
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_payam_daryafti(request):
     return moshtarak.show_payam_daryafti(request, 'madadkar')
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_payam_ersali(request):
     return moshtarak.show_payam_ersali(request, 'madadkar')
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_roydadha(request):
     return moshtarak.show_roydadha(request, 'madadkar')
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_sandoghe_payamhaye_daryafti(request):
     return moshtarak.show_sandoghe_payamhaye_daryafti(request, 'madadkar')
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_sandoghe_payamhaye_ersali(request):
     return moshtarak.show_sandoghe_payamhaye_ersali(request, 'madadkar')
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_amaliat_movafagh(request):
     return moshtarak.show_amaliat_movafagh(request, 'madadkar')
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_ahdaf(request):
     return moshtarak.show_ahdaf(request, 'madadkar')
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_ashnai(request):
     return moshtarak.show_ashnai(request, 'madadkar')
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_sakhtar_sazmani(request):
     return moshtarak.show_sakhtar_sazmani(request, 'madadkar')
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_moshahede_list_koodakan(request):
     return moshtarak.show_moshahede_list_koodakan(request, 'madadkar')
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_madadkar, login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadkar, login_url='/permission/')
 def show_moshahede_list_niazhaye_fori_taminnashode(request):
     return moshtarak.show_moshahede_list_niazhaye_fori_taminnashode(request, 'madadkar')

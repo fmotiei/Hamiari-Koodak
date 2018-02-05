@@ -110,7 +110,7 @@
 				<article class="col-xs-12">
 					{% for name,niazha in madadjuyan %}
 					<h2><a href="#" >{{name}}</a></h2>
-					{% for onvan,hazineTaminShode,hazineTaminNashode,fori in niazha %}
+					{% for niazid,onvan,hazineTaminShode,hazineTaminNashode,fori in niazha %}
 					<p>{{onvan}}</p>
 					<p class="pull-right">
 						            <span class="label label-default">{{hazineTaminShode}}  تومان تامین نشده</span>
@@ -127,7 +127,6 @@
 					{% endfor %}
 				</article>
 			</div>
-			<hr>
 		</div><!--/Center Column-->
 
 
@@ -144,6 +143,7 @@
 				<div class="list-group">
 					<a href="/hamiar/hemayat_az_moasese" class="list-group-item">حمایت از موسسه</a>
 					<a href="/hamiar/niaz_haye_tamin_nashode" class="list-group-item">مشاهده لیست نیازهای تامین نشده</a>
+					<a href="/hamiar/niaz_haye_tamin_nashode_fori" class="list-group-item">مشاهده لیست نیازهای تامین نشده فوری</a>
 				</div>
 			</div>
 

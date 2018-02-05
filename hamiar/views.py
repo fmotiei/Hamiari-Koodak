@@ -25,8 +25,8 @@ def is_hamiar(user):
             return Hamiar.objects.filter(staffID=staffMember).exists()
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_hamiar,login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_hamiar,login_url='/permission/')
 def show_hemayat_az_moasese(request):
 
     template = 'hamiar/hemayat_az_moasese.html'
@@ -57,8 +57,8 @@ def show_hemayat_az_moasese(request):
                 , 'progress': karbar.darbare_ma.progress()
                 , 'username': request.user, 'form': form})
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_hamiar,login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_hamiar,login_url='/permission/')
 def show_hemayat_az_niaz(request):
     template = 'hamiar/hemayat_az_niaz.html'
     return render(request, template, {'utype':'hamiar'
@@ -70,8 +70,8 @@ def show_hemayat_az_niaz(request):
                                       , 'fori' : '' })
 #TODO username: username karbar , niazName : name niaz , hazine ha va fori marbut b niaz
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_hamiar,login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_hamiar,login_url='/permission/')
 def show_moshahede_niaz_haye_taht_hemayat(request):
     template = 'hamiar/moshahede_niaz_haye_taht_hemayat.html'
     user = User.objects.get(username=request.user)
@@ -103,23 +103,47 @@ def Enseraf(request):
     niazid=request.GET.get('niaz')
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_hamiar,login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_hamiar,login_url='/permission/')
 def show_niaz_haye_tamin_nashode(request):
     template = 'hamiar/niaz_haye_tamin_nashode.html'
-    niazha = []
-    for niaz in Niaz.objects.all():
-        if niaz.hemaiatshod == False:
-            niazha.append(niaz)
+    madadjus = []
+    for madadju in Madadju.objects.all() :
+        niazs = []
+        for niaz in Niaz.objects.all() :
+            if niaz.niazmand == madadju :
+                niazs.append((niaz.id,niaz.onvan,niaz.mablagh_taminshodeh,niaz.mablagh_taminnashode(),niaz.niazFori))
+        if not len(niazs) == 0 :
+            madadjus.append((madadju.user.user.username,niazs))
     return render(request, template, {'utype':'hamiar'
                                     , 'progress': karbar.darbare_ma.progress()
                                     , 'username' : request.user
-                                      , 'niazha': [(n.niazmand.username, n.onvan, n.mablagh,n.niazFori) for n in niazha]
+                                      ,'madadjuyan' : madadjus
                                       })
 #TODO ba zadane hemayat hemayat konad
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_hamiar,login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_hamiar,login_url='/permission/')
+def show_niaz_haye_tamin_nashode_fori(request):
+    template = 'hamiar/niaz_haye_tamin_nashode_fori.html'
+    madadjus = []
+    for madadju in Madadju.objects.all() :
+        niazs = []
+        for niaz in Niaz.objects.all() :
+            if ( niaz.niazmand == madadju ) & niaz.niazFori:
+                niazs.append((niaz.id,niaz.onvan,niaz.mablagh_taminshodeh,niaz.mablagh_taminnashode(),niaz.niazFori))
+        if not len(niazs) == 0 :
+            madadjus.append((madadju.user.user.username,niazs))
+    return render(request, template, {'utype':'hamiar'
+                                    , 'progress': karbar.darbare_ma.progress()
+                                    , 'username' : request.user
+                                      ,'madadjuyan' : madadjus
+                                      })
+#TODO ba zadane hemayat hemayat konad
+
+
+@login_required(login_url='/permission/')
+@user_passes_test(is_hamiar,login_url='/permission/')
 def show_niaz_haye_madadju(request):
     template = 'hamiar/niaz_haye_madadju.html'
     madadju_un = request.GET.get('madadju_un')
@@ -137,8 +161,8 @@ def show_niaz_haye_madadju(request):
                                                   n.mablagh_taminshodeh, n.niazFori) for n in niazha],
                                       'madadju_un': madadju_un, })
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_hamiar,login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_hamiar,login_url='/permission/')
 def show_profile(request):
     template = 'hamiar/profile.html'
     userKarbar = UserKarbar.objects.get(user=request.user)
@@ -146,7 +170,8 @@ def show_profile(request):
     hamiar = Hamiar.objects.get(staffID=staffMember)
     madadjuha = []
     for niaz in hemaiatNiaz.objects.filter(hamiar=hamiar):
-            madadjuha.append(niaz.niazmand.username())
+        if not madadjuha.__contains__(niaz.niaz.niazmand.username()):
+            madadjuha.append(niaz.niaz.niazmand.username())
     return render(request, template, {'utype':'hamiar'
                                     , 'progress': karbar.darbare_ma.progress()
                                     , 'username' : request.user
@@ -156,8 +181,8 @@ def show_profile(request):
                                       , 'etebar' : userKarbar.mojudi
                                     })
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_hamiar,login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_hamiar,login_url='/permission/')
 def show_profile_madadju(request):
     template = 'hamiar/profile_madadju.html'
     madadju_un = request.GET.get('madadju_un')
@@ -179,84 +204,84 @@ def show_profile_madadju(request):
 #TODO bayad madadju ra baraye list niaz hayash befrestad
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_hamiar,login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_hamiar,login_url='/permission/')
 def show_hamiar(request):
     return moshtarak.show_user(request,'hamiar')
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_hamiar,login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_hamiar,login_url='/permission/')
 def show_afzayesh_etebar(request):
     return moshtarak.show_afzayesh_etebar(request,'hamiar')
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_hamiar,login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_hamiar,login_url='/permission/')
 def show_ersal_payam(request):
     return moshtarak.show_ersal_payam(request,'hamiar')
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_hamiar,login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_hamiar,login_url='/permission/')
 def show_moshahede_tarakonesh_haye_mali(request):
     return moshtarak.show_moshahede_tarakonesh_haye_mali(request,'hamiar')
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_hamiar,login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_hamiar,login_url='/permission/')
 def show_payam_daryafti(request):
     return moshtarak.show_payam_daryafti(request,'hamiar')
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_hamiar,login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_hamiar,login_url='/permission/')
 def show_payam_ersali(request):
     return moshtarak.show_payam_ersali(request,'hamiar')
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_hamiar,login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_hamiar,login_url='/permission/')
 def show_roydadha(request):
     return moshtarak.show_roydadha(request,'hamiar')
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_hamiar,login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_hamiar,login_url='/permission/')
 def show_sandoghe_payamhaye_daryafti(request):
     return moshtarak.show_sandoghe_payamhaye_daryafti(request,'hamiar')
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_hamiar,login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_hamiar,login_url='/permission/')
 def show_sandoghe_payamhaye_ersali(request):
     return moshtarak.show_sandoghe_payamhaye_ersali(request,'hamiar')
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_hamiar,login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_hamiar,login_url='/permission/')
 def show_amaliat_movafagh(request):
     return moshtarak.show_amaliat_movafagh(request,'hamiar')
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_hamiar,login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_hamiar,login_url='/permission/')
 def show_ahdaf(request):
     return moshtarak.show_ahdaf(request,'hamiar')
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_hamiar,login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_hamiar,login_url='/permission/')
 def show_ashnai(request):
     return moshtarak.show_ashnai(request,'hamiar')
 
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_hamiar,login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_hamiar,login_url='/permission/')
 def show_sakhtar_sazmani(request):
     return moshtarak.show_sakhtar_sazmani(request,'hamiar')
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_hamiar,login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_hamiar,login_url='/permission/')
 def show_moshahede_list_koodakan(request):
     return moshtarak.show_moshahede_list_koodakan(request,'hamiar')
 
-@login_required(login_url='/karbar/')
-@user_passes_test(is_hamiar,login_url='/karbar/')
+@login_required(login_url='/permission/')
+@user_passes_test(is_hamiar,login_url='/permission/')
 def show_moshahede_list_niazhaye_fori_taminnashode(request):
     return moshtarak.show_moshahede_list_niazhaye_fori_taminnashode(request,'hamiar')
