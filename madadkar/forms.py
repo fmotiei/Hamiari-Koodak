@@ -1,7 +1,7 @@
 import datetime
 from django import forms
 from django.contrib.auth.models import User
-from madadju.models import sharhe_tahsil
+from madadju.models import sharhe_tahsil, Niaz
 
 
 class VirayeshTahsilForm(forms.ModelForm):
@@ -52,3 +52,13 @@ class SignUpForm(SignUpInitialMadadju):
 class taghireNiazForm(forms.Form):
     mablagh = forms.IntegerField(min_value=0, max_value=99999999, required=True,widget=forms.Textarea(attrs={'type':'number', 'class': 'form-control',    'name' : "mablagh",
     'placeholder' : "مبلغ" ,         'id':"mablagh",}))
+
+class afzoodanNiazForm(forms.ModelForm):
+
+    noe = (
+        ('yr', 'سالانه'),
+        ('mo', 'ماهانه'))
+    Type=forms.ChoiceField(choices=noe, widget=forms.Select(attrs={'class':'form-control','name':'Type'}))
+    class Meta:
+        model = Niaz
+        fields = ('onvan', 'mablagh','Type','niazFori')

@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from karbar.models import Payam_Madadju, Payam
-from madadkar.forms import taghireNiazForm, SignUpInitialMadadju,SignUpForm, VirayeshTahsilForm
+from madadkar.forms import taghireNiazForm, afzoodanNiazForm,SignUpForm, VirayeshTahsilForm
 from django.contrib.auth.models import User
 import datetime
 # Create your views here.
@@ -20,9 +20,33 @@ from madadju.models import Madadju, Niaz, Madadkar, UserKarbar, staff_members,sh
 
 def show_afzoudan_niaz(request):
     template = 'madadkar/afzoudan_niaz.html'
-    return render(request, template, {'progress': karbar.darbare_ma.progress(),
-                                      'username': request.user})
-#todo transform form fields to db
+    if request.method == "GET":
+        form = afzoodanNiazForm()
+        return render(request, template, {'progress': karbar.darbare_ma.progress(),
+                                      'username': request.user, 'madadju_un':request.GET.get('madadju_un')
+                                          ,'form':form})
+    if request.method == "POST":
+        form = afzoodanNiazForm(request.POST)
+        if form.is_valid():
+            madadju_un=request.GET.get('madadju_un')
+            madadju_user=User.objects.get(username=madadju_un)
+            madadju_uk = UserKarbar.objects.get(user = madadju_user)
+            madadju_our = Madadju.objects.get(user = madadju_uk)
+            mablagh = form.cleaned_data['mablagh']
+            onvan = form.cleaned_data['onvan']
+            Type = form.cleaned_data['Type']
+            niazFori = form.cleaned_data['niazFori']
+            if Niaz.objects.filter(onvan=onvan).exists():
+                return render(request, template, {'progress': karbar.darbare_ma.progress(),
+                                                  'username': request.user, 'madadju_un': request.GET.get('madadju_un')
+                    , 'form': form,'message':'نیازی به این نام برای مددجو وجود دارد.در صورتی که می‌خواهید مبلغ آن را تغییر دهید به ویرایش نیاز مراجعه کنید.'
+          })
+            Niaz.objects.create(niazmand = madadju_our, onvan = onvan, mablagh=mablagh, Type=Type, niazFori =niazFori)
+            return moshtarak.show_amaliat_movafagh(request, 'madadkar')
+        else:
+            return render(request, template, {'progress': karbar.darbare_ma.progress(),
+                                              'username': request.user, 'madadju_un': request.GET.get('madadju_un')
+                , 'form': form})
 
 def show_moshahede_madadjuyan_taht_kefalat(request):
     template = 'madadkar/moshahede_madadjuyan_taht_kefalat.html'
@@ -151,7 +175,6 @@ def show_sandoghe_payamhaye_entezar(request):
         , 'username': request.user
         , 'payamha': payamha})
 
-#todo YEGANE
 def show_sabte_naam_madadju(request):
     template = 'madadkar/sabte_naam_madadju.html'
     Umadadkar = UserKarbar.objects.get(user=request.user)

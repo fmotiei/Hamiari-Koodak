@@ -49,11 +49,12 @@ class Niaz(models.Model):
     niazmand = models.ForeignKey(Madadju, on_delete=models.CASCADE)
     onvan = models.CharField(max_length=50)
     mablagh = models.PositiveIntegerField()
-    mablagh_taminshodeh = models.PositiveIntegerField()
+    mablagh_taminshodeh = models.PositiveIntegerField(default=0)
     hemaiatshod = models.BooleanField(default=False)
-    Type = (
-        ('yr', 'Salaneh'),
-        ('mo', 'Mahaneh'))
+    Type = models.CharField(max_length=100,default='')
+    # Type = (
+        # ('yr', 'Salaneh'),
+        # ('mo', 'Mahaneh'))
     niazFori = models.BooleanField(default=False)
 
     class Meta:
