@@ -28,7 +28,6 @@ urlpatterns = [
     url(r'^moshahede_niaz_haye_taht_hemayat/$', hamiar.views.show_moshahede_niaz_haye_taht_hemayat),
     url(r'^moshahede_tarakonesh_haye_mali/$', hamiar.views.show_moshahede_tarakonesh_haye_mali),
     url(r'^niaz_haye_tamin_nashode/$', hamiar.views.show_niaz_haye_tamin_nashode),
-    url(r'^niaz_haye_tamin_nashode_fori/$', hamiar.views.show_niaz_haye_tamin_nashode_fori),
     url(r'^niaz_haye_madadju/$', hamiar.views.show_niaz_haye_madadju),
     url(r'^payam_daryafti/$', hamiar.views.show_payam_daryafti),
     url(r'^payam_ersali/$', hamiar.views.show_payam_ersali),

@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.template import Context
 from django.template.loader import get_template
@@ -6,21 +7,23 @@ from django.http import HttpResponse
 
 # Create your views here.
 import karbar
+from hamiar.models import hemaiatNiaz, Hamiar
 from karbar import moshtarak
+from karbar.models import UserKarbar, staff_members
 from madadju.models import Madadju, Niaz
 
 def show_hemayat_az_moasese(request):
     template = 'hamiar/hemayat_az_moasese.html'
     return render(request, template, {'utype':'hamiar'
                                     , 'progress': karbar.darbare_ma.progress()
-                                    , 'username' : ''})
-#TODO html b DB username: username karbar
+                                    , 'username' : request.user })
+#TODO mablagh ro begire va b hesab moassese (?) ezafe kone
 
 def show_hemayat_az_niaz(request):
     template = 'hamiar/hemayat_az_niaz.html'
     return render(request, template, {'utype':'hamiar'
                                     , 'progress': karbar.darbare_ma.progress()
-                                    , 'username' : ''
+                                    , 'username' : request.user
                                     , 'niazName' : ''
                                       , 'hazineTaminShode' : ''
                                       , 'hazineTaminNashode' : ''
@@ -29,27 +32,47 @@ def show_hemayat_az_niaz(request):
 
 def show_moshahede_niaz_haye_taht_hemayat(request):
     template = 'hamiar/moshahede_niaz_haye_taht_hemayat.html'
+    user = User.objects.get(username=request.user)
+    userKarbar = UserKarbar.objects.get(user=user)
+    staffMember = staff_members.objects.get(stafID=userKarbar)
+    hamiar = Hamiar.objects.get(staffID=staffMember)
+    niazha = []
+    for niaz in hemaiatNiaz.objects.all():
+        if niaz.hamiar == hamiar:
+            niazha.append(niaz)
+    madadjuyan = []
+    for niaz in niazha:
+        if not madadjuyan.__contains__(niaz.niaz.niazmand):
+            madadjuyan.append(niaz.niaz.niazmand)
+    madadjus = []
+    for madadju in madadjuyan :
+        niazs = []
+        for niaz in niazha :
+            if niaz.niaz.niazmand == madadju :
+                niazs.append((niaz.niaz.id,niaz.niaz.onvan,niaz.niaz.mablagh_taminshodeh,niaz.niaz.mablagh_taminnashode(),niaz.niaz.niazFori))
+        madadjus.append((madadju.user.user.username,niazs))
+
     return render(request, template, {'utype':'hamiar'
                                     , 'progress': karbar.darbare_ma.progress()
-                                    , 'username' : ''
-                                      , 'madadjuyan' : [] })
-#TODO username: username karbar, madadjuyan : name,niazha k niazha : onvan , hazine tamin shode va nashode , fori marbut b niaz
+                                    , 'username' : request.user
+                                      , 'madadjuyan' : madadjus })
+#TODO ba zadane enseraf enseraf dahad
 
 def show_niaz_haye_tamin_nashode(request):
     template = 'hamiar/niaz_haye_tamin_nashode.html'
+    madadjus = []
+    for madadju in Madadju.objects.all():
+        niazs = []
+        for niaz in Niaz.objects.all():
+            if niaz.niazmand == madadju:
+                niazs.append((niaz.id, niaz.onvan, niaz.mablagh_taminshodeh,
+                              niaz.mablagh_taminnashode(), niaz.niazFori))
+        madadjus.append((madadju.user.user.username, niazs))
     return render(request, template, {'utype':'hamiar'
                                     , 'progress': karbar.darbare_ma.progress()
-                                    , 'username' : ''
-                                      , 'madadjuyan' : [] })
-#TODO username: username karbar, madadjuyan : name,niazha k niazha : onvan , hazine tamin shode va nashode , fori marbut b niaz
-
-def show_niaz_haye_tamin_nashode_fori(request):
-    template = 'hamiar/niaz_haye_tamin_nashode_fori.html'
-    return render(request, template, {'utype':'hamiar'
-                                    , 'progress': karbar.darbare_ma.progress()
-                                    , 'username' : ''
-                                      , 'madadjuyan' : [] })
-#TODO username: username karbar, madadjuyan : name,niazha k niazha : onvan , hazine tamin shode va nashode , fori marbut b niaz
+                                    , 'username' : request.user
+                                      , 'madadjuyan' : madadjus })
+#TODO ba zadane hemayat hemayat konad
 
 def show_niaz_haye_madadju(request):
     template = 'hamiar/niaz_haye_madadju.html'
