@@ -429,7 +429,7 @@ def show_moshahede_list_niazhaye_fori_taminnashode(request,user):
         if not user == 'karbar':
             userName = request.user
 
-        return render(request, template, {'form': form, 'madadjuyan':[( m.user.user.first_name, ((niaz.onvan,niaz.mablagh_taminnashode()) for niaz in Niaz.objects.filter(niazFori=True))) for m in madadjuyan]
+        return render(request, template, {'form': form, 'madadjuyan':[( m.user.user.first_name, [(niaz.onvan,niaz.mablagh_taminnashode()) for niaz in Niaz.objects.filter(niazFori=True)]) for m in madadjuyan]
                                       ,'progress':karbar.darbare_ma.progress()
                                       ,'utype' : user
                                       ,'username':userName})

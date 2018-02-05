@@ -124,7 +124,7 @@ def show_profile_madadju(request):
             niazha.append(niaz)
     hamiarha = []
     for niaz in niazha:
-        if not hamiarha.__contains__(niaz.hamiar):
+        if not hamiarha.__contains__(niaz.hamiar.username()):
             hamiarha.append(niaz.hamiar.staffID.stafID.user.username)
     shoruh=sharhe_tahsil.objects.get(madadju=madadju)
     return render(request, template, {'username' : madadju_un,

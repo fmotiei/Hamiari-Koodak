@@ -181,12 +181,16 @@
                 {% for name,niazha in madadjuyan %}
             <tr>
               <td style="width: 20%">{{name}}</th>
+              <td style="width: 30%">
                 {% for onvan,mablagh in niazha %}
-              <td style="width: 20%">onvan</th>
+                  {{onvan}}<br>
                 {% endfor %}
-                {% for onvan,niaz in niazha %}
-              <td style="width: 60%">{{mablagh}}</th>
+                </th>
+                <td style="width: 20%">
+                    {% for onvan,mablagh in niazha %}
+                  {{mablagh}}<br>
                 {% endfor %}
+                </th>
             </tr>
                 {% endfor %}
         </table>
