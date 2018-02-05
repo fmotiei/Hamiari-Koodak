@@ -87,7 +87,7 @@ def show_sabtename_hamyar(request):
             user = User.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name)
             user.save()
             ukarbar=UserKarbar.objects.create(user=user, phone_number=phone_number, address=address, is_hamiar=True)
-            staff=staff_members.objects.create(stafID=ukarbar,pardakhti=0,dariafti=0 )
+            staff=staff_members.objects.create(stafID=ukarbar )
             hamiar.models.Hamiar.objects.create(staffID=staff )
             login(request, user)
             return render(request, 'karbar/regiset_success.html', {'form': form})
