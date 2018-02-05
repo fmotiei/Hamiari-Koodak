@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
+from madadkar.forms import taghireNiazForm, SignUpInitialMadadju,SignUpForm
 
 
 # Create your views here.
@@ -49,7 +49,7 @@ def show_niaz_haye_madadju(request):
             niazha.append(niaz)
     return render(request, template, {'username' : request.user,
                                       'progress': karbar.darbare_ma.progress(),
-                                      'niazha' :[( n.onvan, n.mablagh-n.mablagh_taminshodeh, n.mablagh_taminshodeh, n.niazFori) for n in niazha], # [ (type(n.niazmand),1,1,1) for n in Niaz.objects.all()],#= 'Madadju object (1)')],
+                                      'niazha' :[( n.id, n.onvan, n.mablagh-n.mablagh_taminshodeh, n.mablagh_taminshodeh, n.niazFori) for n in niazha], # [ (type(n.niazmand),1,1,1) for n in Niaz.objects.all()],#= 'Madadju object (1)')],
                                       'madadju_un' : madadju_un,
                                       'madadju_alarm' : madadju.ekhtar
                                       })
@@ -143,11 +143,24 @@ def show_sabte_naam_madadju(request):
     return render(request, template, {'username' : request.user,
                                       'progress': karbar.darbare_ma.progress()})
 
-#todo YEGANE
+
 def show_virayesh_niaz(request):
     template = 'madadkar/virayesh_niaz.html'
-    return render(request, template, {'username' : request.user,
-                                      'progress': karbar.darbare_ma.progress()})
+    niazID=request.GET.get('niaz_id')
+    mNiaz=Niaz.objects.get(id=niazID)
+    if request.method == 'GET':
+        form= taghireNiazForm()
+        return render(request, template, {'username' : request.user,
+                                      'progress': karbar.darbare_ma.progress(),
+                                          'form':form})
+    if request.method == 'POST':
+        form = taghireNiazForm(request.POST)
+        new_mablagh = form.cleaned_data['mablagh']
+        mNiaz.mablagh=new_mablagh
+        template = 'karbar/amaliat_movafagh.html'
+        return render(request, template, {'utype': 'madadkar'
+            , 'progress': karbar.darbare_ma.progress()
+            , 'username': request.user})
 
 
 def show_vaziat_tahsili(request):
