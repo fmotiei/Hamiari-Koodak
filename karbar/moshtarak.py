@@ -172,7 +172,10 @@ def show_payam_daryafti(request, user):
     try:
         payam = Payam_Madadju.objects.get(id=upayam)
     except ObjectDoesNotExist:
-        payam = Payam_Adi.objects.get(id=upayam)
+        try:
+            payam = Payam_Adi.objects.get(id=upayam)
+        except :
+            payam = Payam_Madadju_Madadkar.objects.get(id=upayam)
 
     return render(request, template, {'utype': user
         , 'progress': karbar.darbare_ma.progress()
@@ -190,7 +193,10 @@ def show_payam_ersali(request,user):
     try:
         payam = Payam_Madadju.objects.get(id=upayam)
     except ObjectDoesNotExist:
-        payam = Payam_Adi.objects.get(id=upayam)
+        try:
+            payam = Payam_Adi.objects.get(id=upayam)
+        except :
+            payam = Payam_Madadju_Madadkar.objects.get(id=upayam)
 
     return render(request, template, {'utype': user
                                     , 'progress': karbar.darbare_ma.progress()
