@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
+from django.urls import reverse
 import datetime
 from hamiar.models import PardakhtNiaz, Hamiar
 from karbar.forms import  SignInForm, ErsalPayamForm
@@ -263,7 +264,6 @@ def show_amaliat_movafagh(request,user):
     return render(request, template, {'utype' : user
                                       , 'progress': karbar.darbare_ma.progress()
                                       ,'username':''})
-
 
 
 def show_ahdaf(request,user):

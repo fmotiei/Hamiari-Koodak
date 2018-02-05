@@ -5,7 +5,8 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from karbar.models import Payam_Madadju, Payam
 from madadkar.forms import taghireNiazForm, afzoodanNiazForm, SignUpForm, VirayeshTahsilForm
 from django.contrib.auth.models import User
@@ -291,7 +292,17 @@ def show_moshahede_madadjuyan_dar_entezar_madadkar(request):
                                       'username': request.user
                                       # todo link moshahede profile madadju
                                       })
-
+def ekhtar(request):
+    madadju_un=request.GET.get('madadju_un')
+    madadju_user = User.objects.get(username=madadju_un)
+    madadju_uk = UserKarbar.objects.get(user=madadju_user)
+    madadju_our = Madadju.objects.get(user=madadju_uk)
+    if madadju_our.ekhtar == True:
+        madadju_our.ekhtar =False
+    else:
+        madadju_our.ekhtar = True
+    madadju_our.save()
+    return HttpResponseRedirect(reverse( "movafaghshodim"))
 
 def show_profile_madadju_bi_kefalat(request):
     template = 'madadkar/profile_madadju_bi_kefalat.html'
