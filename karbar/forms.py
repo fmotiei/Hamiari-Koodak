@@ -1,7 +1,7 @@
 import datetime
 from django import forms
 from django.contrib.auth.models import User
-
+from karbar.models import Payam
 
 class SignInForm(forms.ModelForm):
     class Meta:
@@ -36,7 +36,7 @@ class SignUpForm(SignUpInitial):
             label='آدرس محل کار ',
             widget=forms.Textarea(attrs={'class':'form-control'}),help_text=' پر کردن خانه‌های ستاره دار الزامی است!'
         )
-    phone_number = forms.EmailField(required=False, label='تلفن تماس ', widget=forms.TextInput(
+    phone_number = forms.CharField( required=False, label='تلفن تماس ', widget=forms.TextInput(
             attrs={'type': 'text', 'class': "form-control", 'placeholder': "تلفن به همراه کد شهر"}))
     bday = forms.DateField(required=False, label='تاریخ تولد', widget=forms.DateInput(attrs={'type':'date','class':'form-control'}))
 
@@ -66,3 +66,14 @@ class SignUpForm(SignUpInitial):
             }
         }
 
+
+class ErsalPayamInitial(forms.ModelForm):
+    class Meta:
+        model=Payam
+        fields = ( 'onvan', 'matn')
+
+class ErsalPayamForm(ErsalPayamInitial):
+    reciever = forms.CharField(required=True , label='نام کاربری گیرنده ', widget=forms.TextInput(
+            attrs={'type': 'text', 'class': "form-control", 'placeholder': "مثال: yeganeh"}))
+    class Meta(ErsalPayamInitial.Meta):
+        fields =('reciever',)+ ErsalPayamInitial.Meta.fields

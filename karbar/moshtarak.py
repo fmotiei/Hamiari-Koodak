@@ -1,11 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
-
+import datetime
 from hamiar.models import PardakhtNiaz, Hamiar
-from karbar.forms import  SignInForm
+from karbar.forms import  SignInForm, ErsalPayamForm
 import karbar
-from karbar.models import Payam, Payam_Madadju, Payam_Adi, UserKarbar, staff_members, events
+from karbar.models import Payam, Payam_Madadju, Payam_Adi, UserKarbar, staff_members, events,Payam_Madadju_Madadkar
 from madadju.models import Madadju, Niaz
 from django import forms
 from django.contrib.auth.models import User
@@ -62,15 +62,73 @@ def show_afzayesh_etebar(request,user):
             return render(request, template, {'form':form,'utype' : user
                                     , 'progress': karbar.darbare_ma.progress()
                                     , 'username' : request.user})
-#TODO etebar ra begirad va afzayesh dahad
+#TODO etebar ra begirad va afzayesh dahad (bara hamiar mikone)
 
 @login_required
 def show_ersal_payam(request,user):
     template = 'karbar/ersal_payam.html'
-    return render(request, template, {'utype' : user
+    if request.method == 'GET':
+        form = ErsalPayamForm()
+        return render(request, template, {'form':form, 'utype' : user
                                     , 'progress': karbar.darbare_ma.progress()
                                     ,'username' : request.user})
-#TODO shenase o onvan o matn ro begire va payam ro befreste
+    if request.method == 'POST':
+        form = ErsalPayamForm(request.POST)
+        if form.is_valid():
+            recieverUN=form.cleaned_data['reciever']
+            onvan=form.cleaned_data['onvan']
+            matn=form.cleaned_data['matn']
+            if User.objects.filter(username=recieverUN).exists():
+                recieverUser=User.objects.get(username=recieverUN)
+            else:
+                return render(request, template, {'form': form, 'utype': user
+                    , 'progress': karbar.darbare_ma.progress()
+                    , 'username': request.user, 'message':'نام کاربری گیرنده در سیستم موجود نیست.'})
+
+            userUK = User.objects.get(username=request.user)
+            ukarbar=UserKarbar.objects.get(user=userUK)
+            if staff_members.objects.filter(stafID=ukarbar).exists():# halati ke ye staff payam mide
+                ustmember = staff_members.objects.get(stafID=ukarbar)
+                Payam_Adi.objects.create(sender=ustmember, reciever=recieverUser,onvan=onvan,matn=matn, zaman=datetime.datetime.now())
+                template = 'karbar/amaliat_movafagh.html'
+                return render(request, template, {'utype': user
+                    , 'progress': karbar.darbare_ma.progress()
+                    , 'username': ''})
+
+            else: #halati ke madadju payam mide :D
+                ustmember = Madadju.objects.get(user=ukarbar)
+                recieverUkarbar = UserKarbar.objects.get(user= recieverUser)
+                if staff_members.objects.filter(stafID=recieverUkarbar).exists():
+                    recieverStaff=staff_members.objects.get(stafID=recieverUkarbar)
+                    if Hamiar.objects.filter(staffID=recieverStaff).exists(): #payam madadju be hamiar
+                        recieverhamiar=Hamiar.objects.get(staffID=recieverStaff)
+                        Payam_Madadju.objects.create(sender=ustmember, reciever=recieverhamiar,onvan=onvan,matn=matn, zaman=datetime.datetime.now(),taieed=False)
+                        template = 'karbar/amaliat_movafagh.html'
+                        return render(request, template, {'utype': user
+                            , 'progress': karbar.darbare_ma.progress()
+                            , 'username': ''})
+                    else: #payam madadju be madadkar
+                        if Madadkar.objects.filter(staffID=recieverStaff):
+                            recieverMadadkar = Madadkar.objects.get(staffID=recieverStaff)
+                            Payam_Madadju_Madadkar.objects.create(sender=ustmember, reciever=recieverMadadkar,onvan=onvan,matn=matn, zaman=datetime.datetime.now(),taieed=False)
+                            template = 'karbar/amaliat_movafagh.html'
+                            return render(request, template, {'utype': user
+                                , 'progress': karbar.darbare_ma.progress()
+                                , 'username': ''})
+                        else:
+                            return render(request, template, {'form': form, 'utype': user
+                                , 'progress': karbar.darbare_ma.progress()
+                                , 'username': request.user,
+                                                              'message': 'نام کاربری فرستنده باید نام کاربری یک همیار یا مددکار باشد.'})
+                else:
+                    return render(request, template, {'form': form, 'utype': user
+                        , 'progress': karbar.darbare_ma.progress()
+                        , 'username': request.user, 'message': 'نام کاربری فرستنده باید نام کاربری یک همیار یا مددکار باشد.'})
+        else:
+            return render(request, template, {'form': form, 'utype': user
+                , 'progress': karbar.darbare_ma.progress()
+                , 'username': request.user})
+
 
 @login_required
 def show_moshahede_tarakonesh_haye_mali(request,user):
@@ -159,10 +217,15 @@ def show_sandoghe_payamhaye_daryafti(request,user):
     payamha = []
     if user == 'hamiar':
         for payam in Payam_Madadju.objects.all():
-            if payam.reciever.user.user == request.user:
+            if payam.reciever.staffID.stafID.user == request.user:
+                payamha.append((payam.pk, payam.sender.username, payam.zaman, payam.onvan))
+
+    if user == 'madadkar':
+        for payam in Payam_Madadju_Madadkar.objects.all():
+            if payam.reciever.staffID.stafID.user == request.user:
                 payamha.append((payam.pk, payam.sender.username, payam.zaman, payam.onvan))
     for payam in Payam_Adi.objects.all():
-        if payam.reciever.user.user == request.user:
+        if payam.reciever == request.user:
             payamha.append((payam.pk, payam.sender.username , payam.zaman, payam.onvan))
     return render(request, template, {'utype': user
         , 'progress': karbar.darbare_ma.progress()
