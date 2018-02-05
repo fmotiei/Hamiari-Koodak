@@ -34,8 +34,8 @@ def show_profile(request):
             niazha.append(niaz)
     hamiarha = []
     for niaz in niazha :
-        if not hamiarha.__contains__(niaz.hamiar):
-            hamiarha.append(niaz.hamiar.staffID.stafID.user.username)
+        if not hamiarha.__contains__(niaz.hamiar.username()):
+            hamiarha.append(niaz.hamiar.username())
     return render(request, template, {'utype' : 'madadju'
                                     , 'progress': karbar.darbare_ma.progress()
                                     , 'username' : request.user
@@ -44,6 +44,25 @@ def show_profile(request):
                                     , 'alarm': madadju.ekhtar
                                     , 'madadkar': madadju.madadkar.staffID.stafID.user.username
                                     , 'hamiarha': hamiarha })
+
+@login_required
+def show_niaz_haye_madadju(request):
+    template = 'madadju/niaz_haye_madadju.html'
+    madadju_un = request.user
+    user = User.objects.get(username=madadju_un)
+    userKarbar = UserKarbar.objects.get(user=user)
+    madadju = Madadju.objects.get(user=userKarbar)
+    niazha = []
+    for niaz in Niaz.objects.all():
+        if niaz.niazmand == madadju:
+            niazha.append(niaz)
+    return render(request, template, {'username' : request.user,
+                                      'progress': karbar.darbare_ma.progress(),
+                                      'niazha' :[( n.id, n.onvan, n.mablagh-n.mablagh_taminshodeh, n.mablagh_taminshodeh, n.niazFori) for n in niazha], # [ (type(n.niazmand),1,1,1) for n in Niaz.objects.all()],#= 'Madadju object (1)')],
+                                      'madadju_un' : madadju_un,
+                                      'madadju_alarm' : madadju.ekhtar
+                                      })
+
 
 @login_required
 def show_hamiar_profile(request):

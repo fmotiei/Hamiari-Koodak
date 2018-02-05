@@ -38,5 +38,5 @@ def progress():
             sumMablagh = sumMablagh + niaz.mablagh
             sumTamin = sumTamin + niaz.mablagh_taminshodeh
         niaz = int(100 * sumTamin / sumMablagh)
-    pr.append([niaz,'٪ نیازهای مددجویان تامین شده است.'])
+    pr.append([niaz,'٪ تامین نیازها'])
     return pr
