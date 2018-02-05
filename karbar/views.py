@@ -87,6 +87,7 @@ def show_sabtename_hamyar(request):
             ukarbar=UserKarbar.objects.create(user=user, phone_number=phone_number, address=address, is_hamiar=True)
             staff=staff_members.objects.create(stafID=ukarbar )
             hamiar.models.Hamiar.objects.create(staffID=staff )
+            events.objects.create(onvan='ثبت نام',matn='همیار عزیز! به بنیاد خیریه کودک خوش آمدید. شما با موفقیت در بنیاد ثبت نام شدید.',user = user,zaman=datetime.datetime.now())
             login(request, user)
             return render(request, 'karbar/regiset_success.html', {'form': form})
             # return HttpResponseRedirect(reverse("hamyar_panel")+"?success=1")  # this should be hamyar's own page

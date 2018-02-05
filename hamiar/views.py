@@ -10,7 +10,7 @@ import datetime
 import karbar
 from hamiar.models import hemaiatNiaz, Hamiar
 from karbar import moshtarak
-from karbar.models import UserKarbar, staff_members, Payment
+from karbar.models import UserKarbar, staff_members, Payment, events
 from madadju.models import Madadju, Niaz
 
 def is_hamiar(user):
@@ -51,6 +51,10 @@ def show_hemayat_az_moasese(request):
                 Payment.objects.create(onvan='کمک به موسسه', mablagh=mablagh, pardakht_konande=ukarbar, girande=UK,
                                        # girande ro chi bezaram?
                                        zaman=datetime.datetime.now())
+
+                events.objects.create(onvan='حمایت از موسسه',
+                                      matn='با تشکر از حمایت شما از بنیاد خیریه کودک. اطلاعات حمایت شما در سامانه ثبت شد.',
+                                      user=request.user, zaman=datetime.datetime.now())
             return moshtarak.show_amaliat_movafagh(request, 'hamiar')
         else:
             return render(request, template, {'utype': 'hamiar'
