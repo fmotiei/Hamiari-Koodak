@@ -3,8 +3,9 @@ from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.template import Context
 from django.template.loader import get_template
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from hamiar.forms import afzayeshEtebar
+from django.urls import reverse
 import datetime
 # Create your views here.
 import karbar
@@ -98,9 +99,22 @@ def show_moshahede_niaz_haye_taht_hemayat(request):
                                     , 'progress': karbar.darbare_ma.progress()
                                     , 'username' : request.user
                                       , 'madadjuyan' : madadjus })
-#TODO ba zadane enseraf enseraf dahad
+
 def Enseraf(request):
     niazid=request.GET.get('niaz')
+    niaz=Niaz.objects.get(id=niazid)
+
+    uname=request.user
+    ouruser = User.objects.get(username=uname)
+    ourUk = UserKarbar.objects.get(user=ouruser)
+    ourSTF = staff_members.objects.get(stafID=ourUk)
+    ourHamiar = Hamiar.objects.get(staffID=ourSTF)
+
+    hn=hemaiatNiaz.objects.get(niaz=niaz,hamiar = ourHamiar)
+    niaz.mablagh-=hn.mablagh
+    hemaiatNiaz.objects.filter(niaz=niaz, hamiar=ourHamiar).delete()
+
+    return HttpResponseRedirect(reverse("movafaghshodimHamiar"))
 
 
 @login_required(login_url='/permission/')
@@ -120,7 +134,23 @@ def show_niaz_haye_tamin_nashode(request):
                                     , 'username' : request.user
                                       ,'madadjuyan' : madadjus
                                       })
-#TODO ba zadane hemayat hemayat konad
+def hemaiat(request):
+    uname=request.user
+    ouruser=User.objects.get(username=uname)
+    ourUk=UserKarbar.objects.get(user =ouruser)
+    ourSTF=staff_members.objects.get(stafID=ourUk)
+    ourHamiar=Hamiar.objects.get(staffID = ourSTF)
+    ourNiaz=Niaz.objects.get(id=request.GET.get('niaz'))
+    ourNiaz.mablagh_taminshodeh=ourNiaz.mablagh
+    ourNiaz.hemaiatshod = True
+    ourNiaz.save()
+    if hemaiatNiaz.objects.filter(hamiar=ourHamiar, niaz=ourNiaz).exists():
+        hniaz=hemaiatNiaz.objects.get(hamiar=ourHamiar, niaz=ourNiaz)
+        hniaz.mablagh=ourNiaz.mablagh
+    else:
+        hemaiatNiaz.objects.create(active=True, hamiar=ourHamiar,niaz=ourNiaz, mablagh=ourNiaz.mablagh)
+    return HttpResponseRedirect(reverse( "movafaghshodimHamiar"))
+
 
 @login_required(login_url='/permission/')
 @user_passes_test(is_hamiar,login_url='/permission/')
@@ -139,7 +169,7 @@ def show_niaz_haye_tamin_nashode_fori(request):
                                     , 'username' : request.user
                                       ,'madadjuyan' : madadjus
                                       })
-#TODO ba zadane hemayat hemayat konad
+
 
 
 @login_required(login_url='/permission/')
