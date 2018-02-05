@@ -62,6 +62,7 @@ def show_moshahede_madadjuyan_taht_kefalat(request):
                                       #todo link moshahede profile madadju
                                       })
 
+
 @login_required
 def show_niaz_haye_madadju(request):
     template = 'madadkar/niaz_haye_madadju.html'
