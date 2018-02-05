@@ -31,7 +31,7 @@ def show_profile(request):
         return render(request, template, {'tozihat': karbar.darbare_ma.tozihat_text(),'form': form, 'utype' : 'karbar'
         , 'progress': karbar.darbare_ma.progress()
         , 'username':''
-        , 'roydadha' : {} })
+        , 'akhbar' : akhbar.objects.all()})
 
     if request.method == 'POST':
         form = SignInForm(request.POST)
@@ -43,7 +43,7 @@ def show_profile(request):
                 message = 'گذرواژه اشتباه ‌است'
                 args = {'tozihat': karbar.darbare_ma.tozihat_text(),'form': form, 'message': message ,'utype' : 'karbar'
         , 'progress': karbar.darbare_ma.progress()
-        , 'roydadha' : {} }
+        , 'akhbar' : akhbar.objects.all()}
                 return render(request, template, args)
             else:
                 utype=user_type(user)
@@ -54,7 +54,7 @@ def show_profile(request):
             args = {'tozihat': karbar.darbare_ma.tozihat_text(),'form': form, 'message': message, 'utype' : 'karbar'
         , 'progress': karbar.darbare_ma.progress()
         , 'username':''
-        , 'roydadha' : {} }
+        , 'akhbar' : akhbar.objects.all()}
             return render(request, template, args)
 
 
@@ -64,8 +64,7 @@ def show_sabtename_hamyar(request):
         form = SignUpForm()
         return  render(request, template, {'form': form, 'utype' : 'karbar'
         , 'progress': karbar.darbare_ma.progress()
-        , 'username':''
-        , 'roydadha' : {} })
+        , 'username':''})
 
 
     if request.method == 'POST':
@@ -81,8 +80,7 @@ def show_sabtename_hamyar(request):
             if User.objects.filter(username=username).exists():
                 return render(request, template, {'form': form, 'utype' : 'karbar'
         , 'progress': karbar.darbare_ma.progress()
-        , 'username':''
-        , 'roydadha' : {} })
+        , 'username':''})
 
             user = User.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name)
             user.save()

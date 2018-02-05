@@ -212,6 +212,16 @@
 				</article>
 			</div>
 			<hr>
+            {% for khabar in akhbar %}
+            <div class="row">
+				<article class="col-xs-12" align="right">
+					<h2>{{khabar.onvan}}</h2>
+					<p>{{khabar.matn}}</p>
+					<p>{{khabar.zaman}}</p>
+				</article>
+			</div>
+			<hr>
+            {% endfor %}
 		</div><!--/Center Column-->
 
 

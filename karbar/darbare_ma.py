@@ -3,6 +3,7 @@ import glob
 from django.shortcuts import render
 
 import karbar
+from karbar.models import akhbar
 from madadju.models import Niaz
 
 
@@ -30,7 +31,12 @@ def akhbar_image():
 def progress():
     pr = []
     niaz = 100
-    if( len(Niaz.objects.all()) != 0 ):
-        niaz = 100 * len(Niaz.objects.filter(mablagh_taminshodeh=0))/len(Niaz.objects.all())
+    if not len(Niaz.objects.all()) == 0 :
+        sumMablagh = 0
+        sumTamin = 0
+        for niaz in Niaz.objects.all():
+            sumMablagh = sumMablagh + niaz.mablagh
+            sumTamin = sumTamin + niaz.mablagh_taminshodeh
+        niaz = int(100 * sumTamin / sumMablagh)
     pr.append([niaz,'٪ نیازهای مددجویان تامین شده است.'])
     return pr

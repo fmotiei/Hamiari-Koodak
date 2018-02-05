@@ -5,7 +5,8 @@ import datetime
 from hamiar.models import PardakhtNiaz, Hamiar
 from karbar.forms import  SignInForm, ErsalPayamForm
 import karbar
-from karbar.models import Payam, Payam_Madadju, Payam_Adi, UserKarbar, staff_members, events,Payam_Madadju_Madadkar
+from karbar.models import Payam, Payam_Madadju, Payam_Adi, UserKarbar, staff_members, events, Payam_Madadju_Madadkar, \
+    akhbar
 from madadju.models import Madadju, Niaz
 from django import forms
 from django.contrib.auth.models import User
@@ -34,7 +35,8 @@ def show_user(request,user):
         , 'images': karbar.darbare_ma.akhbar_image()
         , 'progress': karbar.darbare_ma.progress()
         , 'utype': user
-        , 'username': request.user })
+        , 'username': request.user
+        , 'akhbar' : akhbar.objects.all()})
 
 @login_required
 def show_afzayesh_etebar(request,user):
@@ -133,35 +135,18 @@ def show_ersal_payam(request,user):
 def show_moshahede_tarakonesh_haye_mali(request,user):
     template = 'karbar/moshahede_tarakonesh_haye_mali.html'
     tarakoneshha = []
-    if user == 'hamiar':
-        userKarbar = UserKarbar.objects.get(user = request.user)
-        staffMember = staff_members.objects.get(stafID = userKarbar)
-        hamiar = Hamiar.objects.get(staffID=staffMember)
-        for tarakonesh in PardakhtNiaz.objects.all() :
-            if tarakonesh.niaz.hamiar == hamiar :
-                tarakoneshha.append(('پرداخت نیاز',tarakonesh.mablagh,request.user.username,tarakonesh.zaman))
 
-    if user == 'madadju':
-        userKarbar = UserKarbar.objects.get(user = request.user)
-        madadju = Madadju.objects.get(user=userKarbar)
-        for tarakonesh in PardakhtNiaz.objects.all() :
-            if tarakonesh.niaz.niaz.niazmand == madadju :
-                tarakoneshha.append(('تامین نیاز',tarakonesh.mablagh,tarakonesh.niaz.hamiar.username(),tarakonesh.zaman))
-
-    if user == 'madadkar' :
-        userKarbar = UserKarbar.objects.get(user=request.user)
-        staffMember = staff_members.objects.get(stafID=userKarbar)
-        madadkar = Madadkar.objects.get(staffID=staffMember)
-        for tarakonesh in hoghugh_dariafti.objects.all():
-            if tarakonesh.maddadkar == madadkar :
-                tarakoneshha.append(('پرداخت حقوق',tarakonesh.mablagh,'موسسه',tarakonesh.zaman))
-
+    userKarbar = UserKarbar.objects.get(user=request.user)
+    for payment in Payment.objects.all():
+        if payment.pardakht_konande == userKarbar :
+            tarakoneshha.append((payment.onvan,0-payment.mablagh,payment.girande,payment.zaman))
+        if payment.girande == userKarbar :
+            tarakoneshha.append((payment.onvan,payment.mablagh,payment.pardakht_konande,payment.zaman))
 
     return render(request, template, {'utype' : user
                                         , 'progress': karbar.darbare_ma.progress()
                                         , 'tarakoneshha' : tarakoneshha
                                         , 'username': request.user})
-#TODO (onvan,mablagh,user,date)    bazi tarakonesh ha ro nadarim k :(
 
 
 @login_required
