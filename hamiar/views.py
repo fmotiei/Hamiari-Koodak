@@ -99,6 +99,9 @@ def show_moshahede_niaz_haye_taht_hemayat(request):
                                     , 'username' : request.user
                                       , 'madadjuyan' : madadjus })
 #TODO ba zadane enseraf enseraf dahad
+def Enseraf(request):
+    niazid=request.GET.get('niaz')
+
 
 @login_required(login_url='/karbar/')
 @user_passes_test(is_hamiar,login_url='/karbar/')
