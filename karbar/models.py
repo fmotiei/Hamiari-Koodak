@@ -86,3 +86,4 @@ class Payment(models.Model):
     pardakht_konande = models.ForeignKey(UserKarbar, null=False, on_delete=models.PROTECT,related_name='pardakht_konande')
     girande = models.ForeignKey(UserKarbar, null=False, on_delete=models.PROTECT,related_name='girande')
     zaman = models.DateTimeField(default=datetime.now, blank=True)
+

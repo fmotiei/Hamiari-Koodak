@@ -112,12 +112,15 @@
 			          </h3>
 			        </div>
 			        <div class="panel-body" align="right">
-			          <form>
+			          <form action="/hamiar/hemayat_az_moasese/" method="post">
+						  {% csrf_token %}
 			          	<p>مبلغ مورد نظر را وارد کنید.</p>
 			            <div class="form-group">
-							<input type="text" class="form-control" id="uid" name="uid" placeholder="مبلغ">
+							<input type="number" class="form-control" id="mablagh" name="mablagh" placeholder="مبلغ">
 						</div>
-			            <button type="add" class="btn btn-default"><a href = "/hamiar/amaliat_movafagh">تایید</a></button>
+			            <input type="submit" class="btn btn-default" style="color:white" value="تایید">
+
+{#{% if form.errors %}<p>{{ form.errors }}</p>{% endif %}#}
 			          </form>
 			        </div>
 			      </div>

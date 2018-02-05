@@ -35,7 +35,6 @@ def show_darkhast_taghir_madadkar(request):
                 , 'username': request.user
                 , 'mName': madadju.madadkar.staffID.stafID.user.username, 'form': form})
 
-#TODO tozihat ra begirad
 
 @login_required
 def show_profile(request):

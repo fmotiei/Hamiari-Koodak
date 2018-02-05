@@ -3,22 +3,45 @@ from django.shortcuts import render
 from django.template import Context
 from django.template.loader import get_template
 from django.http import HttpResponse
-
-
+from hamiar.forms import afzayeshEtebar
+import datetime
 # Create your views here.
 import karbar
 from hamiar.models import hemaiatNiaz, Hamiar
 from karbar import moshtarak
-from karbar.models import UserKarbar, staff_members
+from karbar.models import UserKarbar, staff_members, Payment
 from madadju.models import Madadju, Niaz
 
 def show_hemayat_az_moasese(request):
+
     template = 'hamiar/hemayat_az_moasese.html'
-    return render(request, template, {'utype':'hamiar'
+    if request.method == "GET":
+        form = afzayeshEtebar()
+        return render(request, template, {'utype':'hamiar'
                                     , 'progress': karbar.darbare_ma.progress()
-                                    , 'username' : request.user })
-#TODO mablagh ro begire va b hesab moassese (?) ezafe kone
-#todo YEGANE
+                                    , 'username' : request.user ,'form':form})
+    if request.method == "POST":
+        form = afzayeshEtebar(request.POST)
+        if form.is_valid():
+            mablagh = form.cleaned_data['mablagh']
+            userUK = User.objects.get(username=request.user)
+            ukarbar = UserKarbar.objects.get(user=userUK)
+            ukarbar.mojudi -= mablagh
+            ukarbar.save()
+            if User.objects.filter(username = "kheirieh").exists():
+                khairiehU=User.objects.get(username="kheireih")
+                UK=UserKarbar.objects.get(user=khairiehU)
+                UK.mojudi +=mablagh
+                UK.save()
+                Payment.objects.create(onvan='کمک به موسسه', mablagh=mablagh, pardakht_konande=ukarbar, girande=UK,
+                                       # girande ro chi bezaram?
+                                       zaman=datetime.datetime.now())
+            return moshtarak.show_amaliat_movafagh(request, 'hamiar')
+        else:
+            return render(request, template, {'utype': 'hamiar'
+                , 'progress': karbar.darbare_ma.progress()
+                , 'username': request.user, 'form': form})
+
 
 def show_hemayat_az_niaz(request):
     template = 'hamiar/hemayat_az_niaz.html'
