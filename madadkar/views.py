@@ -78,10 +78,10 @@ def show_niaz_haye_tamin_nashode_fori(request):
                                       'niazha': [(n.niazmand.username, n.onvan, n.mablagh, n.niazFori) for n in niazha],
                                       })
 
-
+#todo FAEZE
 def show_payam_entezar(request):
     template = 'madadkar/payam_entezar.html'
-    return render(request, template, {'username' : '',
+    return render(request, template, {'username' : request.user,
                                       'progress': karbar.darbare_ma.progress(),
                                       'msg' : '',
                                       'header' : '',
@@ -131,21 +131,22 @@ def show_profile_madadju(request):
                                       # 'sharh_kh': (madadju.sharhe_tahsil.Field_Taghir, madadju.sharhe_tahsil.ُType)
                                       })
 
+#todo FAEZEH
 def show_sandoghe_payamhaye_entezar(request):
     template = 'madadkar/sandoghe_payamhaye_entezar.html'
-    return render(request, template, {'username' : '',
+    return render(request, template, {'username' : request.user,
                                       'progress': karbar.darbare_ma.progress()})
 
-
+#todo YEGANE
 def show_sabte_naam_madadju(request):
     template = 'madadkar/sabte_naam_madadju.html'
-    return render(request, template, {'username' : '',
+    return render(request, template, {'username' : request.user,
                                       'progress': karbar.darbare_ma.progress()})
 
-
+#todo YEGANE
 def show_virayesh_niaz(request):
     template = 'madadkar/virayesh_niaz.html'
-    return render(request, template, {'username' : '',
+    return render(request, template, {'username' : request.user,
                                       'progress': karbar.darbare_ma.progress()})
 
 
