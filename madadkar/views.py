@@ -59,7 +59,7 @@ def show_afzoudan_niaz(request):
                                                   })
             Niaz.objects.create(niazmand=madadju_our, onvan=onvan, mablagh=mablagh, Type=Type, niazFori=niazFori)
             events.objects.create(onvan='افزودن نیاز',
-                                  matn='مددکار محترم، نیاز مربوط به مددجوی '+madadju_our.username+'افزوده شد.',
+                                  matn='مددکار محترم، نیاز مربوط به مددجوی '+madadju_our.username()+' افزوده شد.',
                                   user=request.user, zaman=datetime.datetime.now())
             events.objects.create(onvan='افزودن نیاز',
                                   matn='مددجوی عزیز! نیازی به نیازهای شما افزوده شد.',
@@ -126,7 +126,7 @@ def show_niaz_haye_tamin_nashode(request):
             niazha.append(niaz)
     return render(request, template, {'username': request.user,
                                       'progress': karbar.darbare_ma.progress(),
-                                      'niazha': [(n.niazmand.username, n.onvan, n.mablagh, n.niazFori) for n in niazha],
+                                      'niazha': [(n.niazmand.username, n.onvan, n.mablagh_taminshodeh, n.mablagh-n.mablagh_taminshodeh, n.niazFori) for n in niazha],
                                       })
 
 
@@ -141,25 +141,26 @@ def show_niaz_haye_tamin_nashode_fori(request):
                 niazha.append(niaz)
     return render(request, template, {'username': request.user,
                                       'progress': karbar.darbare_ma.progress(),
-                                      'niazha': [(n.niazmand.username, n.onvan, n.mablagh, n.niazFori) for n in niazha],
+                                      'niazha': [(n.niazmand.username, n.onvan, n.mablagh_taminshodeh,n.mablagh-n.mablagh_taminshodeh, n.niazFori) for n in niazha],
                                       })
 
 def accPayam(request):
     payam=request.GET.get('payam')
     payamak=Payam_Madadju.objects.filter(pk= payam)
     payamak.update(taieed=True)
+    payam1 = Payam_Madadju.objects.get(pk= payam)
     events.objects.create(onvan='پذیرش پیام',
-                          matn='مددجوی عزیز! پیام شما به'+payamak.reciever.username+' تایید و ارسال شد.',
-                          user=payamak.sender.user.user, zaman=datetime.datetime.now())
+                          matn='مددجوی عزیز! پیام شما به'+payam1.reciever.username()+' تایید و ارسال شد.',
+                          user=payam1.sender.user.user, zaman=datetime.datetime.now())
 
     return HttpResponseRedirect(reverse( "movafaghshodim"))
 
 def delPayam(request):
     payam =request.GET.get('payam')
-    payamak=Payam_Madadju.objects.filter(pk= payam)
+    payam1 = Payam_Madadju.objects.get(pk= payam)
     events.objects.create(onvan='رد پیام',
-                          matn='مددجوی عزیز! متاسفانه ارسال پیام شما به'+payamak.reciever.username+' رد شد.',
-                          user=payamak.sender.user.user, zaman=datetime.datetime.now())
+                          matn='مددجوی عزیز! متاسفانه ارسال پیام شما به'+payam1.reciever.username()+' رد شد.',
+                          user=payam1.sender.user.user, zaman=datetime.datetime.now())
     Payam_Madadju.objects.filter(pk=payam).delete()
     return HttpResponseRedirect(reverse( "movafaghshodim"))
 
@@ -216,15 +217,18 @@ def show_profile_madadju(request):
     for niaz in niazha:
         if not hamiarha.__contains__(niaz.hamiar.username()):
             hamiarha.append(niaz.hamiar.staffID.stafID.user.username)
-    shoruh = sharhe_tahsil.objects.get(madadju=madadju)
-    return render(request, template, {'username': madadju_un,
+    if sharhe_tahsil.objects.filter(madadju=madadju).exists():
+        shoruh = sharhe_tahsil.objects.get(madadju=madadju).sharh
+    else:
+        shoruh = 'شرح تحصیلی ندارد.'
+    return render(request, template, {'username': request.user,
                                       'alarm': madadju.ekhtar,
                                       'progress': karbar.darbare_ma.progress(),
                                       'madadju_un': request.GET.get('madadju_un'),
                                       'madadju_fn': user.first_name,
                                       'madadju_ln': user.last_name,
                                       'hamiars': hamiarha,
-                                      'sharh': shoruh.sharh,
+                                      'sharh': shoruh,
                                       'virayesh' : virayesh
                                       # 'sharh_kh': (madadju.sharhe_tahsil.Field_Taghir, madadju.sharhe_tahsil.ُType)
                                       })
@@ -280,7 +284,7 @@ def show_sabte_naam_madadju(request):
                                                  start_date=datetime.datetime.now())
 
             events.objects.create(onvan='ثبت نام مددجو',
-                                  matn='مددجوی عزیز !‌خوش آمدید. ثبت نام شما توسط '+request.user+' با موفقیت انجام شد.',
+                                  matn='مددجوی عزیز !‌خوش آمدید. ثبت نام شما توسط '+request.user.username+' با موفقیت انجام شد.',
                                   user=user, zaman=datetime.datetime.now())
             events.objects.create(onvan='ثبت نام مددجو',
                                   matn='مددکار گرامی، مددجوی '+user.username+' با موفقیت ثبت نام شد.',
@@ -298,12 +302,16 @@ def show_sabte_naam_madadju(request):
 @user_passes_test(is_madadkar, login_url='/permission/')
 def show_virayesh_niaz(request):
     template = 'madadkar/virayesh_niaz.html'
+    virayesh = request.GET.get('virayesh')
+    madadju_user = request.GET.get('madadju_un')
     if request.method == 'GET':
         form = taghireNiazForm()
         return render(request, template, {'username': request.user,
                                           'progress': karbar.darbare_ma.progress(),
                                           'form': form, 'madadju': request.GET.get('madadju'),
-                                          'niaz': request.GET.get('niaz')})
+                                          'niaz': request.GET.get('niaz'),
+                                          'virayesh' : virayesh,
+                                          'madadju_un' : madadju_user})
     if request.method == 'POST':
         niazID = request.GET.get('niaz')
         mNiaz = Niaz.objects.get(id=niazID)
@@ -322,21 +330,26 @@ def show_virayesh_niaz(request):
         else:
             return render(request, template, {'username': request.user,
                                               'progress': karbar.darbare_ma.progress(),
-                                              'form': form, 'madadju_un': madadju, 'niaz_id': request.GET.get('niaz')})
+                                              'form': form, 'madadju_un': madadju, 'niaz_id': request.GET.get('niaz')
+                                              , 'virayesh' : virayesh,
+                                          'madadju_un' : madadju_user})
 
 
 @login_required(login_url='/permission/')
 @user_passes_test(is_madadkar, login_url='/permission/')
 def show_vaziat_tahsili(request):
     template = 'madadkar/vaziat_tahsili.html'
+    virayesh = request.GET.get('virayesh')
+    madadju_user = request.GET.get('madadju_un')
     if request.method == "GET":
         form = VirayeshTahsilForm()
         return render(request, template, {'username': request.user,
                                           'madadju_un': request.GET.get('madadju_un'),
-                                          'progress': karbar.darbare_ma.progress(), 'form': form})
+                                          'progress': karbar.darbare_ma.progress(), 'form': form
+                                          ,'virayesh' : virayesh
+                                          ,'madadju_un':madadju_user})
     if request.method == "POST":
         form = VirayeshTahsilForm(request.POST)
-        madadju_user = request.GET.get('madadju_un')
         madadju_u = User.objects.get(username=request.GET.get('madadju_un'))
         madadju_uk = UserKarbar.objects.get(user=madadju_u)
         madadju_ma = Madadju.objects.get(user=madadju_uk)
@@ -354,7 +367,8 @@ def show_vaziat_tahsili(request):
         else:
             return render(request, template, {'username': request.user,
                                               'madadju_un': request.GET.get('madadju_un'),
-                                              'progress': karbar.darbare_ma.progress(), 'form': form})
+                                              'progress': karbar.darbare_ma.progress(), 'form': form,
+                                              'virayesh':virayesh})
 
 
 @login_required(login_url='/permission/')

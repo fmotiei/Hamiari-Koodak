@@ -110,10 +110,11 @@
 			<div class="row" align= right>
 				<h2><strong>نیازهای تامین نشده</strong></h2>
 				<article class="col-xs-12">
-					{%for un, onvan, mablagh, fori in niazha%}
+					{%for un, onvan, mablaghTaminshode, mablaghTaminNashode, fori in niazha%}
 					<h2><a href="/madadkar/profile_madadju?madadju_un={{un}}&virayesh=0" >{{un}}</a></h2>
 					<p>{{onvan}}
-					<span class="label label-default">هزینه: {{mablagh}}</span>
+					<span class="label label-default">تامین شده: {{mablaghTaminshode}}</span>
+					<span class="label label-default">تامین نشده: {{mablaghTaminNashode}}</span>
 						{%if fori %}
 						<span class="label label-default">فوری</span>
 						{%endif%}
