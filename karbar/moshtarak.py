@@ -113,7 +113,7 @@ def show_ersal_payam(request,user):
                         if Madadkar.objects.filter(staffID=recieverStaff):
                             recieverMadadkar = Madadkar.objects.get(staffID=recieverStaff)
                             payam = Payam.objects.create(onvan=onvan, matn=matn, zaman=datetime.datetime.now())
-                            Payam_Madadju_Madadkar.objects.create(payam = payam ,sender=ustmember, reciever=recieverMadadkar,taieed=False)
+                            Payam_Madadju_Madadkar.objects.create(payam = payam ,sender=ustmember, reciever=recieverMadadkar,taieed=True)
                             template = 'karbar/amaliat_movafagh.html'
                             return render(request, template, {'utype': user
                                 , 'progress': karbar.darbare_ma.progress()

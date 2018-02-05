@@ -5,6 +5,8 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+
+from karbar.models import Payam_Madadju, Payam
 from madadkar.forms import taghireNiazForm, SignUpInitialMadadju,SignUpForm, VirayeshTahsilForm
 from django.contrib.auth.models import User
 import datetime
@@ -81,14 +83,20 @@ def show_niaz_haye_tamin_nashode_fori(request):
 #todo FAEZE
 def show_payam_entezar(request):
     template = 'madadkar/payam_entezar.html'
-    return render(request, template, {'username' : request.user,
-                                      'progress': karbar.darbare_ma.progress(),
-                                      'msg' : '',
-                                      'header' : '',
-                                      'rcvr' : '',
-                                      #todo reciver ro bayad kole obj ro dashtebashim
-                                      'time' : ''
-                                      })
+    upayam = request.GET.get('payam')
+    payam1 = Payam.objects.get(pk=upayam)
+    payam = Payam_Madadju.objects.get(payam=payam1)
+    sender = payam.sender.username
+    receiver = payam.reciever.username
+
+    return render(request, template, {'utype': 'madadkar'
+        , 'progress': karbar.darbare_ma.progress()
+        , 'username': request.user
+        , 'onvan': payam1.onvan
+        , 'text': payam1.matn
+        , 'sender': sender
+        , 'receiver' : receiver
+        , 'date': payam1.zaman})
 
 
 def show_profile(request):
@@ -131,11 +139,17 @@ def show_profile_madadju(request):
                                   # 'sharh_kh': (madadju.sharhe_tahsil.Field_Taghir, madadju.sharhe_tahsil.ُType)
                                       })
 
-#todo FAEZEH
 def show_sandoghe_payamhaye_entezar(request):
     template = 'madadkar/sandoghe_payamhaye_entezar.html'
-    return render(request, template, {'username' : request.user,
-                                      'progress': karbar.darbare_ma.progress()})
+    payamha = []
+    for payam in Payam_Madadju.objects.all():
+        if (payam.sender.madadkar.username() == request.user.username) & (payam.taieed == False ):
+            payamha.append((payam.payam.pk, payam.sender.username, payam.reciever.username , payam.payam.zaman, payam.payam.onvan))
+
+    return render(request, template, {'utype': 'madadkar'
+        , 'progress': karbar.darbare_ma.progress()
+        , 'username': request.user
+        , 'payamha': payamha})
 
 #todo YEGANE
 def show_sabte_naam_madadju(request):

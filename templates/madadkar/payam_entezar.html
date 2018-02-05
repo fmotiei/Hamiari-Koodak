@@ -110,19 +110,22 @@
 			      <div class="panel panel-default">
 			        <div class="panel-heading" >
 			          <h3 class="panel-title" align = "right">
-			          	{{header}}
+			          	{{onvan}}
 			          </h3>
 			        </div>
 			        <div class="panel-body" align="right">
 			          <form>
-						<p class="pull-right">گیرنده:<a href="">کاربر شماره ۱</a></p>
+						<p class="pull-right">فرستنده:{{sender}}</p>
 						<br>
 			          	<hr>
+						<p class="pull-right">گیرنده:{{receiver}}</p>
+						<br>
+						  <hr>
 			          	<p>
-			          		{{msg}}
+			          		{{text}}
 			          	</p>
 			          	<hr>
-			          	{{time}}
+			          	{{date}}
 			          	<hr>
 			            <button type="add" class="btn btn-default"><a href = "/madadkar/sandoghe_payamhaye_entezar">تایید</a></button>
 			            <button type="add" class="btn btn-default"><a href = "/madadkar/sandoghe_payamhaye_entezar">رد</a></button>

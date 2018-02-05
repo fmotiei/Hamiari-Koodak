@@ -94,7 +94,7 @@
 				</div>
 				<div class="panel-body" align= right >
 					<form>
-						<button type="submit" class="btn btn-default"><a href="/index/">خروج</a></button>
+						<button type="submit" class="btn btn-default"><a href="{% url 'logout' %}">خروج</a></button>
 					</form>
 				</div>
 			</div>	
@@ -106,7 +106,7 @@
 		<!-- Center Column -->
 		<div class="col-sm-6">	
 		
-			<!— Form —> 
+			<!— Form —>
 			    <table style="width:100%" class="table-bordered">
 					  <h3>صندوق پیام های در انتظار تایید</h3>
 					  <hr>
@@ -116,20 +116,15 @@
 					    <th style="width: 20%">تاریخ و ساعت</th>
 					    <th style="width: 60%">عنوان پیام</th>
 					  </tr>
+						{% for payamid,sender,receiver,date,onvan in payamha %}
 					  <tr>
-					  	<td style="width: 15%">مددجو شماره ۵</th>
-					  	<td style="width: 15%">همیار شماره ۲</th>
-					    <td style="width: 20%">۲۳/۵/۹۶ ساعت ۲۳:۳۰</th>
-					    <td style="width: 60%"><a href="/madadkar/payam_entezar">با سلام لطفا پیام را ارسال فرمایید</a></th>
+					  	<td style="width: 15%">{{sender}}</th>
+					  	<td style="width: 15%">{{receiver}}</th>
+					    <td style="width: 20%">{{date}}</th>
+					    <td style="width: 60%"><a href="/madadkar/payam_entezar?payam={{payamid}}">{{onvan}}</a></th>
 					  </tr>
-					  <tr>
-					  	<td style="width: 15%">مددجو شماره ۲</th>
-					  	<td style="width: 15%">همیار شماره ۱</th>
-					    <td style="width: 20%">۲۳/۵/۹۶ ساعت ۲۳:۳۰</th>
-					    <td style="width: 60%"><a href="/madadkar/payam_entezar">تشکر فراوان از شما</a></th>
-					  </tr>
+						{% endfor %}
 				</table>
-
 			<hr>
 		</div><!--/Center Column-->
 
