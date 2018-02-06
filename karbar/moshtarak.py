@@ -117,7 +117,7 @@ def show_ersal_payam(request,user):
                         if Madadkar.objects.filter(staffID=recieverStaff):
                             recieverMadadkar = Madadkar.objects.get(staffID=recieverStaff)
                             payam = Payam.objects.create(onvan=onvan, matn=matn, zaman=datetime.datetime.now())
-                            Payam_Madadju_Madadkar.objects.create(payam = payam ,sender=ustmember, reciever=recieverMadadkar,taieed=True)
+                            Payam_Madadju_Madadkar.objects.create(payam = payam ,sender=ustmember, reciever=recieverMadadkar)
                             template = 'karbar/amaliat_movafagh.html'
                             return render(request, template, {'utype': user
                                 , 'progress': karbar.darbare_ma.progress()
@@ -208,11 +208,16 @@ def show_payam_ersali(request,user):
 def show_roydadha(request,user):
     template = 'karbar/roydadha.html'
     roydadha = events.objects.filter(user=request.user)
-    roydadha = [(roydad.onvan,roydad.matn,roydad.zaman) for roydad in roydadha]
+    toRetRoydad=[]
+    for roydad in roydadha:
+        toRetRoydad. append((roydad.onvan,roydad.matn,roydad.zaman))
+        if len(toRetRoydad)>10:
+            break
+
     return render(request, template, {'utype' : user
         , 'progress': karbar.darbare_ma.progress()
         , 'username': request.user
-        , 'roydadha' : roydadha })
+        , 'roydadha' : reversed(toRetRoydad) })
 #TODO mishe ba zarbdar pak she ?
 
 @login_required
