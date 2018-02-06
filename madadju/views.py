@@ -192,3 +192,8 @@ def show_moshahede_list_koodakan(request):
 @user_passes_test(is_madadju,login_url='/permission/')
 def show_moshahede_list_niazhaye_fori_taminnashode(request):
     return moshtarak.show_moshahede_list_niazhaye_fori_taminnashode(request,'madadju')
+
+@login_required(login_url='/permission/')
+@user_passes_test(is_madadju,login_url='/permission/')
+def edit_profile(request):
+    return moshtarak.edit_profile(request,'madadju')

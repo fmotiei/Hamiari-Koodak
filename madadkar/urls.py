@@ -52,6 +52,7 @@ urlpatterns = [
     url(r'^ekhtar/$',madadkar.views.ekhtar, name='ekhtar'),
     url(r'^hazfNiaz/$',madadkar.views.hazfNiaz, name='hazfNiaz'),
     url(r'^moshahede_list_niazhaye_fori_taminnashode/$', madadkar.views.show_moshahede_list_niazhaye_fori_taminnashode),
+    url(r'^password_change/$', madadkar.views.edit_profile),
     url(r'^$', madadkar.views.show_madadkar),
 
     # url(r'^ekhtar/$', madadkar.views.ekhtar, name='ekhtar')

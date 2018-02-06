@@ -38,5 +38,6 @@ urlpatterns = [
     url(r'^moshahede_list_niazhaye_fori_taminnashode/$', madadju.views.show_moshahede_list_niazhaye_fori_taminnashode),
     url(r'^hamiar_prof/$', madadju.views.show_hamiar_profile),
     url(r'^niaz_haye_madadju/$', madadju.views.show_niaz_haye_madadju),
+    url(r'^password_change/$', madadju.views.edit_profile),
     url(r'^$', madadju.views.show_madadju),
 ]
