@@ -72,13 +72,67 @@ def show_hemayat_az_niaz(request):
     template = 'hamiar/hemayat_az_niaz.html'
     niazID = request.GET.get('niaz')
     niaz = Niaz.objects.get(id=niazID)
-    return render(request, template, {'utype':'hamiar'
+    if request.method == "GET":
+        form = afzayeshEtebar()
+        return render(request, template, {'utype':'hamiar'
                                     , 'progress': karbar.darbare_ma.progress()
                                     , 'username' : request.user
                                     , 'niazName' : niaz.onvan
                                       , 'hazineTaminShode' : niaz.mablagh_taminshodeh
                                       , 'hazineTaminNashode' : niaz.mablagh_taminnashode()
-                                      , 'fori' : niaz.niazFori })
+                                      , 'fori' : niaz.niazFori ,'form':form, 'niaz':niazID})
+
+    if request.method == "POST":
+        form = afzayeshEtebar(request.POST)
+        if form.is_valid():
+            mablagh = form.cleaned_data['mablagh']
+            uname = request.user
+            ouruser = User.objects.get(username=uname)
+            ourUk = UserKarbar.objects.get(user=ouruser)
+            ourSTF = staff_members.objects.get(stafID=ourUk)
+            ourHamiar = Hamiar.objects.get(staffID=ourSTF)
+
+            ourNiaz = Niaz.objects.get(id=request.GET.get('niaz'))
+            ourNiaz.mablagh_taminshodeh += ourNiaz.mablagh
+            if ourNiaz.mablagh_taminshodeh-ourNiaz.mablagh:
+                ourNiaz.hemaiatshod = True
+
+            if mablagh> ourNiaz.mablagh:
+                return render(request, template, {'utype': 'hamiar'
+                    , 'progress': karbar.darbare_ma.progress()
+                    , 'username': request.user
+                    , 'niazName': niaz.onvan
+                    , 'hazineTaminShode': niaz.mablagh_taminshodeh
+                    , 'hazineTaminNashode': niaz.mablagh_taminnashode()
+                    , 'fori': niaz.niazFori, 'form': form, 'niaz': niazID,'message':'مبلغ وارد شده بیشتر از نیاز مددجو است.'})
+
+            ourNiaz.save()
+
+            events.objects.create(onvan='حمایت از نیاز',
+                                  matn='با تشکر از حمایت شما از نیاز مددجوی' + ourNiaz.niazmand.user.user.username + ' . نیاز ' + ourNiaz.onvan + ' تحت حمایت شما قرار گرفت.',
+                                  user=request.user, zaman=datetime.datetime.now())
+
+            uname = request.user
+            ouruser = User.objects.get(username=uname)
+            events.objects.create(onvan='حمایت از نیاز',
+                                  matn='از نیاز ' + ourNiaz.onvan + ' توسط ' + ouruser.username + ' حمایت شد.',
+                                  user=ourNiaz.niazmand.user.user, zaman=datetime.datetime.now())
+            if hemaiatNiaz.objects.filter(hamiar=ourHamiar, niaz=ourNiaz).exists():
+                hniaz = hemaiatNiaz.objects.get(hamiar=ourHamiar, niaz=ourNiaz)
+                hniaz.mablagh = ourNiaz.mablagh
+            else:
+                hemaiatNiaz.objects.create(active=True, hamiar=ourHamiar, niaz=ourNiaz, mablagh=ourNiaz.mablagh)
+
+            return HttpResponseRedirect(reverse("movafaghshodimHamiar"))
+        else:
+
+            return render(request, template, {'utype': 'hamiar'
+                , 'progress': karbar.darbare_ma.progress()
+                , 'username': request.user
+                , 'niazName': niaz.onvan
+                , 'hazineTaminShode': niaz.mablagh_taminshodeh
+                , 'hazineTaminNashode': niaz.mablagh_taminnashode()
+                , 'fori': niaz.niazFori, 'form': form, 'niaz': niazID})
 #TODO mablagh ro az form begire va b un meghdar ziad kone
 #TODO events esh ham add beshe b madadju va hamiar
 
