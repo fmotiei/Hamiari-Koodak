@@ -26,6 +26,11 @@ def is_hamiar(user):
             staffMember = staff_members.objects.get(stafID=userKarbar)
             return Hamiar.objects.filter(staffID=staffMember).exists()
 
+@login_required(login_url='/permission/')
+@user_passes_test(is_hamiar,login_url='/permission/')
+def edit_profile(request):
+    return moshtarak.edit_profile(request,'hamiar')
+
 
 
 @login_required(login_url='/permission/')

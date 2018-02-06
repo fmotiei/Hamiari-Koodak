@@ -21,6 +21,12 @@ from hamiar.forms import afzayeshEtebar
 from madadkar.models import Madadkar, hoghugh_dariafti
 
 
+def edit_profile(request,user):
+    template = 'karbar/password_change.html'
+    return render(request,template,{'progress': karbar.darbare_ma.progress()
+                                    , 'username' : request.user
+                                    , 'utype': user})
+
 def user_type(user):
     userkarbarInstance = karbar.models.UserKarbar.objects.get(user=user)
     if userkarbarInstance.is_hamiar:

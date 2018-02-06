@@ -43,5 +43,6 @@ urlpatterns = [
     url(r'^amaliat_movafagh/$', hamiar.views.show_amaliat_movafagh, name= "movafaghshodimHamiar"),
     url(r'^moshahede_list_koodakan/$', hamiar.views.show_moshahede_list_koodakan),
     url(r'^moshahede_list_niazhaye_fori_taminnashode/$', hamiar.views.show_moshahede_list_niazhaye_fori_taminnashode),
+    url(r'^password_change/$',hamiar.views.edit_profile),
     url(r'^$', hamiar.views.show_hamiar,name="hamyar_panel"),
 ]
