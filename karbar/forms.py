@@ -3,6 +3,26 @@ from django import forms
 from django.contrib.auth.models import User
 from karbar.models import Payam
 
+
+class EditProfileForm(forms.Form):
+    first_name = forms.CharField(required=False, label='نام', widget=forms.TextInput(
+        attrs={'class': 'form-control', 'name': 'first_name', 'placeholder': 'نام'}))
+    last_name = forms.CharField(required=False, label='نام خانوادگی', widget=forms.TextInput(
+        attrs={'class': 'form-control', 'name': 'last_name', 'placeholder': 'نام خانوادگی'}))
+    current_password = forms.CharField(required=True, label='پسورد فعلی',
+                                       widget=forms.TextInput(
+                                           attrs={'class': 'form-control', 'name': 'current_password', 'placeholder': '* گذرواژه',
+                                                  'type': 'password'}))
+    new_password = forms.CharField(required=False, label='',
+                                   widget=forms.TextInput(
+                                       attrs={'class': 'form-control', 'name': 'new_password', 'placeholder': 'گذرواژه جدید',
+                                              'type': 'password'}))
+    re_new_password = forms.CharField(required=False, label='',
+                                      widget=forms.TextInput(
+                                          attrs={'class': 'form-control', 'name': 're_new_password',
+                                                 'placeholder': 'تکرار گذرواژه جدید', 'type': 'password'}))
+
+
 class SignInForm(forms.ModelForm):
     class Meta:
         model = User

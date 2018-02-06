@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse
 import datetime
 from hamiar.models import PardakhtNiaz, Hamiar
-from karbar.forms import  SignInForm, ErsalPayamForm
+from karbar.forms import  SignInForm, ErsalPayamForm,EditProfileForm
 import karbar
 from karbar.models import Payam, Payam_Madadju, Payam_Adi, UserKarbar, staff_members, events, Payam_Madadju_Madadkar, \
     akhbar
@@ -20,12 +20,59 @@ from karbar.models import Payment
 from hamiar.forms import afzayeshEtebar
 from madadkar.models import Madadkar, hoghugh_dariafti
 
+def edit_profile(request,utype):
+    template_edit = 'karbar/password_change.html'
+    # print("salam")
+    if request.method == 'GET':
+        print("salam")
+        form = EditProfileForm()
+        return render(request, template_edit, {'form': form,'utype': utype
+                , 'progress': karbar.darbare_ma.progress()
+                , 'username': request.user})
 
-def edit_profile(request,user):
-    template = 'karbar/password_change.html'
-    return render(request,template,{'progress': karbar.darbare_ma.progress()
-                                    , 'username' : request.user
-                                    , 'utype': user})
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST)
+        args = {'form': form}
+        if form.is_valid():
+            current_password = form.cleaned_data['current_password']
+            user = authenticate(request, username=request.user, password=current_password)
+            if user is None:
+                message = 'گذرواژه اشتباه ‌است'
+                args = {'form': form,'utype': utype
+                , 'progress': karbar.darbare_ma.progress()
+                , 'username': request.user, 'message': message}
+                return render(request, template_edit, args)
+            new_password = form.cleaned_data['new_password']
+            re_new_password = form.cleaned_data['re_new_password']
+            if new_password != re_new_password:
+                message = 'تکرار گذرواژه جدید درست نیست.'
+                args = {'form': form,'utype': utype
+                , 'progress': karbar.darbare_ma.progress()
+                , 'username': request.user, 'message': message}
+                return render(request, template_edit, args)
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            if len(new_password) > 0:
+                user = User.objects.get(username=request.user)
+                user.set_password(new_password)
+                user.save()
+                login(request, user)
+            if len(first_name) > 0:
+                User.objects.filter(user=request.user).update(first_name=first_name)
+            if len(last_name) > 0:
+                User.objects.filter(user=request.user).update(last_name=last_name)
+
+            template = 'karbar/amaliat_movafagh.html'
+            return render(request, template, {'utype': utype #in ro dorsot konam
+                , 'progress': karbar.darbare_ma.progress()
+                , 'username': request.user})
+        else:
+            return render(request,{'form': form,'utype': request.GET.get('utype')
+                , 'progress': karbar.darbare_ma.progress()
+                , 'username': request.user})
+
+
+
 
 def user_type(user):
     userkarbarInstance = karbar.models.UserKarbar.objects.get(user=user)
