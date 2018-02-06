@@ -489,8 +489,17 @@ def show_moshahede_list_niazhaye_fori_taminnashode(request,user):
         userName = ''
         if not user == 'karbar':
             userName = request.user
+        niazha = Niaz.objects.filter(niazFori=True)
+        madadjus = []
+        for madadju in Madadju.objects.all():
+            niazs = []
+            for niaz in niazha:
+                if niaz.niazmand == madadju:
+                    niazs.append((niaz.onvan, niaz.mablagh_taminnashode()))
+            if not len(niazs) == 0:
+                madadjus.append((madadju.username(), niazs))
 
-        return render(request, template, {'form': form, 'madadjuyan':[( m.user.user.first_name, [(niaz.onvan,niaz.mablagh_taminnashode()) for niaz in Niaz.objects.filter(niazFori=True)]) for m in madadjuyan]
+        return render(request, template, {'form': form, 'madadjuyan':madadjus
                                       ,'progress':karbar.darbare_ma.progress()
                                       ,'utype' : user
                                       ,'username':userName})
@@ -503,7 +512,17 @@ def show_moshahede_list_niazhaye_fori_taminnashode(request,user):
             user = authenticate(request, username=username, password=password)
             if user is None:
                 message = 'گذرواژه اشتباه ‌است'
-                args = {'form': form, 'message': message, 'madadjuyan':[( m.user.user.first_name, ((niaz.onvan,niaz.mablagh_taminnashode()) for niaz in Niaz.objects.filter(niazFori=True))) for m in madadjuyan]
+                niazha = Niaz.objects.filter(niazFori=True)
+                madadjus = []
+                for madadju in Madadju.objects.all():
+                    niazs = []
+                    for niaz in niazha :
+                        if niaz.niazmand == madadju :
+                            niazs.append((niaz.onvan,niaz.mablagh_taminnashode()))
+                    if not len(niazs) == 0:
+                        madadjus.append((madadju.username(),niazs))
+
+                args = {'form': form, 'message': message, 'madadjuyan': madadjus
                                       ,'progress':karbar.darbare_ma.progress()
                                       ,'utype' : user
                                       ,'username':request.user}
