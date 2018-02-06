@@ -93,21 +93,23 @@ def show_hemayat_az_niaz(request):
             ourHamiar = Hamiar.objects.get(staffID=ourSTF)
 
             ourNiaz = Niaz.objects.get(id=request.GET.get('niaz'))
-            ourNiaz.mablagh_taminshodeh += mablagh
-            if ourNiaz.mablagh_taminshodeh-ourNiaz.mablagh <=0:
-                ourNiaz.hemaiatshod = True
-            print(mablagh)
-            print(ourNiaz.mablagh)
-            if mablagh> (ourNiaz.mablagh- ourNiaz.mablagh_taminshodeh):
+            if mablagh > 1 + (ourNiaz.mablagh - ourNiaz.mablagh_taminshodeh):
                 return render(request, template, {'utype': 'hamiar'
                     , 'progress': karbar.darbare_ma.progress()
                     , 'username': request.user
                     , 'niazName': niaz.onvan
                     , 'hazineTaminShode': niaz.mablagh_taminshodeh
                     , 'hazineTaminNashode': niaz.mablagh_taminnashode()
-                    , 'fori': niaz.niazFori, 'form': form, 'niaz': niazID,'message':'مبلغ وارد شده بیشتر از نیاز مددجو است.'})
+                    , 'fori': niaz.niazFori, 'form': form, 'niaz': niazID,
+                                                  'message': 'مبلغ وارد شده بیشتر از نیاز مددجو است.'})
 
-            ourNiaz.save()
+            ourNiazUp = Niaz.objects.filter(id=request.GET.get('niaz'))
+            if (mablagh+ourNiaz.mablagh_taminshodeh-ourNiaz.mablagh) >=0:
+                print("Salam")
+                ourNiazUp.update(hemaiatshod = True)
+
+            tmn=ourNiaz.mablagh_taminshodeh
+            ourNiazUp.update(mablagh_taminshodeh =tmn+ mablagh)
 
             events.objects.create(onvan='حمایت از نیاز',
                                   matn='با تشکر از حمایت شما از نیاز مددجوی' + ourNiaz.niazmand.user.user.username + ' . نیاز ' + ourNiaz.onvan + ' تحت حمایت شما قرار گرفت.',

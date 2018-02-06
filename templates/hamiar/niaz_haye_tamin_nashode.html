@@ -110,8 +110,10 @@
 					{% for name,niazha in madadjuyan %}
 					<h2><a href="/hamiar/profile_madadju?madadju_un={{name}}" >{{name}}</a></h2>
 					{% for niazid,onvan,hazineTaminShode,hazineTaminNashode,fori in niazha %}
+					{% if hazineTaminNashode  %}
 					<p>{{onvan}}</p>
 					<p class="pull-right">
+
 						            <span class="label label-default">{{hazineTaminShode}}  تومان تامین نشده</span>
                                     <span class="label label-default">{{hazineTaminNashode}}  تومان تامین شده</span>
                                     {% if fori %}
@@ -121,6 +123,7 @@
                     </p>
 					<br><br>
 					<p><button class="btn btn-default"><a href="/hamiar/hemayat_az_niaz/?niaz={{niazid}}">حمایت</a></button></p>
+					{% endif %}
 					{% endfor %}
 					<hr>
 					{% endfor %}
