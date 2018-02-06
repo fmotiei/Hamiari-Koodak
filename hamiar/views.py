@@ -93,11 +93,12 @@ def show_hemayat_az_niaz(request):
             ourHamiar = Hamiar.objects.get(staffID=ourSTF)
 
             ourNiaz = Niaz.objects.get(id=request.GET.get('niaz'))
-            ourNiaz.mablagh_taminshodeh += ourNiaz.mablagh
-            if ourNiaz.mablagh_taminshodeh-ourNiaz.mablagh:
+            ourNiaz.mablagh_taminshodeh += mablagh
+            if ourNiaz.mablagh_taminshodeh-ourNiaz.mablagh <=0:
                 ourNiaz.hemaiatshod = True
-
-            if mablagh> ourNiaz.mablagh:
+            print(mablagh)
+            print(ourNiaz.mablagh)
+            if mablagh> (ourNiaz.mablagh- ourNiaz.mablagh_taminshodeh):
                 return render(request, template, {'utype': 'hamiar'
                     , 'progress': karbar.darbare_ma.progress()
                     , 'username': request.user

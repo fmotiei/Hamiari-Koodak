@@ -57,7 +57,7 @@ def show_afzoudan_niaz(request):
                     , 'form': form,
                                                   'message': 'نیازی به این نام برای مددجو وجود دارد.در صورتی که می‌خواهید مبلغ آن را تغییر دهید به ویرایش نیاز مراجعه کنید.'
                                                   })
-            Niaz.objects.create(niazmand=madadju_our, onvan=onvan, mablagh=mablagh, Type=Type, niazFori=niazFori)
+            Niaz.objects.create(niazmand=madadju_our, onvan=onvan, mablagh=mablagh,  Type=Type, niazFori=niazFori, mablagh_taminshodeh=0)
             events.objects.create(onvan='افزودن نیاز',
                                   matn='مددکار محترم، نیاز مربوط به مددجوی '+madadju_our.username()+' افزوده شد.',
                                   user=request.user, zaman=datetime.datetime.now())
